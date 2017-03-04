@@ -20,7 +20,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="?attr/colorPrimary"
-        android:elevation="6dp"
       app:popupTheme="@style/AppTheme.PopupOverlay" />
 
   </android.support.design.widget.AppBarLayout>
@@ -29,7 +28,7 @@
     android:id="@+id/fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
+    android:layout_alignParentBottom="true"
     android:layout_margin="@dimen/fab_margin"
     app:srcCompat="@android:drawable/ic_dialog_email"/>
 
@@ -39,7 +38,6 @@
       android:id="@+id/tab_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_below="@id/toolbar"
       android:background="?attr/colorPrimary"
       android:elevation="6dp"
       android:minHeight="?attr/actionBarSize"
