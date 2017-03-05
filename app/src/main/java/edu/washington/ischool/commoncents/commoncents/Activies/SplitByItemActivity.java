@@ -7,6 +7,9 @@ import edu.washington.ischool.commoncents.commoncents.R;
 
 public class SplitByItemActivity extends AppCompatActivity {
 
+
+    String[] dataset = {"one", "two", "third", "fourth"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
