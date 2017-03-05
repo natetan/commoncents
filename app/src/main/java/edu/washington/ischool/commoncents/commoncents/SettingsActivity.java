@@ -15,6 +15,8 @@ public class SettingsActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_settings);
+
+    // TODO: fix this line, it's causing crashes
     getActionBar().setTitle("Settings");
 
     signupLoginButton = (Button) findViewById(R.id.signupLoginButton);
