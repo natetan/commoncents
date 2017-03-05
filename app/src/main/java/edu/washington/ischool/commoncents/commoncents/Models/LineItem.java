@@ -8,13 +8,13 @@ import java.util.List;
 
 public class LineItem {
 
-    private String lineItemName;
+    private String name;
     private int price;
     private User user;
     private List<Payment> payments;
 
     public LineItem(String lineItemName, int price, User user) {
-        this.lineItemName = lineItemName;
+        this.name = lineItemName;
         this.price = price;
         this.user = user;
     }
@@ -24,8 +24,8 @@ public class LineItem {
     //----------------------------------------------------------------------------------------------
 
     //Name of the item (drink, food, etc)
-    public String getLineItemName() {
-        return lineItemName;
+    public String getName() {
+        return name;
     }
 
     //Price or cost of the item
