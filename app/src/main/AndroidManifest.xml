@@ -11,7 +11,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -20,7 +19,8 @@
         <activity android:name=".Activies.AddFriendActivity" />
         <activity android:name=".Activies.EventSummaryActivity" />
         <activity android:name=".Activies.FriendProfileActivity" />
-        <activity android:name=".Activies.LoginActivity"></activity>
+        <activity android:name=".Activies.LoginActivity" />
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>
