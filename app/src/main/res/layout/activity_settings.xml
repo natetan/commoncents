@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="edu.washington.ischool.commoncents.commoncents.SettingsActivity">
+
+
+  <Button
+    android:id="@+id/signupLoginButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="92dp"
+    android:padding="20sp"
+    android:text="Sign Up / Login"
+    android:layout_alignParentTop="true"
+    android:layout_alignLeft="@+id/inviteFriendsButton"
+    android:layout_alignStart="@+id/inviteFriendsButton"/>
+
+  <Button
+    android:id="@+id/inviteFriendsButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="65dp"
+    android:text="Invite Friends"
+    android:padding="20sp"
+    android:layout_below="@+id/signupLoginButton"
+    android:layout_centerHorizontal="true"/>
+
+  <Button
+    android:id="@+id/changeCurrencyButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="65dp"
+    android:text="Change Currency"
+    android:padding="20sp"
+    android:textSize="12sp"
+    android:layout_below="@+id/inviteFriendsButton"
+    android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>

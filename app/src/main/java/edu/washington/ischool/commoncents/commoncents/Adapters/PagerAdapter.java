@@ -1,9 +1,12 @@
-package edu.washington.ischool.commoncents.commoncents;
+package edu.washington.ischool.commoncents.commoncents.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
+
+import edu.washington.ischool.commoncents.commoncents.Fragments.FriendsListFragment;
+import edu.washington.ischool.commoncents.commoncents.Fragments.SplitCostsFragment;
 
 /**
  * Created by iguest on 3/3/17.
