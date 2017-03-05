@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.AbstractCollection;
-
 /**
  * Created by iguest on 3/4/17.
  */
@@ -67,7 +65,7 @@ public class Login extends Activity {
                     .show();
             }
         });
-        
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
