@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:HEAD="http://schemas.android.com/apk/res-auto"
     tools:context="edu.washington.ischool.commoncents.commoncents.Fragments.SplitCostsFragment"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -19,6 +20,7 @@
         android:text="Event Name"/>
 
     <EditText
+        android:id="@+id/txt_event_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -27,15 +29,43 @@
         android:layout_height="wrap_content"
         android:text="Date"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Split by Sum"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txt_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:text="select date for event"/>
+
+        <Button
+            android:id="@+id/btn_date_picker"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:maxHeight="12dp"
+            android:drawableBottom="@android:drawable/ic_menu_edit"
+            android:drawableTint="@color/colorAccent" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Split by Items"
-        android:id="@+id/split_by_items_button"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_split_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Split by&#10;SUM"/>
+
+        <Button
+            android:id="@+id/btn_split_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Split by&#10;ITEMS"/>
+
+    </LinearLayout>
 
 </LinearLayout>
