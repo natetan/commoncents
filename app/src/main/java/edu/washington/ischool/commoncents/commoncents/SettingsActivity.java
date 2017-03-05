@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.washington.ischool.commoncents.commoncents.Activies.LoginActivity;
+
 public class SettingsActivity extends Activity {
   private Button signupLoginButton, inviteFriendsButton, changeCurrencyButton;
 
@@ -22,7 +24,7 @@ public class SettingsActivity extends Activity {
     signupLoginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        startActivity(new Intent(SettingsActivity.this, Login.class));
+        startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
       }
     });
   }

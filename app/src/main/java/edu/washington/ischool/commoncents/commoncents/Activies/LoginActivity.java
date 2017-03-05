@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import edu.washington.ischool.commoncents.commoncents.Login;
 import edu.washington.ischool.commoncents.commoncents.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -39,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(passwordEditText);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
         signupButton = (Button) findViewById(R.id.signupButton);
         loginButton = (Button) findViewById(R.id.loginButton);
