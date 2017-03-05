@@ -15,6 +15,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import edu.washington.ischool.commoncents.commoncents.Activies.SplitByItemActivity;
+import edu.washington.ischool.commoncents.commoncents.Activies.SplitBySumActivity;
+
 /**
  * Created by iguest on 3/3/17.
  */
@@ -59,7 +62,7 @@ public class SplitCostsFragment extends android.support.v4.app.Fragment {
         btnSplitSum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SplitBySum.class);
+                Intent intent = new Intent(getContext(), SplitBySumActivity.class);
                 String eventName = txtEventName.getText().toString();
                 intent.putExtra("eventName", eventName);
                 intent.putExtra("eventDate", dateString); //yyyy,mm,dd format
@@ -70,7 +73,7 @@ public class SplitCostsFragment extends android.support.v4.app.Fragment {
         btnSplitItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SplitByItem.class);
+                Intent intent = new Intent(getContext(), SplitByItemActivity.class);
                 String eventName = txtEventName.getText().toString();
                 intent.putExtra("eventName", eventName);
                 intent.putExtra("eventDate", dateString);
