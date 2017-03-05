@@ -1,5 +1,7 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
+import java.util.List;
+
 /**
  * Created by iguest on 3/5/17.
  */
@@ -9,6 +11,7 @@ public class LineItem {
     private String lineItemName;
     private int price;
     private User user;
+    private List<Payment> payments;
 
     public LineItem(String lineItemName, int price, User user) {
         this.lineItemName = lineItemName;
@@ -19,7 +22,7 @@ public class LineItem {
     //----------------------------------------------------------------------------------------------
     // Getters
     //----------------------------------------------------------------------------------------------
-    
+
     //Name of the item (drink, food, etc)
     public String getLineItemName() {
         return lineItemName;
@@ -33,5 +36,10 @@ public class LineItem {
     //User associated with the item, the user that should pay for the particular item
     public User getUser() {
         return user;
+    }
+
+    //List of payments for a single line item (multiple users splitting a single line item) if applicable, otherwise is just a list with one payment
+    public List<Payment> getPayments() {
+        return payments;
     }
 }
