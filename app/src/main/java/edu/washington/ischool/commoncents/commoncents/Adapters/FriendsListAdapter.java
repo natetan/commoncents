@@ -1,10 +1,14 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     private static final int ITEM_LAYOUT_ID = R.layout.item_friend_list_item;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int MONEY_VIEW_ID = R.id.item_description;
+    private static final int PROFILE_PIC_VIEW_ID = R.id.profile_picture;
 
     private Listener listener;
     private List<Friend> friends = new ArrayList<>();
@@ -45,11 +50,13 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameView;
         public TextView moneyView;
+        public ImageView profilePicView;
 
-        public ViewHolder(View itemView, TextView nameView, TextView moneyView) {
+        public ViewHolder(View itemView, TextView nameView, TextView moneyView, ImageView profilePicView) {
             super(itemView);
             this.nameView = nameView;
             this.moneyView = moneyView;
+            this.profilePicView = profilePicView;
         }
     }
 
@@ -76,20 +83,23 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         // Inflate container view for this item
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(ITEM_LAYOUT_ID, parent, false);
-        // Get important views for this item
-        TextView nameTextView = (TextView) itemView.findViewById(NAME_VIEW_ID);
-        TextView moneyTextView = (TextView) itemView.findViewById(MONEY_VIEW_ID);
 
-        return new ViewHolder(itemView, nameTextView, moneyTextView);
+        // Get important views for this item
+        TextView nameView = (TextView) itemView.findViewById(NAME_VIEW_ID);
+        TextView moneyView = (TextView) itemView.findViewById(MONEY_VIEW_ID);
+        ImageView profilePicView = (ImageView) itemView.findViewById(PROFILE_PIC_VIEW_ID);
+
+        return new ViewHolder(itemView, nameView, moneyView, profilePicView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Friend friend = friends.get(position);
 
-        // Set the text for this cell based on its position
+        // Set the view properties for this cell
         holder.nameView.setText(friend.getName());
         holder.moneyView.setText("$100");
+        holder.profilePicView.setImageDrawable(generateProfilePic(friend));
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +109,22 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
                 listener.onFriendClicked(view, friend);
             }
         });
+    }
+
+    private TextDrawable generateProfilePic(Friend friend) {
+
+        // Generate arbitrary color based on friends name
+        float h = (float)Math.abs(friend.getName().hashCode()) % 360;
+        float s = 0.5f;
+        float v = 0.8f;
+
+        // Calculate the initials for this friends name
+        String initials = friend.getName().substring(0, 2);
+
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRound(initials, Color.HSVToColor(new float[]{ h, s, v }));
+
+        return drawable;
     }
 
     @Override
