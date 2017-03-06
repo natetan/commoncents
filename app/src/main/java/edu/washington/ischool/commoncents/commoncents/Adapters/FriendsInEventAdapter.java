@@ -11,12 +11,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import edu.washington.ischool.commoncents.commoncents.Models.Payment;
+
 /**
  * Created by iguest on 3/5/17.
  */
 
 public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAdapter.ViewHolder> {
-    private ArrayList<String> friendsInEvent; // Friends gets saved to be passed into another object later.
+    private ArrayList<Payment> friendsInEvent; // Friends gets saved to be passed into another object later.
     private int itemLayout;
     private int nameId;
     private int percentageId;
@@ -56,16 +58,22 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
 
     @Override
     public void onBindViewHolder(FriendsInEventAdapter.ViewHolder holder, final int position) {
-        holder.name.setText(friendsInEvent.get(position));
+        holder.name.setText(friendsInEvent.get(position).getUser().getName());
+        holder.amount.setText(friendsInEvent.get(position).getAmount());
+        //CALCULATE PERCENTAGE HERE
+        Log.v("ON BIND", friendsInEvent.get(position).getUser().getName());
     }
 
     @Override
     public int getItemCount() {
+        Log.v("GET ITEM COUNT", "" + friendsInEvent.size());
         return friendsInEvent.size();
+
     }
 
-    public void addToFriendsInEvent(String name) {
-        this.friendsInEvent.add(name);
+    public void addToFriendsInEvent(Payment payment) {
+        this.friendsInEvent.add(payment);
+        notifyDataSetChanged();
         Log.v("TAG", friendsInEvent.toString());
     }
 }
