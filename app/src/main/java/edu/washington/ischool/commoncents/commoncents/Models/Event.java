@@ -8,19 +8,17 @@ import java.util.List;
  */
 
 public class Event {
-    private String eventName;
-    private Date eventDate;
-    private String eventDescription;
+    private String name;
+    private Date date;
+    private String description;
     private List<Friend> friendsInvolved;
-    private int owe;
     private List<LineItem> lineItems;
 
-    public Event(String eventName, Date eventDate, String eventDescription, List<Friend> friendsInvolved, int owe, List<LineItem> lineItems) {
-        this.eventName = eventName;
-        this.eventDate = eventDate;
-        this.eventDescription = eventDescription;
+    public Event(String eventName, Date eventDate, String eventDescription, List<Friend> friendsInvolved, List<LineItem> lineItems) {
+        this.name = eventName;
+        this.date = eventDate;
+        this.description = eventDescription;
         this.friendsInvolved = friendsInvolved;
-        this.owe = owe;
         this.lineItems = lineItems;
     }
 
@@ -30,28 +28,23 @@ public class Event {
     //----------------------------------------------------------------------------------------------
 
     //Name of the event
-    public String getEventName() {
-        return eventName;
+    public String getName() {
+        return name;
     }
 
     //Date of the event
-    public Date getEventDate() {
-        return eventDate;
+    public Date getDate() {
+        return date;
     }
 
     //Description for the event
-    public String getEventDescription() {
-        return eventDescription;
+    public String getDescription() {
+        return description;
     }
 
     //List of friends involved with the event
     public List<Friend> getFriendsInvolved() {
         return friendsInvolved;
-    }
-
-    //How much you owe or are owed for the event
-    public int getOwe() {
-        return owe;
     }
 
     //List of items involved with this event

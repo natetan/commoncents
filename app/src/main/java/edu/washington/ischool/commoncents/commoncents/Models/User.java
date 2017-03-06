@@ -8,13 +8,13 @@ import java.util.List;
 
 public class User {
 
-    private String userName;
+    private String name;
     private List<Event> eventList;
     private String email;
     private String phoneNumber;
 
     public User(String userName, List<Event> eventList, String email, String phoneNumber) {
-        this.userName = userName;
+        this.name = userName;
         this.eventList = eventList;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -25,8 +25,8 @@ public class User {
     //----------------------------------------------------------------------------------------------
 
     //User's name
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
     //User's list of events
