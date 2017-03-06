@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,10 @@ public class User {
     private List<Event> eventList;
     private String email;
     private String phoneNumber;
+
+    public User(String name) {
+        this(name, new ArrayList<Event>(), "", "");
+    }
 
     public User(String userName, List<Event> eventList, String email, String phoneNumber) {
         this.name = userName;
