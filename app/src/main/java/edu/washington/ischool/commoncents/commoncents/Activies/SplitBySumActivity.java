@@ -50,7 +50,7 @@ public class SplitBySumActivity extends AppCompatActivity {
         sumInput = (EditText) findViewById(R.id.sum_input);
         splitEqually = (Switch) findViewById(R.id.split_equally_switch);
         totalPercentage = (TextView) findViewById(R.id.total_percentage);
-        name = (EditText) findViewById(R.id.name);
+        name = (EditText) findViewById(R.id.edit_name);
 //        amount = (EditText) findViewById(R.id.amount);
 //        percentage = (EditText) findViewById(R.id.percentage);
 
@@ -63,14 +63,12 @@ public class SplitBySumActivity extends AppCompatActivity {
                 //IMPLEMENT LATER USING PAYMENT OBJECT
 //                adapter.add(amount.getText().toString());
 //                adapter.add(percentage.getText().toString());
-                EditText newItem = (EditText) findViewById(R.id.name);
+                EditText newItem = (EditText) findViewById(R.id.edit_name);
                 String itemText = newItem.getText().toString();
                 adapter.addToFriendsInEvent(itemText);
                 newItem.setText("");
             }
         });
-
-        adapter.notifyDataSetChanged();
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
