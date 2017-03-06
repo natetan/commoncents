@@ -23,11 +23,11 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
     private int amountId;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public EditText name;
-        public EditText percentage;
-        public EditText amount;
+        public TextView name;
+        public TextView percentage;
+        public TextView amount;
 
-        public ViewHolder(View itemView, EditText name, EditText percentage, EditText amount) {
+        public ViewHolder(View itemView, TextView name, TextView percentage, TextView amount) {
             super(itemView);
             this.name = name;
             this.percentage = percentage;
@@ -46,10 +46,10 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
     @Override
     public FriendsInEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
-        EditText name = (EditText) itemView.findViewById(nameId);
+        TextView name = (TextView) itemView.findViewById(nameId);
         //NEED TO GET IDs by passing in activity  when creating adapter.
-        EditText percentage = (EditText) itemView.findViewById(percentageId);
-        EditText amount = (EditText) itemView.findViewById(amountId);
+        TextView percentage = (TextView) itemView.findViewById(percentageId);
+        TextView amount = (TextView) itemView.findViewById(amountId);
 
         return new ViewHolder(itemView, name, percentage, amount);
     }

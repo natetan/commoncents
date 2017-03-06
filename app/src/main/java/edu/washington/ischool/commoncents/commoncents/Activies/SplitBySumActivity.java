@@ -51,8 +51,8 @@ public class SplitBySumActivity extends AppCompatActivity {
         splitEqually = (Switch) findViewById(R.id.split_equally_switch);
         totalPercentage = (TextView) findViewById(R.id.total_percentage);
         name = (EditText) findViewById(R.id.name);
-        amount = (EditText) findViewById(R.id.amount);
-        percentage = (EditText) findViewById(R.id.percentage);
+//        amount = (EditText) findViewById(R.id.amount);
+//        percentage = (EditText) findViewById(R.id.percentage);
 
         initializeFriendsInEventView();
 
@@ -69,6 +69,8 @@ public class SplitBySumActivity extends AppCompatActivity {
                 newItem.setText("");
             }
         });
+
+        adapter.notifyDataSetChanged();
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
