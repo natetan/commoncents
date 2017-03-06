@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     tools:context="edu.washington.ischool.commoncents.commoncents.Fragments.FriendsListFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Friends List"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/friends_list"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

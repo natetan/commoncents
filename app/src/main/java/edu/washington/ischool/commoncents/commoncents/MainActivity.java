@@ -7,14 +7,20 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.*;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.washington.ischool.commoncents.commoncents.Adapters.MainPagerAdapter;
+
 public class MainActivity extends AppCompatActivity {
+
   public static final String TAG = "TAG";
+
+  private static final String EVENTS_TAB_NAME = "Events";
+  private static final String FRIENDS_TAB_NAME = "Friends";
+  private static final String SETTINGS_TAB_NAME = "Settings";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-    tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-    tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+    tabLayout.addTab(tabLayout.newTab().setText(EVENTS_TAB_NAME));
+    tabLayout.addTab(tabLayout.newTab().setText(FRIENDS_TAB_NAME));
+    tabLayout.addTab(tabLayout.newTab().setText(SETTINGS_TAB_NAME));
     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
     final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-    edu.washington.ischool.commoncents.commoncents.Adapters.PagerAdapter adapter = new edu.washington.ischool.commoncents.commoncents.Adapters.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+    MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
     viewPager.setAdapter(adapter);
     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -55,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onClick(View view) {
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
+                .setAction("Action", null).show();
       }
     });
   }
