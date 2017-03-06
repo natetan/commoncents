@@ -1,6 +1,7 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by iguest on 3/5/17.
  */
 
 public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAdapter.ViewHolder> {
-    private String[] friendsInEvent; // Friends gets saved to be passed into another object later.
+    private ArrayList<String> friendsInEvent; // Friends gets saved to be passed into another object later.
     private int itemLayout;
     private int nameId;
     private int percentageId;
@@ -34,7 +37,7 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
 
     public FriendsInEventAdapter(int itemLayout, int nameId, int percentageId, int amountId) {
         this.itemLayout = itemLayout;
-        this.friendsInEvent = friendsInEvent;
+        this.friendsInEvent = new ArrayList<>();
         this.nameId = nameId;
         this.percentageId = percentageId;
         this.amountId = amountId;
@@ -53,11 +56,16 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
 
     @Override
     public void onBindViewHolder(FriendsInEventAdapter.ViewHolder holder, final int position) {
-
+        holder.name.setText(friendsInEvent.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return friendsInEvent.length;
+        return friendsInEvent.size();
+    }
+
+    public void addToFriendsInEvent(String name) {
+        this.friendsInEvent.add(name);
+        Log.v("TAG", friendsInEvent.toString());
     }
 }

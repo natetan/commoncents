@@ -18,6 +18,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.login.LoginException;
+
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.R;
 
@@ -32,7 +34,10 @@ public class SplitBySumActivity extends AppCompatActivity {
     private TextView totalPercentage;
     //private List<String> friends;
     private RecyclerView friendsInEventView;
-    private RecyclerView.Adapter adapter;
+    private FriendsInEventAdapter adapter;
+    private EditText name;
+    private EditText amount;
+    private EditText percentage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +50,23 @@ public class SplitBySumActivity extends AppCompatActivity {
         sumInput = (EditText) findViewById(R.id.sum_input);
         splitEqually = (Switch) findViewById(R.id.split_equally_switch);
         totalPercentage = (TextView) findViewById(R.id.total_percentage);
+        name = (EditText) findViewById(R.id.name);
+        amount = (EditText) findViewById(R.id.amount);
+        percentage = (EditText) findViewById(R.id.percentage);
 
         initializeFriendsInEventView();
 
         addPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.e(TAG, "onClick: clicked add person");
+                //IMPLEMENT LATER USING PAYMENT OBJECT
+//                adapter.add(amount.getText().toString());
+//                adapter.add(percentage.getText().toString());
+                EditText newItem = (EditText) findViewById(R.id.name);
+                String itemText = newItem.getText().toString();
+                adapter.addToFriendsInEvent(itemText);
+                newItem.setText("");
             }
         });
 
