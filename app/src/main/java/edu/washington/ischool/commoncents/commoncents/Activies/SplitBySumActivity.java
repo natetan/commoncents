@@ -21,6 +21,8 @@ import java.util.List;
 import javax.security.auth.login.LoginException;
 
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
+import edu.washington.ischool.commoncents.commoncents.Models.Payment;
+import edu.washington.ischool.commoncents.commoncents.Models.User;
 import edu.washington.ischool.commoncents.commoncents.R;
 
 public class SplitBySumActivity extends AppCompatActivity {
@@ -50,9 +52,9 @@ public class SplitBySumActivity extends AppCompatActivity {
         sumInput = (EditText) findViewById(R.id.sum_input);
         splitEqually = (Switch) findViewById(R.id.split_equally_switch);
         totalPercentage = (TextView) findViewById(R.id.total_percentage);
-        name = (EditText) findViewById(R.id.name);
-//        amount = (EditText) findViewById(R.id.amount);
-//        percentage = (EditText) findViewById(R.id.percentage);
+        name = (EditText) findViewById(R.id.edit_name);
+        amount = (EditText) findViewById(R.id.edit_amount);
+        percentage = (EditText) findViewById(R.id.edit_percentage);
 
         initializeFriendsInEventView();
 
@@ -63,14 +65,24 @@ public class SplitBySumActivity extends AppCompatActivity {
                 //IMPLEMENT LATER USING PAYMENT OBJECT
 //                adapter.add(amount.getText().toString());
 //                adapter.add(percentage.getText().toString());
-                EditText newItem = (EditText) findViewById(R.id.name);
-                String itemText = newItem.getText().toString();
-                adapter.addToFriendsInEvent(itemText);
-                newItem.setText("");
+
+                String newName = name.getText().toString();
+                String newAmount = amount.getText().toString();
+                String newPercentage = amount.getText().toString();
+
+                User user = new User(newName);
+                Payment payment = new Payment(user, Integer.parseInt(newAmount) * 100);
+
+                adapter.addToFriendsInEvent(payment);
+
+                //IMPLEMENT PAYMENT OBJECT HERE
+//                adapter.addToFriendsInEvent();
+//                adapter.addToFriendsInEvent();
+                name.setText("");
+                amount.setText("");
+                percentage.setText("");
             }
         });
-
-        adapter.notifyDataSetChanged();
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
