@@ -33,4 +33,8 @@ public class Friend {
     public List<Event> getSharedEvents() {
         return sharedEvents;
     }
+
+    public int getAmountOwed() {
+        return (int)((Math.random() - 0.5) * 200) * 100;
+    }
 }
