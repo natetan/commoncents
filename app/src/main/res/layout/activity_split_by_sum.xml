@@ -42,13 +42,37 @@
         android:layout_width="374dp"
         android:layout_height="162dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:hint="name goes here"
-        android:id="@+id/edit_name"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:hint="Name"
+            android:id="@+id/edit_name"
+            android:layout_weight="1"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:hint="Amount"
+            android:id="@+id/edit_amount"
+            android:layout_weight="1"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:hint="Percentage"
+            android:id="@+id/edit_percentage"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <Button
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
