@@ -1,15 +1,25 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by keegomyneego on 3/5/17.
  */
 
 public class Friend {
 
-    private String name;
+    private User user;
+    private List<Event> sharedEvents;
 
-    public Friend(String name) {
-        this.name = name;
+    public Friend(User currentUser, User friend) {
+
+        // Get shared events by calculating the intersection of both user's events
+        List<Event> friendsEvents = new ArrayList<>(friend.getEventList());
+        friendsEvents.retainAll(currentUser.getEventList());
+
+        this.user = friend;
+        this.sharedEvents = friendsEvents;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -17,6 +27,10 @@ public class Friend {
     //----------------------------------------------------------------------------------------------
 
     public String getName() {
-        return name;
+        return user.getName();
+    }
+
+    public List<Event> getSharedEvents() {
+        return sharedEvents;
     }
 }
