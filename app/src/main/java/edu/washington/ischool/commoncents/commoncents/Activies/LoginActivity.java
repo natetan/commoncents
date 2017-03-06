@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize the Firebase auth instance
         auth = FirebaseAuth.getInstance();
-        
+
         // Tracks if the user is signed in or out
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
