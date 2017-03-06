@@ -20,6 +20,7 @@ public class DataRepository {
     public static DataRepository getInstance() {
         if (instance == null) {
             instance = new DataRepository();
+            instance.loadFriends();
         }
 
         return instance;
