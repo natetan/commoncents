@@ -44,6 +44,9 @@ public class MainPagerController {
         tabLayout.addOnTabSelectedListener(getTabSelectedListener(appCompatActivity, viewPager, tabInfoList, tabLayout));
         viewPager.setAdapter(getAdapter(fragmentManager, tabInfoList));
         viewPager.addOnPageChangeListener(getPageChangeListener(tabLayout));
+
+        // Apply new theme
+        updateTheme(appCompatActivity, tabLayout, tabInfoList[0]);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -75,6 +78,23 @@ public class MainPagerController {
     // Private Helpers
     //----------------------------------------------------------------------------------------------
 
+    /**
+     * Updates the theme based ont he tab info of the selected tab
+     */
+    private static void updateTheme(AppCompatActivity appContext, TabLayout tabLayout, TabInfo tabInfo) {
+
+        // Apply new theme
+        appContext.getTheme().applyStyle(tabInfo.theme, true);
+
+        // Extract accent color from current theme
+        TypedValue accentColorValue = new TypedValue();
+        appContext.getTheme().resolveAttribute(R.attr.colorAccent, accentColorValue, true);
+        int accentColor = accentColorValue.data;
+
+        // Update tab bar
+        tabLayout.setBackgroundColor(accentColor);
+    }
+
     private static ViewPager.OnPageChangeListener getPageChangeListener(TabLayout tabLayout) {
         return new TabLayout.TabLayoutOnPageChangeListener(tabLayout);
     }
@@ -85,7 +105,6 @@ public class MainPagerController {
 
             @Override
             public Fragment getItem(int position) {
-                Log.v(TAG, "switching to tab #" + position);
 
                 // Defensive programming
                 if (position >= tabInfoList.length) {
@@ -125,15 +144,7 @@ public class MainPagerController {
                 viewPager.setCurrentItem(position);
 
                 // Apply new theme
-                appContext.getTheme().applyStyle(tabInfo.theme, true);
-
-                // Extract accent color from current theme
-                TypedValue accentColorValue = new TypedValue();
-                appContext.getTheme().resolveAttribute(R.attr.colorAccent, accentColorValue, true);
-                int accentColor = accentColorValue.data;
-
-                // Update tab bar
-                tabLayout.setBackgroundColor(accentColor);
+                updateTheme(appContext, tabLayout, tabInfo);
             }
 
             @Override

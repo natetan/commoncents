@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.washington.ischool.commoncents.commoncents">
+    package="edu.washington.ischool.commoncents.commoncents">
 
-  <application
-    android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity android:name=".Activies.SplitByItemActivity"/>
-    <activity android:name=".Activies.SplitBySumActivity"/>
-    <activity android:name=".Activies.AddFriendActivity"/>
-    <activity android:name=".Activies.EventSummaryActivity"/>
-    <activity android:name=".Activies.FriendProfileActivity"/>
-    <activity android:name=".Activies.LoginActivity"/>
-    <activity android:name=".SettingsActivity"/>
-    <activity
-      android:name=".Activies.SignUpActivity"
-      android:label="@string/title_activity_sign_up"
-      android:theme="@style/AppTheme.NoActionBar">
-    </activity>
-  </application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activies.SplitCostsActivity" />
+        <activity android:name=".Activies.SplitByItemActivity" />
+        <activity android:name=".Activies.SplitBySumActivity" />
+        <activity android:name=".Activies.AddFriendActivity" />
+        <activity android:name=".Activies.EventSummaryActivity" />
+        <activity android:name=".Activies.FriendProfileActivity" />
+        <activity android:name=".Activies.LoginActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".Activies.SignUpActivity"/>
+
+
+    </application>
 
 </manifest>

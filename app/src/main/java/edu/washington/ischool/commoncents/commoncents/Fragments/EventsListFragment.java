@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity;
+import edu.washington.ischool.commoncents.commoncents.Activies.SplitCostsActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.EventsListAdapter;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -47,7 +48,7 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, AddFriendActivity.class));
+                context.startActivity(new Intent(context, SplitCostsActivity.class));
             }
         });
     }

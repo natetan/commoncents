@@ -2,19 +2,13 @@ package edu.washington.ischool.commoncents.commoncents;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.*;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import edu.washington.ischool.commoncents.commoncents.Adapters.MainPagerAdapter;
 import edu.washington.ischool.commoncents.commoncents.Controllers.MainPagerController;
-import edu.washington.ischool.commoncents.commoncents.Fragments.SplitCostsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         MainPagerController.setupViewPager(this, viewPager, tabLayout);
+
+        // Note to team: Fab click actions are now specified in the
+        // EventsListFragment and FriendsListFragment
     }
 
     @Override

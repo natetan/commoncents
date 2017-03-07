@@ -14,11 +14,30 @@
 
   <!-- Material UI Color Palette -->
   <color name="colorMaterialUIRed">#F44336</color>
+  <color name="colorMaterialUIPink">#E91E63</color>
+  <color name="colorMaterialUIPurple">#9C27B0</color>
+  <color name="colorMaterialUIDeepPurple">#673AB7</color>
+  <color name="colorMaterialUIIndigo">#3F51B5</color>
   <color name="colorMaterialUIBlue">#2196F3</color>
   <color name="colorMaterialUILightBlue">#03A9F4</color>
   <color name="colorMaterialUICyan">#00BCD4</color>
+  <color name="colorMaterialUITeal">#009688</color>
   <color name="colorMaterialUIGreen">#4CAF50</color>
   <color name="colorMaterialUILightGreen">#8BC34A</color>
   <color name="colorMaterialUILime">#CDDC39</color>
-  <color name="colorMaterialUIGrey">#9E9E9E</color>
+  <color name="colorMaterialUIYellow">#FFEB3B</color>
+  <color name="colorMaterialUIAmber">#FFC107</color>
+  <color name="colorMaterialUIOrange">#FF9800</color>
+  <color name="colorMaterialUIDeepOrange">#FF5722</color>
+  <color name="colorMaterialUIBrown">#795548</color>
+  <color name="colorMaterialUIWhite">#FFFFFF</color>
+  <color name="colorMaterialUISuperLightGrey">#EEEEEE</color>
+  <color name="colorMaterialUILightGrey">#DDDDDD</color>
+  <color name="colorMaterialUIGrey">#BDBDBD</color>
+  <color name="colorMaterialUIDarkGrey">#757575</color>
+  <color name="colorMaterialUISuperLightBlueGrey">#B0BEC5</color>
+  <color name="colorMaterialUILightBlueGrey">#90A4AE</color>
+  <color name="colorMaterialUIBlueGrey">#78909C</color>
+  <color name="colorMaterialUIDarkBlueGrey">#546E7A</color>
+  <color name="colorMaterialUIBlack">#000000</color>
 </resources>
