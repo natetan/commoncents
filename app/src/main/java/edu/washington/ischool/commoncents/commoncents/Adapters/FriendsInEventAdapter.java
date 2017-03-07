@@ -50,7 +50,7 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
     public FriendsInEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
         TextView name = (TextView) itemView.findViewById(nameId);
-        //NEED TO GET IDs by passing in activity  when creating adapter.
+        //NEED TO GET IDs by passing in activity when creating adapter.
         TextView percentage = (TextView) itemView.findViewById(percentageId);
         TextView amount = (TextView) itemView.findViewById(amountId);
 

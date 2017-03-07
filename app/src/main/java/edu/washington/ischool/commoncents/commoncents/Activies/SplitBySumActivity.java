@@ -102,9 +102,11 @@ public class SplitBySumActivity extends AppCompatActivity {
 
                 //If the user is splitting equally
                 if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
-                    Log.v("TOTAL DOLLARS", "" + Integer.valueOf(totalDollars));
-                    portion = Integer.valueOf(totalDollars) / totalFriends;
-                    percent = (double) portion / Integer.valueOf(totalDollars) * 100;
+                    costInCents = Integer.valueOf(totalDollars) * 100;
+                    Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
+
+                    portion = costInCents / totalFriends;
+                    percent = (double) portion / costInCents;
                 }
                 amount.setText("$" + portion);
                 percentage.setText("" + percent + "%");
@@ -143,10 +145,18 @@ public class SplitBySumActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 Log.v(TAG, cents.getText().toString());
-
+                int portion = 0;
+                double percent = 0.0;
                 //Enter key pressed
                 if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     Log.v("TAG", "ENTER KEY PRESSED");
+                }
+                if (splitEqually.isChecked() && totalCents != null && !totalCents.equals("")) {
+                    //costInCents += Integer.valueOf(totalCents);
+                    Log.v("TOTAL DOLLARS IN CENTS", "" + Integer.valueOf(totalCents));
+
+                    portion = costInCents / totalFriends;
+                    percent = (double) portion / costInCents;
                 }
                 totalCents = cents.getText().toString();
                 Log.v(TAG, cents.getText().toString());
@@ -219,7 +229,6 @@ public class SplitBySumActivity extends AppCompatActivity {
                 String newPercentage = amount.getText().toString();
 
                 Log.v(TAG, newAmount);
-
 
                 User user = new User(newName);
                 Payment payment = new Payment(user, Integer.valueOf(newAmount));
