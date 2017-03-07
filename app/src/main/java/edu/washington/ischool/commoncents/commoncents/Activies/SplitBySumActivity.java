@@ -228,7 +228,6 @@ public class SplitBySumActivity extends AppCompatActivity {
 
                 adapter.addToFriendsInEvent(payment);
 
-                //IMPLEMENT PAYMENT OBJECT HERE
 //                adapter.addToFriendsInEvent();
 //                adapter.addToFriendsInEvent();
                 name.setText("");

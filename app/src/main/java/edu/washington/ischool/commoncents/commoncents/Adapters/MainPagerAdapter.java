@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
+import edu.washington.ischool.commoncents.commoncents.Fragments.EventsListFragment;
 import edu.washington.ischool.commoncents.commoncents.Fragments.FriendsListFragment;
+import edu.washington.ischool.commoncents.commoncents.Fragments.SettingsFragment;
 import edu.washington.ischool.commoncents.commoncents.Fragments.SplitCostsFragment;
 import edu.washington.ischool.commoncents.commoncents.SettingsActivity;
 
@@ -38,7 +40,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
             }
             case 2: {
                 // TODO make SettingsActivity a fragment and return it here
-                FriendsListFragment tab = new FriendsListFragment();
+                SettingsFragment tab = new SettingsFragment();
                 return tab;
             }
             default:

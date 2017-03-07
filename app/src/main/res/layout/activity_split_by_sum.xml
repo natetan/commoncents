@@ -61,8 +61,8 @@
         android:id="@+id/friends_in_event_list"
         android:padding="8dp"
         android:scrollbars="vertical"
-        android:layout_width="374dp"
-        android:layout_height="162dp" />
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

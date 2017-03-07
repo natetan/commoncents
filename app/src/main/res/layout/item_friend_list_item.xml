@@ -7,26 +7,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/list_item_min_height"
-    android:layout_margin="@dimen/list_padding"
+    android:layout_margin="@dimen/list_item_margin_half"
     card_view:cardCornerRadius="@dimen/cardview_default_elevation">
 
     <LinearLayout
         android:orientation="horizontal"
+        android:layout_margin="@dimen/list_item_padding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/profile_picture"
+            android:scaleType="fitCenter"
             android:layout_width="@dimen/profile_picture_size_in_item"
             android:layout_height="@dimen/profile_picture_size_in_item" />
 
         <TextView
             android:id="@+id/item_title"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/list_item_subitem_margin"
+            android:layout_marginStart="@dimen/list_item_subitem_margin"
+            android:layout_marginRight="@dimen/list_item_subitem_margin"
+            android:layout_marginEnd="@dimen/list_item_subitem_margin"
             android:layout_gravity="start|center_vertical"
             android:layout_weight="3"
             android:layout_width="wrap_content"
@@ -36,13 +37,16 @@
 
         <TextView
             android:id="@+id/item_description"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/list_item_subitem_margin"
+            android:layout_marginStart="@dimen/list_item_subitem_margin"
+            android:layout_marginRight="@dimen/list_item_subitem_margin"
+            android:layout_marginEnd="@dimen/list_item_subitem_margin"
             android:gravity="end"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="18sp"
             android:text="Description"/>
 
     </LinearLayout>
