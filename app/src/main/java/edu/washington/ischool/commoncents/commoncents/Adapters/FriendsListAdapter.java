@@ -95,10 +95,19 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Friend friend = friends.get(position);
+        int centsOwed = friend.getAmountOwed();
+        String amountOwed;
+
+        if (centsOwed >= 0) {
+            amountOwed = (centsOwed / 100) + "." + (centsOwed % 100);
+        } else {
+            amountOwed = "(" + (-centsOwed / 100) + "." + (-centsOwed % 100) + ")";
+        }
+
 
         // Set the view properties for this cell
         holder.nameView.setText(friend.getName());
-        holder.moneyView.setText("$100");
+        holder.moneyView.setText(amountOwed);
         holder.profilePicView.setImageDrawable(generateProfilePic(friend));
 
         // Set this cell's onClickListener
