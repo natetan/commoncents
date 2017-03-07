@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "905081543586",
+    "firebase_url": "https://commoncents-e3b13.firebaseio.com",
+    "project_id": "commoncents-e3b13",
+    "storage_bucket": "commoncents-e3b13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905081543586:android:40af63ba0af417e9",
+        "android_client_info": {
+          "package_name": "edu.washington.ischool.commoncents.commoncents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905081543586-26o378qqgs9af6o5p1rj0abknedpq1ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQhTtYm6T2U1AvshRjKtXoh9hkj1zLDzg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
