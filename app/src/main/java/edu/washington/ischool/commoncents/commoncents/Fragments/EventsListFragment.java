@@ -1,7 +1,10 @@
 package edu.washington.ischool.commoncents.commoncents.Fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity;
+import edu.washington.ischool.commoncents.commoncents.Activies.SplitCostsActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.EventsListAdapter;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -32,8 +37,20 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_events_list, container, false);
+        initializeFab(getContext(), mainView);
         initializeEventsList(mainView);
         return mainView;
+    }
+
+    private void initializeFab(final Context context, View mainView) {
+        FloatingActionButton fab = (FloatingActionButton) mainView.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, SplitCostsActivity.class));
+            }
+        });
     }
 
     private void initializeEventsList(View mainView) {

@@ -1,7 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.washington.ischool.commoncents.commoncents.ComponentHelper;
+import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -102,8 +99,8 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
         // Set the view properties for this cell
         holder.nameView.setText(friend.getName());
-        ComponentHelper.getInstance(context).setOweAmount(holder.moneyView, friend.getAmountOwed());
-        ComponentHelper.getInstance(context).setProfilePicture(holder.profilePicView, friend);
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed());
+        ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, friend);
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
