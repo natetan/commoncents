@@ -1,7 +1,9 @@
 package edu.washington.ischool.commoncents.commoncents;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.washington.ischool.commoncents.commoncents.Activies.SplitCostsActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.MainPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
   private static final String FRIENDS_TAB_NAME = "Friends";
   private static final String SETTINGS_TAB_NAME = "Settings";
 
+  @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -57,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
     });
 
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_new_event);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        Intent intent = new Intent(getBaseContext(), SplitCostsActivity.class);
+        startActivity(intent);
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+
       }
     });
   }
