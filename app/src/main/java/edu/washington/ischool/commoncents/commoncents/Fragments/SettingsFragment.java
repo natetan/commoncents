@@ -27,7 +27,7 @@ public class SettingsFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    public final String TAG = getActivity().getClass().getSimpleName();
+    public final String TAG = "Settings Fragment";
 
     public static final String SIGN_IN = "Sign Up / Login";
     public static final String SIGN_OUT = "Sign out";
