@@ -55,7 +55,7 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
         friendsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new FriendsListAdapter(this);
+        adapter = new FriendsListAdapter(getContext(), this);
         friendsList.setAdapter(adapter);
 
         friendsListUpdated();

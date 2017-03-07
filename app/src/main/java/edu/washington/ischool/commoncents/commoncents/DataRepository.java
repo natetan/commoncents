@@ -21,13 +21,11 @@ public class DataRepository {
 
     private static DataRepository instance;
 
-
-
     public static DataRepository getInstance() {
         if (instance == null) {
             instance = new DataRepository();
             instance.loadUsers();
-            instance.loadFriends();
+            instance.loadFriends(); // must be called *after* users are loaded
             instance.loadEvents();
         }
 
@@ -35,17 +33,19 @@ public class DataRepository {
     }
 
     //----------------------------------------------------------------------------------------------
-    // Data - fields holding all data
+    // State - fields holding the current app state
     //----------------------------------------------------------------------------------------------
 
     User currentUser = new User("me");
+    Event currentEvent;
+
+    //----------------------------------------------------------------------------------------------
+    // Data - fields holding all data
+    //----------------------------------------------------------------------------------------------
 
     List<Friend> friends = new ArrayList<>();
     List<User> users = new ArrayList<>();
-
     List<Event> events = new ArrayList<>();
-
-    Event currentEvent;
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
@@ -54,37 +54,30 @@ public class DataRepository {
     public List<Friend> getFriends() {
         return friends;
     }
-    public List<Event> getEvents() {
-        return events;
-    }
-    public Event getCurrentEvent() { return currentEvent; }
-
-
-    //----------------------------------------------------------------------------------------------
-    // Setters - for the client to set data in repo
-    //----------------------------------------------------------------------------------------------
-    public void setCurrentEvent(Event e) {
-        currentEvent = e;
-    }
-
 
     public List<User> getUsers() {
         return users;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public Event getCurrentEvent() {
+        return currentEvent;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Setters - for the client to set data in repo
+    //----------------------------------------------------------------------------------------------
+
+    public void setCurrentEvent(Event e) {
+        currentEvent = e;
+    }
+
     //----------------------------------------------------------------------------------------------
     // Loaders - for the repo to get data from external sources
     //----------------------------------------------------------------------------------------------
-
-    private void loadFriends() {
-        friends = new ArrayList<>();
-
-        for (User user : users) {
-            friends.add(new Friend(currentUser, user));
-        }
-
-        // TODO emit broadcast Repo Updated - New Data - Friends
-    }
 
     private void loadUsers() {
         users = new ArrayList<>();
@@ -98,14 +91,32 @@ public class DataRepository {
         // TODO emit broadcast Repo Updated - New Data - Users
     }
 
+    /**
+     * Note: must be called after loadUsers!
+     */
+    private void loadFriends() {
+        friends = new ArrayList<>();
+
+        for (User user : users) {
+            friends.add(new Friend(currentUser, user));
+        }
+
+        // TODO emit broadcast Repo Updated - New Data - Friends
+    }
+
     private void loadEvents() {
         events = new ArrayList<>();
-        User me = new User("me");
-        List<LineItem> lineItem = new ArrayList<LineItem>();
-        lineItem.add(new LineItem("a", 10, me));
 
-        events.add(new Event("Cupcake", new Date(), "cupcake party?", friends, lineItem));
+        List<LineItem> cupcakeItems = new ArrayList<>();
+        cupcakeItems.add(new LineItem("cupcake 1", 10, currentUser));
+        cupcakeItems.add(new LineItem("cupcake 2", 20, currentUser));
+        events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", friends, cupcakeItems));
 
-        // TODO emit broadcast Repo Updated - New Friends Data
+        List<LineItem> birthdayPartyItems = new ArrayList<>();
+        birthdayPartyItems.add(new LineItem("birthday cake 1", 15, currentUser));
+        birthdayPartyItems.add(new LineItem("birthday cake 2", 25, currentUser));
+        events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", friends, birthdayPartyItems));
+
+        // TODO emit broadcast Repo Updated - New Data - Events
     }
 }
