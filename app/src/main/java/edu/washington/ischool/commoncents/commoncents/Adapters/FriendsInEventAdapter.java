@@ -29,15 +29,15 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
         public TextView percentage;
         public TextView amount;
 
-        public ViewHolder(View itemView, TextView name, TextView percentage, TextView amount) {
+        public ViewHolder(View itemView, TextView name, TextView amount, TextView percentage) {
             super(itemView);
             this.name = name;
-            this.percentage = percentage;
             this.amount = amount;
+            this.percentage = percentage;
         }
     }
 
-    public FriendsInEventAdapter(int itemLayout, int nameId, int percentageId, int amountId) {
+    public FriendsInEventAdapter(int itemLayout, int nameId, int amountId, int percentageId) {
         this.itemLayout = itemLayout;
         this.friendsInEvent = new ArrayList<>();
         this.nameId = nameId;
@@ -53,13 +53,15 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
         TextView percentage = (TextView) itemView.findViewById(percentageId);
         TextView amount = (TextView) itemView.findViewById(amountId);
 
-        return new ViewHolder(itemView, name, percentage, amount);
+        return new ViewHolder(itemView, name, amount, percentage);
     }
 
     @Override
     public void onBindViewHolder(FriendsInEventAdapter.ViewHolder holder, final int position) {
         holder.name.setText(friendsInEvent.get(position).getUser().getName());
-        holder.amount.setText(friendsInEvent.get(position).getAmount());
+        holder.amount.setText("" + friendsInEvent.get(position).getAmount());
+        //Divide by total friends in event.
+        holder.percentage.setText("" + friendsInEvent.get(position).getAmount());
         //CALCULATE PERCENTAGE HERE
         Log.v("ON BIND", friendsInEvent.get(position).getUser().getName());
     }

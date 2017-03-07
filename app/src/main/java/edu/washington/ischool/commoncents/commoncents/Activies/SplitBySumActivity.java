@@ -40,9 +40,12 @@ public class SplitBySumActivity extends AppCompatActivity {
     private EditText name;
     private EditText amount;
     private EditText percentage;
-    private EditText sum;
-    private String totalPrice;
+    private EditText dollar;
+    private EditText cents;
+    private String totalDollars;
+    private String totalCents;
     private int totalFriends;
+    private int costInCents;
 
 
     @Override
@@ -51,16 +54,18 @@ public class SplitBySumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_split_by_sum);
 
         //UI elements
-        doneBtn = (Button) findViewById(R.id.done_button);
-        addPerson = (Button) findViewById(R.id.add_button);
+        dollar = (EditText) findViewById(R.id.dollar_input);
+        cents = (EditText) findViewById(R.id.cent_input);
         splitEqually = (Switch) findViewById(R.id.split_equally_switch);
-        totalPercentage = (TextView) findViewById(R.id.total_percentage);
         name = (EditText) findViewById(R.id.edit_name);
         amount = (EditText) findViewById(R.id.edit_amount);
         percentage = (EditText) findViewById(R.id.edit_percentage);
-        sum = (EditText) findViewById(R.id.sum_input);
+        addPerson = (Button) findViewById(R.id.add_button);
+        doneBtn = (Button) findViewById(R.id.done_button);
+        totalPercentage = (TextView) findViewById(R.id.total_percentage);
 
         splitEqually.setChecked(true);
+        totalFriends = 1;
 
         //Switch listener for choosing split method (Equal or Unequal)
         splitEqually.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -79,74 +84,140 @@ public class SplitBySumActivity extends AppCompatActivity {
             }
         });
 
+        //----------------------------------------------------------------------------------------------
+        // Dollar EditText Listeners
+        //----------------------------------------------------------------------------------------------
+
         //Key listener for number inputs
-        sum.setOnKeyListener(new View.OnKeyListener() {
+        dollar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                Log.v(TAG, sum.getText().toString());
-
+                int portion = 0;
+                double percent = 0;
                 //Enter key pressed
                 if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     Log.v("TAG", "ENTER KEY PRESSED");
                 }
-                totalPrice = sum.getText().toString();
-                Log.v(TAG, sum.getText().toString());
+                totalDollars = dollar.getText().toString();
+
+                //If the user is splitting equally
+                if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
+                    Log.v("TOTAL DOLLARS", "" + Integer.valueOf(totalDollars));
+                    portion = Integer.valueOf(totalDollars) / totalFriends;
+                    percent = portion / Integer.valueOf(totalDollars) * 100;
+                }
+                amount.setText("$" + portion);
+                percentage.setText("" + percent + "%");
                 return false;
             }
         });
 
         //On focus change, get what is currently in the edit text view
-        sum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        dollar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 Log.v(TAG, "On Focus Changed");
-                totalPrice = sum.getText().toString();
-                Log.v(TAG, sum.getText().toString());
+                totalDollars = dollar.getText().toString();
+                Log.v(TAG, dollar.getText().toString());
             }
         });
 
         //On enter key on the android keyboard, get what is currently in the edit text view
-        sum.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        dollar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 Log.v(TAG, "On Editor Action");
-                totalPrice = sum.getText().toString();
-                Log.v(TAG, sum.getText().toString());
+                totalDollars = dollar.getText().toString();
+                Log.v(TAG, dollar.getText().toString());
                 return false;
             }
         });
 
+
+        //----------------------------------------------------------------------------------------------
+        // Cents EditText Listeners
+        //----------------------------------------------------------------------------------------------
+
+        //Key listener for number inputs
+        cents.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                Log.v(TAG, cents.getText().toString());
+
+                //Enter key pressed
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    Log.v("TAG", "ENTER KEY PRESSED");
+                }
+                totalCents = cents.getText().toString();
+                Log.v(TAG, cents.getText().toString());
+
+                return false;
+            }
+        });
+
+        //On focus change, get what is currently in the edit text view
+        cents.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                Log.v(TAG, "On Focus Changed");
+                totalCents = cents.getText().toString();
+                Log.v(TAG, cents.getText().toString());
+            }
+        });
+
+        //On enter key on the android keyboard, get what is currently in the edit text view
+        cents.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                Log.v(TAG, "On Editor Action");
+                totalCents = cents.getText().toString();
+                Log.v(TAG, cents.getText().toString());
+
+                return false;
+
+
+            }
+        });
+
         initializeFriendsInEventView();
+
+        //If the user is splitting equally, adding new people should automatically fill values.
+        if (splitEqually.isChecked()) {
+            name.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                    int portion = totalDollars / totalFriends;
+                    amount.setText(totalDollars / totalFriends);
+                    percentage.setText(portion / totalDollars);
+                    return false;
+                }
+            });
+        }
+
+
+        //----------------------------------------------------------------------------------------------
+        // Once total price fields have been filled, enable the button to add a person to the event
+        //----------------------------------------------------------------------------------------------
 
         addPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e(TAG, "onClick: clicked add person");
                 totalFriends++;
-                if (splitEqually.isChecked()) {
-                    Log.v("TOTAL PRICE", totalPrice);
-                    String[] split = totalPrice.split("\\.");
-                    Log.v("SPLIT AT 0", split[0]);
-                    String totalCents = split[0] + split[1];
-                    Log.v("TOTAL CENTS", totalCents);
-                    int costInCents = Integer.parseInt(totalCents);
-                    Log.v("Cost in cents", "" + costInCents);
 
-                    splitEqually(totalFriends, costInCents);
-                }
                 //IMPLEMENT LATER USING PAYMENT OBJECT
 //                adapter.add(amount.getText().toString());
 //                adapter.add(percentage.getText().toString());
 
                 String newName = name.getText().toString();
-                String newAmount = amount.getText().toString();
+                String newAmount = amount.getText().toString().split("\\$")[1];
                 String newPercentage = amount.getText().toString();
 
                 Log.v(TAG, newAmount);
 
 
                 User user = new User(newName);
-                Payment payment = new Payment(user, Integer.parseInt(newAmount) * 100);
+                Payment payment = new Payment(user, Integer.valueOf(newAmount));
 
                 adapter.addToFriendsInEvent(payment);
 
@@ -190,7 +261,7 @@ public class SplitBySumActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         friendsInEventView.setLayoutManager(layoutManager);
 
-        adapter = new FriendsInEventAdapter(R.layout.item_friend_for_event, R.id.name, R.id.percentage, R.id.amount);
+        adapter = new FriendsInEventAdapter(R.layout.item_friend_for_event, R.id.name, R.id.amount, R.id.percentage);
         friendsInEventView.setAdapter(adapter);
     }
 
@@ -198,17 +269,6 @@ public class SplitBySumActivity extends AppCompatActivity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
         return false;
-    }
-
-    private void splitEqually(int numOfFriends, int sum) {
-        Log.v("CALLING SPLIT EQUALLY", "CALLING SPLIT EQUALLY");
-
-        amount.setText(sum / numOfFriends);
-        percentage.setText(100 / numOfFriends);
-
-
-        Log.v("AMOUNT", amount.getText().toString());
-        Log.v("PERCENTAGE", percentage.getText().toString());
     }
 
 }
