@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "1029005370153",
-    "firebase_url": "https://commoncents-df10a.firebaseio.com",
-    "project_id": "commoncents-df10a",
-    "storage_bucket": "commoncents-df10a.appspot.com"
+    "project_number": "905081543586",
+    "firebase_url": "https://commoncents-e3b13.firebaseio.com",
+    "project_id": "commoncents-e3b13",
+    "storage_bucket": "commoncents-e3b13.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1029005370153:android:40af63ba0af417e9",
+        "mobilesdk_app_id": "1:905081543586:android:40af63ba0af417e9",
         "android_client_info": {
           "package_name": "edu.washington.ischool.commoncents.commoncents"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1029005370153-qdmco4a2bfo0l3jakvjl834t0p1ss2ft.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "edu.washington.ischool.commoncents.commoncents",
-            "certificate_hash": "2eb933ec6acd712eb75391f46ddff2d0484cff81"
-          }
-        },
-        {
-          "client_id": "1029005370153-r554aik2tt8b9t72amur66tup0bnv7p5.apps.googleusercontent.com",
+          "client_id": "905081543586-26o378qqgs9af6o5p1rj0abknedpq1ao.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBoycfkELcAAVNnAQJLrGtHnkijtaM2UIU"
+          "current_key": "AIzaSyCQhTtYm6T2U1AvshRjKtXoh9hkj1zLDzg"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1029005370153-r554aik2tt8b9t72amur66tup0bnv7p5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
