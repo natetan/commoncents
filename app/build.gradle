@@ -27,6 +27,7 @@ dependencies {
 
     // Firebase
     compile 'com.google.firebase:firebase-auth:10.2.0'
+    compile 'com.google.firebase:firebase-database:10.2.0'
 
     // Material UI components
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
