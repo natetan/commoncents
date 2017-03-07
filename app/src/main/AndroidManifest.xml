@@ -15,6 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activies.SplitCostsActivity" />
         <activity android:name=".Activies.SplitByItemActivity" />
         <activity android:name=".Activies.SplitBySumActivity" />
         <activity android:name=".Activies.AddFriendActivity" />
@@ -22,11 +23,9 @@
         <activity android:name=".Activies.FriendProfileActivity" />
         <activity android:name=".Activies.LoginActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity
-            android:name=".Activies.SignUpActivity"
-            android:label="@string/title_activity_sign_up"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Activies.SplitCostsActivity"></activity>
+        <activity android:name=".Activies.SignUpActivity"/>
+
+
     </application>
 
 </manifest>

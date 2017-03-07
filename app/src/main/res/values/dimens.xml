@@ -1,13 +1,14 @@
 <resources>
-  <!-- Default screen margins, per the Android Design guidelines. -->
-  <dimen name="activity_horizontal_margin">16dp</dimen>
-  <dimen name="activity_vertical_margin">16dp</dimen>
-  <dimen name="fab_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
-  <!-- Standard app-wide dimensions -->
-  <dimen name="list_item_min_height">64dp</dimen>
-  <dimen name="profile_picture_size_in_item">56dp</dimen>
-  <dimen name="list_item_margin">8dp</dimen>
-  <dimen name="list_item_padding">8dp</dimen>
-  <dimen name="list_item_subitem_margin">8dp</dimen>
+    <!-- Standard app-wide dimensions -->
+    <dimen name="list_item_min_height">64dp</dimen>
+    <dimen name="profile_picture_size_in_item">56dp</dimen>
+    <dimen name="list_item_margin_half">4dp</dimen>
+    <dimen name="list_item_padding">8dp</dimen>
+    <dimen name="list_item_subitem_margin">8dp</dimen>
+    <dimen name="fab_buffer">64dp</dimen>
 </resources>
