@@ -10,58 +10,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsListAdapter;
-import edu.washington.ischool.commoncents.commoncents.Models.Friend;
+import edu.washington.ischool.commoncents.commoncents.Adapters.EventsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FriendsListFragment extends Fragment implements FriendsListAdapter.Listener {
+public class EventsListFragment extends Fragment implements EventsListAdapter.Listener {
 
-    private FriendsListAdapter adapter;
+    private EventsListAdapter adapter;
 
-    //----------------------------------------------------------------------------------------------
-    // Fragment Implementation
-    //----------------------------------------------------------------------------------------------
 
-    public FriendsListFragment() {
+    public EventsListFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mainView = inflater.inflate(R.layout.fragment_friends_list, container, false);
-
-        initializeFriendsList(mainView);
-
+        View mainView = inflater.inflate(R.layout.fragment_events_list, container, false);
+        initializeEventsList(mainView);
         return mainView;
     }
 
-    private void initializeFriendsList(View mainView) {
+    private void initializeEventsList(View mainView) {
         // Get the recycler
-        RecyclerView friendsList = (RecyclerView) mainView.findViewById(R.id.friends_list);
+        RecyclerView eventsList = (RecyclerView) mainView.findViewById(R.id.events_list);
 
         // Set some basic properties
-        friendsList.setHasFixedSize(true);
+        eventsList.setHasFixedSize(true);
 
         // Use a simple linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        friendsList.setLayoutManager(layoutManager);
+        eventsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new FriendsListAdapter(getContext(), this);
-        friendsList.setAdapter(adapter);
+        adapter = new EventsListAdapter(this);
+        eventsList.setAdapter(adapter);
 
-        friendsListUpdated();
+        eventsListUpdated();
     }
 
-    private void friendsListUpdated() {
+    private void eventsListUpdated() {
         // Notify adapter that data has changed
         if (adapter != null) {
             adapter.notifyDataSetChanged();
@@ -69,12 +62,14 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
     }
 
     //----------------------------------------------------------------------------------------------
-    // FriendsListAdapter.Listener Implementation
+    // EventsListAdapter.Listener Implementation
     //----------------------------------------------------------------------------------------------
 
     @Override
-    public void onFriendClicked(View view, Friend friend) {
+    public void onEventClicked(View view, Event event) {
         // TODO: go to detail activity
-        Toast.makeText(getContext(), "TODO: show details for " + friend.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "TODO: show details for " + event.getName(), Toast.LENGTH_SHORT).show();
     }
+
+
 }
