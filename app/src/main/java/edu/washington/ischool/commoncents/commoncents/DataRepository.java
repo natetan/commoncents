@@ -21,6 +21,8 @@ public class DataRepository {
 
     private static DataRepository instance;
 
+
+
     public static DataRepository getInstance() {
         if (instance == null) {
             instance = new DataRepository();
@@ -39,6 +41,8 @@ public class DataRepository {
 
     List<Event> events = new ArrayList<>();
 
+    Event currentEvent;
+
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
     //----------------------------------------------------------------------------------------------
@@ -49,6 +53,16 @@ public class DataRepository {
     public List<Event> getEvents() {
         return events;
     }
+    public Event getCurrentEvent() { return currentEvent; }
+
+
+    //----------------------------------------------------------------------------------------------
+    // Setters - for the client to set data in repo
+    //----------------------------------------------------------------------------------------------
+    public void setCurrentEvent(Event e) {
+        currentEvent = e;
+    }
+
 
     //----------------------------------------------------------------------------------------------
     // Loaders - for the repo to get data from external sources
