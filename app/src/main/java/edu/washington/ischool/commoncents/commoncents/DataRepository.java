@@ -51,6 +51,7 @@ public class DataRepository {
         friends.add(new Friend("Hai"));
         friends.add(new Friend("Yulong"));
         friends.add(new Friend("Irene"));
+        friends.add(new Friend("Keegan"));
 
         // TODO emit broadcast Repo Updated - New Friends Data
     }
