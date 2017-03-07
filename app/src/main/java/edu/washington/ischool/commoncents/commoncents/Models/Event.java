@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,10 @@ public class Event {
     private String description;
     private List<Friend> friendsInvolved;
     private List<LineItem> lineItems;
+
+    public Event(String eventName, Date eventDate) {
+        this(eventName, eventDate, "", new ArrayList<Friend>(), new ArrayList<LineItem>());
+    }
 
     public Event(String eventName, Date eventDate, String eventDescription, List<Friend> friendsInvolved, List<LineItem> lineItems) {
         this.name = eventName;
