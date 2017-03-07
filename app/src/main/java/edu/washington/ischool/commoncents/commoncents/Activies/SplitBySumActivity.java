@@ -104,7 +104,7 @@ public class SplitBySumActivity extends AppCompatActivity {
                 if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
                     Log.v("TOTAL DOLLARS", "" + Integer.valueOf(totalDollars));
                     portion = Integer.valueOf(totalDollars) / totalFriends;
-                    percent = portion / Integer.valueOf(totalDollars) * 100;
+                    percent = (double) portion / Integer.valueOf(totalDollars) * 100;
                 }
                 amount.setText("$" + portion);
                 percentage.setText("" + percent + "%");
@@ -182,17 +182,17 @@ public class SplitBySumActivity extends AppCompatActivity {
         initializeFriendsInEventView();
 
         //If the user is splitting equally, adding new people should automatically fill values.
-        if (splitEqually.isChecked()) {
-            name.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    int portion = totalDollars / totalFriends;
-                    amount.setText(totalDollars / totalFriends);
-                    percentage.setText(portion / totalDollars);
-                    return false;
-                }
-            });
-        }
+//        if (splitEqually.isChecked()) {
+//            name.setOnKeyListener(new View.OnKeyListener() {
+//                @Override
+//                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+//                    int portion = Integer.valueOf(totalDollars) / totalFriends;
+//                    amount.setText("" + portion/ totalFriends);
+//                    percentage.setText("" + portion / Integer.valueOf(totalDollars));
+//                    return false;
+//                }
+//            });
+//        }
 
 
         //----------------------------------------------------------------------------------------------
@@ -204,13 +204,20 @@ public class SplitBySumActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.e(TAG, "onClick: clicked add person");
                 totalFriends++;
+                Log.v("TOTAL FRIENDS?", "" + totalFriends);
 
+                Log.v("TOTAL DOLLARS?", totalDollars);
+                int portion = Integer.valueOf(totalDollars) / totalFriends;
+                double percent = (double) portion / Integer.valueOf(totalDollars) * 100;
+                Log.v("PERCENTS?", "" + percent);
+
+                Log.v("PORTIONS?", "" + portion);
                 //IMPLEMENT LATER USING PAYMENT OBJECT
 //                adapter.add(amount.getText().toString());
 //                adapter.add(percentage.getText().toString());
 
                 String newName = name.getText().toString();
-                String newAmount = amount.getText().toString().split("\\$")[1];
+                String newAmount = amount.getText().toString().substring(1);
                 String newPercentage = amount.getText().toString();
 
                 Log.v(TAG, newAmount);
@@ -225,8 +232,8 @@ public class SplitBySumActivity extends AppCompatActivity {
 //                adapter.addToFriendsInEvent();
 //                adapter.addToFriendsInEvent();
                 name.setText("");
-                amount.setText("");
-                percentage.setText("");
+                amount.setText("" + portion);
+                percentage.setText("" + percent);
             }
         });
 
