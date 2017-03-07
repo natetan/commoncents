@@ -174,8 +174,6 @@ public class SplitBySumActivity extends AppCompatActivity {
                 Log.v(TAG, cents.getText().toString());
 
                 return false;
-
-
             }
         });
 
@@ -226,13 +224,13 @@ public class SplitBySumActivity extends AppCompatActivity {
                 User user = new User(newName);
                 Payment payment = new Payment(user, Integer.valueOf(newAmount));
 
-                adapter.addToFriendsInEvent(payment);
+                adapter.addToFriendsInEvent(payment, Integer.valueOf(totalDollars));
 
 //                adapter.addToFriendsInEvent();
 //                adapter.addToFriendsInEvent();
                 name.setText("");
-                amount.setText("" + portion);
-                percentage.setText("" + percent);
+                amount.setText("$" + portion);
+                percentage.setText(percent + "%");
             }
         });
 

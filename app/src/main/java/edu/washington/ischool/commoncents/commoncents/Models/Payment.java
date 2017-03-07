@@ -26,4 +26,9 @@ public class Payment {
     public int getAmount() {
         return amount;
     }
+
+    //Set user amount
+    public void setAmount(int newAmount) {
+        this.amount = newAmount;
+    }
 }

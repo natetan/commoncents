@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import edu.washington.ischool.commoncents.commoncents.Models.Payment;
@@ -59,9 +60,9 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
     @Override
     public void onBindViewHolder(FriendsInEventAdapter.ViewHolder holder, final int position) {
         holder.name.setText(friendsInEvent.get(position).getUser().getName());
-        holder.amount.setText("" + friendsInEvent.get(position).getAmount());
+        holder.amount.setText("" + new DecimalFormat("#.##").format(friendsInEvent.get(position).getAmount()));
         //Divide by total friends in event.
-        holder.percentage.setText("" + friendsInEvent.get(position).getAmount());
+        holder.percentage.setText("" + new DecimalFormat("#.##").format(100.0 / friendsInEvent.size()));
 
         //CALCULATE PERCENTAGE HERE
         Log.v("ON BIND", friendsInEvent.get(position).getUser().getName());
@@ -76,9 +77,24 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
 
     }
 
-    public void addToFriendsInEvent(Payment payment) {
+    public void addToFriendsInEvent(Payment payment, int total) {
+        boolean splitEqually = true;
+
         this.friendsInEvent.add(payment);
+
+        if (splitEqually) {
+            for (Payment friendsPayment: friendsInEvent ) {
+                friendsPayment.setAmount(total / friendsInEvent.size());
+            }
+            // get # of people in friendsInEvent
+            // calculate percentage
+            // for each friend in friendsInEvent
+            //   set percetage
+            //   set dollar amount
+        }
+
         notifyDataSetChanged();
+
         Log.v("TAG", friendsInEvent.toString());
     }
 }
