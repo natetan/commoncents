@@ -10,5 +10,4 @@
     <dimen name="list_item_margin_half">4dp</dimen>
     <dimen name="list_item_padding">8dp</dimen>
     <dimen name="list_item_subitem_margin">8dp</dimen>
-    <dimen name="fab_buffer">64dp</dimen>
 </resources>
