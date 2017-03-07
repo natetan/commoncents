@@ -26,6 +26,7 @@ public class DataRepository {
     public static DataRepository getInstance() {
         if (instance == null) {
             instance = new DataRepository();
+            instance.loadUsers();
             instance.loadFriends();
             instance.loadEvents();
         }
@@ -37,7 +38,10 @@ public class DataRepository {
     // Data - fields holding all data
     //----------------------------------------------------------------------------------------------
 
+    User currentUser = new User("me");
+
     List<Friend> friends = new ArrayList<>();
+    List<User> users = new ArrayList<>();
 
     List<Event> events = new ArrayList<>();
 
@@ -64,6 +68,10 @@ public class DataRepository {
     }
 
 
+    public List<User> getUsers() {
+        return users;
+    }
+
     //----------------------------------------------------------------------------------------------
     // Loaders - for the repo to get data from external sources
     //----------------------------------------------------------------------------------------------
@@ -71,13 +79,23 @@ public class DataRepository {
     private void loadFriends() {
         friends = new ArrayList<>();
 
-        friends.add(new Friend("Hamzah"));
-        friends.add(new Friend("Hai"));
-        friends.add(new Friend("Yulong"));
-        friends.add(new Friend("Irene"));
-        friends.add(new Friend("Keegan"));
+        for (User user : users) {
+            friends.add(new Friend(currentUser, user));
+        }
 
-        // TODO emit broadcast Repo Updated - New Friends Data
+        // TODO emit broadcast Repo Updated - New Data - Friends
+    }
+
+    private void loadUsers() {
+        users = new ArrayList<>();
+
+        users.add(new User("Hamzah"));
+        users.add(new User("Hai"));
+        users.add(new User("Yulong"));
+        users.add(new User("Irene"));
+        users.add(new User("Keegan"));
+
+        // TODO emit broadcast Repo Updated - New Data - Users
     }
 
     private void loadEvents() {
