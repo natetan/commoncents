@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/item_view"
+    android:minHeight="25dp"
+    card_view:cardCornerRadius="@dimen/cardview_default_elevation">>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:maxHeight="10dp"
+            android:drawableBottom="@android:drawable/ic_delete" />
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

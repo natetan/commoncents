@@ -25,8 +25,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Friends"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_friend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/add_friend"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="10dp"
+                    android:layout_weight="0"
+                    android:drawableBottom="@android:drawable/ic_input_add" />
+
+            </LinearLayout>
+
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/friends_in_event_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"/>
@@ -46,13 +68,35 @@
                 android:layout_height="wrap_content"
                 android:text="Items"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/new_lineitem_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/add_lineitem"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="10dp"
+                    android:layout_weight="0"
+                    android:drawableBottom="@android:drawable/ic_input_add" />
+
+            </LinearLayout>
+
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_margin="10dp"/>
+                android:padding="10dp" />
 
         </LinearLayout>
+
     </LinearLayout>
 
     <Button
