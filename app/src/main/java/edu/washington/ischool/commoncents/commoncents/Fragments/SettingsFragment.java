@@ -30,10 +30,7 @@ import edu.washington.ischool.commoncents.commoncents.R;
 public class SettingsFragment extends Fragment {
     private Button signupLoginButton, inviteFriendsButton, changeCurrencyButton;
 
-    private Context context;
-    private RelativeLayout layout;
     private EditText emailEditText;
-    private AlertDialog.Builder builder;
     private String email;
 
     // Firebase
@@ -63,16 +60,6 @@ public class SettingsFragment extends Fragment {
         inviteFriendsButton = (Button) view.findViewById(R.id.inviteFriendsButton);
         changeCurrencyButton = (Button) view.findViewById(R.id.changeCurrencyButton);
 
-        context = getActivity();
-        layout = new RelativeLayout(context);
-
-        emailEditText = new EditText(context);
-        emailEditText.setHint("email");
-        emailEditText.setHintTextColor(Color.GRAY);
-        emailEditText.setTextColor(Color.BLACK);
-        emailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-
-        builder = new AlertDialog.Builder(context);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -106,22 +93,7 @@ public class SettingsFragment extends Fragment {
         inviteFriendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (emailEditText.getParent() != null) {
-                    ((ViewGroup) emailEditText.getParent()).removeView(emailEditText);
-                }
-                layout.addView(emailEditText);
-                builder.setView(layout); // <== ISSUE IS WITH THIS LINE WHEN CALLED TWICE?
-                builder.setTitle("Invite Friend");
-                builder.setPositiveButton("Invite Friend", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        email = emailEditText.getText().toString();
-                    }
-
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).setIcon(android.R.drawable.ic_dialog_email).show();
+                promptForEmail();
             }
 
         });
@@ -135,6 +107,36 @@ public class SettingsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void promptForEmail() {
+        // get prompts xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+        View promptView = layoutInflater.inflate(R.layout.email_input_dialog, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setView(promptView);
+
+        emailEditText = (EditText) promptView.findViewById(R.id.emailEditText);
+        emailEditText.setHintTextColor(Color.GRAY);
+        emailEditText.setTextColor(Color.BLACK);
+        emailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        email = emailEditText.getText().toString();
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     @Override
