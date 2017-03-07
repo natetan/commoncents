@@ -31,7 +31,7 @@ dependencies {
     // Material UI components
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     // Generates ImageViews based on Strings
-    
+
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support:support-v4:25.2.0'
