@@ -64,12 +64,10 @@ public class AddFriendActivity extends AppCompatActivity {
                     Toast.makeText(AddFriendActivity.this, "Friend does not exist, adding the new friend...", Toast.LENGTH_SHORT).show();
                     //If the email field is filled out, then add the email to the User object
                     if (!emailString.equals("")) {
-                        Toast.makeText(AddFriendActivity.this, "The email field is filled out with something...", Toast.LENGTH_SHORT).show();
                         user.setEmail(emailString);
                     }
                     //If the phone number field is filled out, then add the phone number to the User object
                     if (!phoneString.equals("")) {
-                        Toast.makeText(AddFriendActivity.this, "The phone field is filled out with something...", Toast.LENGTH_SHORT).show();
                         user.setPhoneNumber(phoneString);
                     }
                     DataRepository.getInstance().addUser(user);
@@ -77,27 +75,6 @@ public class AddFriendActivity extends AppCompatActivity {
                     Toast.makeText(AddFriendActivity.this, "Friend already exists", Toast.LENGTH_SHORT).show();
                 }
 
-//                for (User user: users) {
-//                    Log.v("USER", user.getName());
-//                    count++;
-//                    Log.v("COUNT", "" + count);
-//                    if (user.getName().equals(friendNameString)) {
-//                        Toast.makeText(AddFriendActivity.this, "That friend already exisits", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Log.v("ELSE", "ELSE");
-//                        DataRepository.getInstance().addUser(new User(friendNameString));
-//                        //If the email field is filled out, then add the email to the User object
-//                        if (!emailString.equals("")) {
-//                            Toast.makeText(AddFriendActivity.this, "The email field is filled out with something...", Toast.LENGTH_SHORT).show();
-//                            user.setEmail(emailString);
-//                        }
-//                        //If the phone number field is filled out, then add the phone number to the User object
-//                        if (!phoneString.equals("")) {
-//                            Toast.makeText(AddFriendActivity.this, "The phone field is filled out with something...", Toast.LENGTH_SHORT).show();
-//                            user.setPhoneNumber(phoneString);
-//                        }
-//                    }
-//                }
             }
         });
     }

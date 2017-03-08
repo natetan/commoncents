@@ -23,6 +23,8 @@ import java.util.List;
 import javax.security.auth.login.LoginException;
 
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
+import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.Payment;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -339,6 +341,8 @@ public class SplitBySumActivity extends AppCompatActivity {
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                AppState.getCurrentState().getSelectedEvent();
 
             }
         });

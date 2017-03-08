@@ -12,14 +12,14 @@ public class Event {
     private String name;
     private Date date;
     private String description;
-    private List<Friend> friendsInvolved;
+    private List<User> friendsInvolved;
     private List<LineItem> lineItems;
 
     public Event(String eventName, Date eventDate) {
-        this(eventName, eventDate, "", new ArrayList<Friend>(), new ArrayList<LineItem>());
+        this(eventName, eventDate, "", new ArrayList<User>(), new ArrayList<LineItem>());
     }
 
-    public Event(String eventName, Date eventDate, String eventDescription, List<Friend> friendsInvolved, List<LineItem> lineItems) {
+    public Event(String eventName, Date eventDate, String eventDescription, List<User> friendsInvolved, List<LineItem> lineItems) {
         this.name = eventName;
         this.date = eventDate;
         this.description = eventDescription;
@@ -48,7 +48,7 @@ public class Event {
     }
 
     //List of friends involved with the event
-    public List<Friend> getFriendsInvolved() {
+    public List<User> getFriendsInvolved() {
         return friendsInvolved;
     }
 
@@ -61,5 +61,15 @@ public class Event {
     public int getAmountOwed(User user) {
         // TODO implement
         return (int)((Math.random() - 0.5) * 200) * 100;
+    }
+
+    //Sets the friends involved in the event
+    public void setFriendsInvolved(List<User> friendsInvolved) {
+        this.friendsInvolved = friendsInvolved;
+    }
+
+    //Sets the lines items in the events
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
     }
 }

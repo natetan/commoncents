@@ -27,6 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:hint="0"
+            android:textAlignment="textEnd"
             android:ems="10"
             android:inputType="number" />
 
