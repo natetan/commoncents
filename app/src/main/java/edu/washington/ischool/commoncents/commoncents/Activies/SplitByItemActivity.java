@@ -1,5 +1,7 @@
 package edu.washington.ischool.commoncents.commoncents.Activies;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -90,25 +92,37 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
                 //take EditText values and create ListItem object
                 String nLineItem = newLineItem.getText().toString();
                 String nDollar = newDollar.getText().toString();
-                int nDollarInt = Integer.parseInt(nDollar);
-                String nCents = newCents.getText().toString();
-                int nCentsInt;
-                if (!nCents.equalsIgnoreCase("")) {
-                    nCentsInt = Integer.parseInt(nCents);
+                if (nLineItem.equalsIgnoreCase("") || nDollar.equalsIgnoreCase("")) {
+                    new AlertDialog.Builder(SplitByItemActivity.this)
+                            .setTitle("Cannot Add Line Item")
+                            .setMessage("Please input a line item name and/or price.")
+                            .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .show();
                 } else {
-                    //defaults to 0 if no input;
-                    nCentsInt = 0;
+                    int nDollarInt = Integer.parseInt(nDollar);
+                    String nCents = newCents.getText().toString();
+                    int nCentsInt;
+                    if (!nCents.equalsIgnoreCase("")) {
+                        nCentsInt = Integer.parseInt(nCents);
+                    } else {
+                        //defaults to 0 if no input;
+                        nCentsInt = 0;
+                    }
+
+                    //price to be stored in LineItem object
+                    int priceInCents = (nDollarInt * 100) + nCentsInt;
+
+                    LineItem thisLineItem = new LineItem(nLineItem, priceInCents);
+                    adapterRight.addToLineItemList(thisLineItem);
+
+                    newLineItem.setText("");
+                    newDollar.setText("");
+                    newCents.setText("");
                 }
-
-                //price to be stored in LineItem object
-                int priceInCents = (nDollarInt * 100) + nCentsInt;
-
-                LineItem thisLineItem = new LineItem(nLineItem, priceInCents);
-                adapterRight.addToLineItemList(thisLineItem);
-
-                newLineItem.setText("");
-                newDollar.setText("");
-                newCents.setText("");
             }
         });
 
