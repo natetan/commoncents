@@ -21,24 +21,30 @@
         <!-- Event Activities -->
         <activity
             android:name=".activites.EventSummaryActivity"
-            android:theme="@style/EventsTheme"/>
+            android:theme="@style/EventsTheme"
+            android:label="Event Summary"/>
         <activity
-            android:name=".activites.SplitCostsActivity"
-            android:theme="@style/EventsTheme"/>
+            android:name=".activites.AddEventActivity"
+            android:theme="@style/EventsTheme"
+            android:label="Create An Event"/>
         <activity
             android:name=".activites.SplitByItemActivity"
-            android:theme="@style/EventsTheme"/>
+            android:theme="@style/EventsTheme"
+            android:label="Split By Item"/>
         <activity
             android:name=".activites.SplitBySumActivity"
-            android:theme="@style/EventsTheme"/>
+            android:theme="@style/EventsTheme"
+            android:label="Split By Sum"/>
 
         <!-- Friend Activities -->
         <activity
             android:name=".activites.AddFriendActivity"
-            android:theme="@style/FriendsTheme"/>
+            android:theme="@style/FriendsTheme"
+            android:label="Add A New Friend"/>
         <activity
             android:name=".activites.FriendProfileActivity"
-            android:theme="@style/FriendsTheme"/>
+            android:theme="@style/FriendsTheme.NoActionBar"
+            android:label=""/>
 
         <!-- Setting Activities -->
         <activity

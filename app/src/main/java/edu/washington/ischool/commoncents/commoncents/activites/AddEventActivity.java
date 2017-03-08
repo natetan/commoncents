@@ -21,7 +21,7 @@ import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
 
-public class SplitCostsActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
 
     private final String TAG = "SPLIT_COSTS_FRAGMENT";
     private Date selectedDate;
@@ -50,7 +50,7 @@ public class SplitCostsActivity extends AppCompatActivity {
             final int month = c.get(Calendar.MONTH);
             final int day = c.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(SplitCostsActivity.this, new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AddEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int y, int m, int d) {
                 txtEventDate.setText((new DateFormatSymbols().getMonths()[m]) + " " + d + ", " + y);
@@ -70,7 +70,7 @@ public class SplitCostsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (submitEvent(txtEventName)) {
-                    Intent intent = new Intent(SplitCostsActivity.this, SplitBySumActivity.class);
+                    Intent intent = new Intent(AddEventActivity.this, SplitBySumActivity.class);
                     startActivity(intent);
                 } else {
                     //Alert dialog, STOP user from proceeding
@@ -84,7 +84,7 @@ public class SplitCostsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (submitEvent(txtEventName)) {
-                    Intent intent = new Intent(SplitCostsActivity.this, SplitByItemActivity.class);
+                    Intent intent = new Intent(AddEventActivity.this, SplitByItemActivity.class);
                     startActivity(intent);
                 } else {
                     //Alert dialog, STOP user from proceeding

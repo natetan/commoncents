@@ -37,7 +37,7 @@ public class EventSummaryActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EventSummaryActivity.this, SplitCostsActivity.class);
+                Intent intent = new Intent(EventSummaryActivity.this, AddEventActivity.class);
                 startActivity(intent);
             }
         });
