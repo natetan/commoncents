@@ -10,7 +10,7 @@ import java.util.List;
  * Created by iguest on 3/5/17.
  */
 
-public class Event implements Indexable {
+public class Event extends Indexable {
 
     private String name;
     private Date date;
@@ -32,15 +32,6 @@ public class Event implements Indexable {
         this.description = eventDescription;
         this.usersInvolved = usersInvolved;
         this.lineItems = lineItems;
-    }
-
-    //----------------------------------------------------------------------------------------------
-    // Indexable Implementation
-    //----------------------------------------------------------------------------------------------
-
-    @Exclude
-    public String getKey() {
-        return name + " - " + date.toString();
     }
 
     //----------------------------------------------------------------------------------------------

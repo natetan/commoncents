@@ -12,6 +12,10 @@ public class Friend {
     private User user;
     private List<Event> sharedEvents;
 
+    public Friend() {
+        // Default constructor required for Firebase calls to DataSnapshot.getValue(Friend.class)
+    }
+
     public Friend(User currentUser, User friend) {
 
         // Get shared events by calculating the intersection of both user's events

@@ -11,7 +11,7 @@ import java.util.List;
  * Created by iguest on 3/5/17.
  */
 
-public class User implements Indexable {
+public class User extends Indexable {
 
     @NonNull private String name;
     @NonNull private List<Event> eventList;
@@ -31,15 +31,6 @@ public class User implements Indexable {
         this.eventList = eventList;
         this.email = email;
         this.phoneNumber = phoneNumber;
-    }
-
-    //----------------------------------------------------------------------------------------------
-    // Indexable Implementation
-    //----------------------------------------------------------------------------------------------
-
-    @Exclude
-    public String getKey() {
-        return name;
     }
 
     //----------------------------------------------------------------------------------------------

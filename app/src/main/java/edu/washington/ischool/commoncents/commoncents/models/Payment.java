@@ -8,6 +8,10 @@ public class Payment {
     private User user;
     private int amount;
 
+    public Payment() {
+        // Default constructor required for Firebase calls to DataSnapshot.getValue(Payment.class)
+    }
+
     public Payment(User user, int amount) {
         this.user = user;
         this.amount = amount;

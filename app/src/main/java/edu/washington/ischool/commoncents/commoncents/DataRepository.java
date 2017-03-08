@@ -58,16 +58,14 @@ public class DataRepository {
     private DatabaseReference databaseReference;
 
     private Map<String, User> users = new HashMap<>();
-    private  Map<String, Event> events = new HashMap<>();
+    private Map<String, Event> events = new HashMap<>();
 
-    @Deprecated
     private List<Friend> friends = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
     //----------------------------------------------------------------------------------------------
 
-    @Deprecated
     public List<Friend> getFriends() {
         return friends;
     }
@@ -89,13 +87,13 @@ public class DataRepository {
     //----------------------------------------------------------------------------------------------
 
     public void addEvent(Event newEvent) {
-        events.put(newEvent.getKey(), newEvent);
-        databaseReference.child("events").child(newEvent.getKey()).setValue(newEvent);
+        events.put(newEvent.getIndexKey(), newEvent);
+        databaseReference.child("events").child(newEvent.getIndexKey()).setValue(newEvent);
     }
 
     public void addUser(User newUser) {
-        users.put(newUser.getKey(), newUser);
-        databaseReference.child("users").child(newUser.getKey()).setValue(newUser);
+        users.put(newUser.getIndexKey(), newUser);
+        databaseReference.child("users").child(newUser.getIndexKey()).setValue(newUser);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -123,7 +121,6 @@ public class DataRepository {
     /**
      * Note: must be called after loadUsers!
      */
-    @Deprecated
     private void loadFriends() {
         friends = new ArrayList<>();
 
@@ -193,26 +190,26 @@ public class DataRepository {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 T newData = dataSnapshot.getValue(DataType);
                 Log.i("Firebase", "onChildAdded: (" + DataType.getSimpleName() + ")");
-                Log.i("Firebase", "   key: " + newData.getKey());
+                Log.i("Firebase", "   key: " + newData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
-                dataStore.put(newData.getKey(), newData);
+                dataStore.put(newData.getIndexKey(), newData);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 T changedData = dataSnapshot.getValue(DataType);
                 Log.i("Firebase", "onChildChanged: (" + DataType.getSimpleName() + ")");
-                Log.i("Firebase", "   key: " + changedData.getKey());
+                Log.i("Firebase", "   key: " + changedData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
-                dataStore.remove(changedData.getKey());
-                dataStore.put(changedData.getKey(), changedData);
+                dataStore.remove(changedData.getIndexKey());
+                dataStore.put(changedData.getIndexKey(), changedData);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 T removedData = dataSnapshot.getValue(DataType);
                 Log.i("Firebase", "onChildRemoved: (" + DataType.getSimpleName() + ")");
-                Log.i("Firebase", "   key: " + removedData.getKey());
+                Log.i("Firebase", "   key: " + removedData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
                 dataStore.remove(removedData);
             }

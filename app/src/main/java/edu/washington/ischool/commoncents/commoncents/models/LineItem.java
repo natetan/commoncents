@@ -13,6 +13,10 @@ public class LineItem {
     private int price;
     private List<Payment> payments; //associate user at the Payment level
 
+    public LineItem() {
+        // Default constructor required for Firebase calls to DataSnapshot.getValue(LineItem.class)
+    }
+
     //constructor for split by items
     //user will be added as line items are associated
     public LineItem(String lineItemName, int price) {
@@ -40,4 +44,5 @@ public class LineItem {
     public List<Payment> getPayments() {
         return payments;
     }
+
 }
