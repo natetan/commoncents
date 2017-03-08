@@ -1,14 +1,10 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +21,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
     static final String TAG = "EventsListAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_event_list;
+    private static final int ITEM_LAYOUT_ID = R.layout.item_event_for_event_list;
     private static final int NAME_VIEW_ID = R.id.event_name;
     private static final int DESCR_VIEW_ID = R.id.event_descr;
 
