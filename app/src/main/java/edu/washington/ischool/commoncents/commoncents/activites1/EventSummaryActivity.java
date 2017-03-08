@@ -62,6 +62,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 Intent intent = new Intent(EventSummaryActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -84,7 +85,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
 
     @Override
     public void onUserClicked(View view, User user) {
-        // Go to selected friends profile page
+
         AppState.getCurrentState().selectUser(user);
         //SHOW LINE ITEMS, CREATE ACTIVITY FOR LINE ITEMS
         //startActivity(new Intent(getBaseContext(), FriendProfileActivity.class));

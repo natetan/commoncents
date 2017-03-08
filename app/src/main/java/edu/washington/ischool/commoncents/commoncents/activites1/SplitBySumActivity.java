@@ -108,7 +108,7 @@ public class SplitBySumActivity extends AppCompatActivity {
                     percent = (double) portion * 100 / costInCents;
 
                     amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
-                    percentage.setText("" + percent + "%");
+                    percentage.setText("" + new DecimalFormat("#.##").format(percent) + "%");
                 }
                 //The user is splitting unequally
                 else {
@@ -318,7 +318,7 @@ public class SplitBySumActivity extends AppCompatActivity {
                 
                 name.setText("");
                 amount.setText("$" + portion);
-                percentage.setText(percent + "%");
+                percentage.setText(new DecimalFormat("#.##").format(percent) + "%");
             }
         });
 
@@ -343,6 +343,7 @@ public class SplitBySumActivity extends AppCompatActivity {
 
                 AppState.getCurrentState().getSelectedEvent().setLineItems(eventLineItem);
 
+                finish();
                 Intent intent = new Intent(SplitBySumActivity.this, EventSummaryActivity.class);
                 startActivity(intent);
             }
