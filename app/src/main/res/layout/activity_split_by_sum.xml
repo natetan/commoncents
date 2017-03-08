@@ -12,32 +12,51 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/sum_label"
             android:layout_width="11dp"
             android:layout_height="20dp"
-            android:text="$"/>
+            android:text="$"
+            android:textSize="18dp" />
 
         <EditText
-            android:id="@+id/sum_input"
-            android:layout_width="172dp"
+            android:id="@+id/dollar_input"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_weight="1"
             android:ems="10"
-            android:hint="$Sum"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="." />
+
+        <EditText
+            android:id="@+id/cent_input"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="00"
             android:inputType="number"
-            android:text="Sum"/>
+            android:maxLength="2" />
 
         <Switch
             android:id="@+id/split_equally_switch"
             android:layout_width="123dp"
             android:layout_height="40dp"
-            android:text="Split Equally" />
+            android:text="Split Equally"
+            android:textOff="Splitting Unequally"
+            android:textOn="Splitting Equally" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/friends_in_event_list"
+        android:padding="8dp"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
@@ -45,32 +64,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:hint="Name"
             android:id="@+id/edit_name"
-            android:layout_weight="1"/>
-        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:hint="Amount"
+            android:layout_weight="1"
+            android:hint="Name"
+            android:textAlignment="center" />
+
+        <EditText
             android:id="@+id/edit_amount"
-            android:layout_weight="1"/>
-        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:hint="Percentage"
+            android:layout_weight="1"
+            android:hint="Amount"
+            android:inputType="numberDecimal"
+            android:textAlignment="center" />
+
+        <EditText
             android:id="@+id/edit_percentage"
-            android:layout_weight="1"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:hint="Percentage"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <Button
