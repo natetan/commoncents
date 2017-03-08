@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Theme-->
   <color name="colorPrimary">@color/colorMaterialUILightGreen</color>
   <color name="colorPrimaryDark">@color/colorMaterialUIGreen</color>
   <color name="colorAccent">@color/colorMaterialUILime</color>
+  <color name="colorEventsAccent">@color/colorMaterialUIBlue</color>
+  <color name="colorFriendsAccent">@color/colorMaterialUICyan</color>
+  <color name="colorSettingsAccent">@color/colorMaterialUIBlueGrey</color>
 
+  <!-- Components -->
   <color name="colorAmountOwedPositive">@color/colorMaterialUIGreen</color>
   <color name="colorAmountOwedNegative">@color/colorMaterialUIRed</color>
 
@@ -25,6 +30,14 @@
   <color name="colorMaterialUIOrange">#FF9800</color>
   <color name="colorMaterialUIDeepOrange">#FF5722</color>
   <color name="colorMaterialUIBrown">#795548</color>
-  <color name="colorMaterialUIGrey">#9E9E9E</color>
-  <color name="colorMaterialUIBlueGrey">#607D8B</color>
+  <color name="colorMaterialUIWhite">#FFFFFF</color>
+  <color name="colorMaterialUISuperLightGrey">#EEEEEE</color>
+  <color name="colorMaterialUILightGrey">#DDDDDD</color>
+  <color name="colorMaterialUIGrey">#BDBDBD</color>
+  <color name="colorMaterialUIDarkGrey">#757575</color>
+  <color name="colorMaterialUISuperLightBlueGrey">#B0BEC5</color>
+  <color name="colorMaterialUILightBlueGrey">#90A4AE</color>
+  <color name="colorMaterialUIBlueGrey">#78909C</color>
+  <color name="colorMaterialUIDarkBlueGrey">#546E7A</color>
+  <color name="colorMaterialUIBlack">#000000</color>
 </resources>

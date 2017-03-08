@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.washington.ischool.commoncents.commoncents">
+    package="edu.washington.ischool.commoncents.commoncents">
 
     <application
         android:allowBackup="true"
@@ -8,21 +8,40 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Main Activity -->
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activies.SplitByItemActivity"/>
-        <activity android:name=".Activies.SplitBySumActivity"/>
-        <activity android:name=".Activies.AddFriendActivity"/>
-        <activity android:name=".Activies.EventSummaryActivity"/>
-        <activity android:name=".Activies.FriendProfileActivity"/>
-        <activity android:name=".Activies.LoginActivity"/>
-        <activity android:name=".SettingsActivity"/>
-        <activity android:name=".Activies.SignUpActivity"/>
+
+        <!-- Event Activities -->
+        <activity android:name=".Activies.EventSummaryActivity"
+                  android:theme="@style/EventsTheme" />
+        <activity android:name=".Activies.SplitCostsActivity"
+                  android:theme="@style/EventsTheme" />
+        <activity android:name=".Activies.SplitByItemActivity"
+                  android:theme="@style/EventsTheme" />
+        <activity android:name=".Activies.SplitBySumActivity"
+                  android:theme="@style/EventsTheme" />
+
+        <!-- Friend Activities -->
+        <activity android:name=".Activies.AddFriendActivity"
+                  android:theme="@style/FriendsTheme" />
+        <activity android:name=".Activies.FriendProfileActivity"
+                  android:theme="@style/FriendsTheme" />
+
+        <!-- Setting Activities -->
+        <activity android:name=".SettingsActivity"
+                  android:theme="@style/SettingsTheme" />
+        <activity android:name=".Activies.LoginActivity"
+                  android:theme="@style/SettingsTheme" />
+        <activity android:name=".Activies.SignUpActivity"
+                  android:theme="@style/SettingsTheme"/>
+
+
     </application>
 
 </manifest>

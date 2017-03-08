@@ -16,7 +16,7 @@ import edu.washington.ischool.commoncents.commoncents.Models.User;
 public class DataRepository {
 
     //----------------------------------------------------------------------------------------------
-    // Singleton
+    // Singleton Pattern
     //----------------------------------------------------------------------------------------------
 
     private static DataRepository instance;
@@ -33,19 +33,12 @@ public class DataRepository {
     }
 
     //----------------------------------------------------------------------------------------------
-    // State - fields holding the current app state
-    //----------------------------------------------------------------------------------------------
-
-    User currentUser = new User("me");
-    Event currentEvent;
-
-    //----------------------------------------------------------------------------------------------
     // Data - fields holding all data
     //----------------------------------------------------------------------------------------------
 
-    List<Friend> friends = new ArrayList<>();
-    List<User> users = new ArrayList<>();
-    List<Event> events = new ArrayList<>();
+    private List<Friend> friends = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
@@ -63,16 +56,20 @@ public class DataRepository {
         return events;
     }
 
-    public Event getCurrentEvent() {
-        return currentEvent;
+    //----------------------------------------------------------------------------------------------
+    // Mutators - for the client to modify data in repo
+    //----------------------------------------------------------------------------------------------
+
+    public void addEvent(Event newEvent) {
+        events.add(newEvent);
     }
 
-    //----------------------------------------------------------------------------------------------
-    // Setters - for the client to set data in repo
-    //----------------------------------------------------------------------------------------------
+    public void addFriend(Friend newFriend) {
+        friends.add(newFriend);
+    }
 
-    public void setCurrentEvent(Event e) {
-        currentEvent = e;
+    public void addUser(User newUser) {
+        users.add(newUser);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -98,7 +95,7 @@ public class DataRepository {
         friends = new ArrayList<>();
 
         for (User user : users) {
-            friends.add(new Friend(currentUser, user));
+            friends.add(new Friend(AppState.getCurrentState().getCurrentUser(), user));
         }
 
         // TODO emit broadcast Repo Updated - New Data - Friends
@@ -107,14 +104,16 @@ public class DataRepository {
     private void loadEvents() {
         events = new ArrayList<>();
 
+        User currentUser = AppState.getCurrentState().getCurrentUser();
+
         List<LineItem> cupcakeItems = new ArrayList<>();
-        cupcakeItems.add(new LineItem("cupcake 1", 10, currentUser));
-        cupcakeItems.add(new LineItem("cupcake 2", 20, currentUser));
+        cupcakeItems.add(new LineItem("cupcake 1", 10));
+        cupcakeItems.add(new LineItem("cupcake 2", 20));
         events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", friends, cupcakeItems));
 
         List<LineItem> birthdayPartyItems = new ArrayList<>();
-        birthdayPartyItems.add(new LineItem("birthday cake 1", 15, currentUser));
-        birthdayPartyItems.add(new LineItem("birthday cake 2", 25, currentUser));
+        birthdayPartyItems.add(new LineItem("birthday cake 1", 15));
+        birthdayPartyItems.add(new LineItem("birthday cake 2", 25));
         events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", friends, birthdayPartyItems));
 
         // TODO emit broadcast Repo Updated - New Data - Events

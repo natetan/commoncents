@@ -1,7 +1,12 @@
 package edu.washington.ischool.commoncents.commoncents.Fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +18,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity;
+import edu.washington.ischool.commoncents.commoncents.Activies.FriendProfileActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsListAdapter;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -38,9 +45,22 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_friends_list, container, false);
 
+        initializeFab(getContext(), mainView);
+
         initializeFriendsList(mainView);
 
         return mainView;
+    }
+
+    private void initializeFab(final Context context, View mainView) {
+        FloatingActionButton fab = (FloatingActionButton) mainView.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, AddFriendActivity.class));
+            }
+        });
     }
 
     private void initializeFriendsList(View mainView) {
@@ -74,7 +94,8 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
 
     @Override
     public void onFriendClicked(View view, Friend friend) {
-        // TODO: go to detail activity
+        // Go to selected friends profile page
+        startActivity(new Intent(getContext(), FriendProfileActivity.class));
         Toast.makeText(getContext(), "TODO: show details for " + friend.getName(), Toast.LENGTH_SHORT).show();
     }
 }
