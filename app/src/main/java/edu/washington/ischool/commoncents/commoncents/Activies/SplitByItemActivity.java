@@ -92,6 +92,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
                 //take EditText values and create ListItem object
                 String nLineItem = newLineItem.getText().toString();
                 String nDollar = newDollar.getText().toString();
+
                 if (nLineItem.equalsIgnoreCase("") || nDollar.equalsIgnoreCase("")) {
                     new AlertDialog.Builder(SplitByItemActivity.this)
                             .setTitle("Cannot Add Line Item")
