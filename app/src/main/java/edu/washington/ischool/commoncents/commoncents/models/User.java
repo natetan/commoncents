@@ -2,8 +2,6 @@ package edu.washington.ischool.commoncents.commoncents.models;
 
 import android.support.annotation.NonNull;
 
-import com.google.firebase.database.Exclude;
-
 import java.util.ArrayList;
 import java.util.List;
 

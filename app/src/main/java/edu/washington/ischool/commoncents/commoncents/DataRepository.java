@@ -247,7 +247,7 @@ public class DataRepository {
                 Log.i("Firebase", "onChildRemoved: (" + DataType.getSimpleName() + ")");
                 Log.i("Firebase", "   key: " + removedData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
-                dataStore.remove(removedData);
+                dataStore.remove(removedData.getIndexKey());
             }
 
             @Override

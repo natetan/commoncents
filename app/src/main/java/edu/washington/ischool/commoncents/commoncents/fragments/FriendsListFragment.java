@@ -50,6 +50,22 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
         return mainView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Fragment Implementation
+    //----------------------------------------------------------------------------------------------
+
     private void initializeFab(final Context context, View mainView) {
         FloatingActionButton fab = (FloatingActionButton) mainView.findViewById(R.id.fab);
 

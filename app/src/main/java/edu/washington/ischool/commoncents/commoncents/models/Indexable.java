@@ -1,7 +1,5 @@
 package edu.washington.ischool.commoncents.commoncents.models;
 
-import com.google.firebase.database.Exclude;
-
 import java.util.UUID;
 
 /**
