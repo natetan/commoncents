@@ -8,11 +8,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.Observable;
+import java.util.Observer;
+
+import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.activites1.EventSummaryActivity;
 import edu.washington.ischool.commoncents.commoncents.activites1.AddEventActivity;
 import edu.washington.ischool.commoncents.commoncents.adapters1.EventsListAdapter;
@@ -26,6 +31,7 @@ import edu.washington.ischool.commoncents.commoncents.R;
 public class EventsListFragment extends Fragment implements EventsListAdapter.Listener {
 
     private EventsListAdapter adapter;
+    private Observer eventsObserver;
 
     //----------------------------------------------------------------------------------------------
     // Fragment Lifecycle
@@ -43,19 +49,23 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         initializeFab(getContext(), mainView);
         initializeEventsList(mainView);
 
+        eventsObserver = new Observer() {
+            @Override
+            public void update(Observable observable, Object o) {
+                Log.i("EventsObserver", "Update received! Object: " + o);
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        DataRepository.getInstance().subscribeToEventCollectionUpdates(eventsObserver);
+
         return mainView;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroyView() {
+        super.onDestroyView();
+        DataRepository.getInstance().unsubscribeFromEventCollectionUpdates(eventsObserver);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -85,7 +95,7 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         eventsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new EventsListAdapter(this);
+        adapter = new EventsListAdapter(getContext(), this);
         eventsList.setAdapter(adapter);
 
         eventsListUpdated();

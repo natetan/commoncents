@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.adapters1;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
@@ -29,6 +31,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     private static final int DESCRIPTION_VIEW_ID = R.id.item_subtitle;
     private static final int MONEY_VIEW_ID = R.id.item_info;
 
+    private Context context;
     private Listener listener;
     private List<Event> events = new ArrayList<>();
 
@@ -62,7 +65,8 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public EventsListAdapter(EventsListAdapter.Listener listener) {
+    public EventsListAdapter(Context context, EventsListAdapter.Listener listener) {
+        this.context = context;
         this.listener = listener;
 
         // Listen to calls to notifyDataSetChanged() so we can keep our local data up to date
@@ -98,7 +102,8 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         holder.nameView.setText(event.getName());
         holder.descrView.setText(event.getDescription());
         // Not sure where to go get the calculated costs
-        holder.moneyView.setText("$100");
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView,
+                event.getAmountOwed(AppState.getCurrentState().getCurrentUser()), true);
         ComponentHelper.getInstance().setEventPicture(holder.imageView, event,
                 ComponentHelper.PictureType.IN_LIST_ITEM);
 

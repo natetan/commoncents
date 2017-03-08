@@ -55,6 +55,14 @@ public class User extends Indexable {
         return phoneNumber;
     }
 
+    public int getAmountOwed() {
+        return (int)((Math.random() - 0.5) * 200) * 100;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Setters
+    //----------------------------------------------------------------------------------------------
+
     //Set user's email
     public void setEmail(@NonNull String email) {
         this.email = email;

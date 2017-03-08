@@ -15,19 +15,19 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.activites1.AddFriendActivity;
-import edu.washington.ischool.commoncents.commoncents.activites1.FriendProfileActivity;
-import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.activites1.UserProfileActivity;
+import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
-import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FriendsListFragment extends Fragment implements FriendsListAdapter.Listener {
+public class FriendsListFragment extends Fragment implements UsersListAdapter.Listener {
 
-    private FriendsListAdapter adapter;
+    private UsersListAdapter adapter;
 
     //----------------------------------------------------------------------------------------------
     // Fragment Implementation
@@ -89,7 +89,7 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
         friendsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new FriendsListAdapter(getContext(), this);
+        adapter = new UsersListAdapter(getContext(), this);
         friendsList.setAdapter(adapter);
 
         friendsListUpdated();
@@ -103,18 +103,18 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
     }
 
     //----------------------------------------------------------------------------------------------
-    // FriendsListAdapter.Listener Implementation
+    // UsersListAdapter.Listener Implementation
     //----------------------------------------------------------------------------------------------
 
     @Override
-    public void onFriendClicked(View view, Friend friend) {
+    public void onUserClicked(View view, User user) {
         // Go to selected friends profile page
-        AppState.getCurrentState().selectFriend(friend);
-        startActivity(new Intent(getContext(), FriendProfileActivity.class));
+        AppState.getCurrentState().selectUser(user);
+        startActivity(new Intent(getContext(), UserProfileActivity.class));
     }
 
     @Override
-    public List<Friend> getUpdatedDataSet() {
-        return DataRepository.getInstance().getFriends();
+    public List<User> getUpdatedDataSet() {
+        return DataRepository.getInstance().getUsers();
     }
 }
