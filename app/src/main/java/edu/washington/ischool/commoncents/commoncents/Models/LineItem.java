@@ -13,6 +13,12 @@ public class LineItem {
     private User user;
     private List<Payment> payments;
 
+    //constructor for split by items
+    //user will be added as line items are associated
+    public LineItem(String lineItemName, int price) {
+        this(lineItemName, price, null);
+    }
+
     public LineItem(String lineItemName, int price, User user) {
         this.name = lineItemName;
         this.price = price;

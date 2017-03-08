@@ -21,9 +21,8 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:maxHeight="10dp"
+            android:maxHeight="5dp"
             android:drawableBottom="@android:drawable/ic_delete" />
-
 
     </LinearLayout>
 
