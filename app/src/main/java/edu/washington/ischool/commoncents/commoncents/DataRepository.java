@@ -17,9 +17,6 @@ import edu.washington.ischool.commoncents.commoncents.Models.User;
 
 public class DataRepository {
 
-    // Firebase database
-    private DatabaseReference databaseReference;
-
     //----------------------------------------------------------------------------------------------
     // Singleton Pattern
     //----------------------------------------------------------------------------------------------
@@ -35,6 +32,8 @@ public class DataRepository {
     }
 
     private DataRepository() {
+
+        // Initialize firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         loadUsers();
@@ -45,6 +44,9 @@ public class DataRepository {
     //----------------------------------------------------------------------------------------------
     // Data - fields holding all data
     //----------------------------------------------------------------------------------------------
+
+    // Firebase database
+    private DatabaseReference databaseReference;
 
     private List<Friend> friends = new ArrayList<>();
     private List<User> users = new ArrayList<>();
