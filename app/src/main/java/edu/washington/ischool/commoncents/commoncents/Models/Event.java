@@ -56,4 +56,10 @@ public class Event {
     public List<LineItem> getLineItems() {
         return lineItems;
     }
+
+    // Gets the amount of money owed to the current user from this event
+    public int getAmountOwed(User user) {
+        // TODO implement
+        return (int)((Math.random() - 0.5) * 200) * 100;
+    }
 }

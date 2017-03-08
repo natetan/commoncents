@@ -21,6 +21,7 @@ import java.util.List;
 import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity;
 import edu.washington.ischool.commoncents.commoncents.Activies.FriendProfileActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
 
@@ -95,7 +96,7 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
     @Override
     public void onFriendClicked(View view, Friend friend) {
         // Go to selected friends profile page
+        AppState.getCurrentState().selectFriend(friend);
         startActivity(new Intent(getContext(), FriendProfileActivity.class));
-        Toast.makeText(getContext(), "TODO: show details for " + friend.getName(), Toast.LENGTH_SHORT).show();
     }
 }

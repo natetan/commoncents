@@ -17,23 +17,36 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/profile_picture"
+            android:id="@+id/item_picture"
             android:scaleType="fitCenter"
             android:layout_width="@dimen/list_item_picture_size"
-            android:layout_height="@dimen/list_item_picture_size" />
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_marginLeft="@dimen/list_item_subitem_margin"
-            android:layout_marginStart="@dimen/list_item_subitem_margin"
+            android:layout_height="@dimen/list_item_picture_size"
             android:layout_marginRight="@dimen/list_item_subitem_margin"
-            android:layout_marginEnd="@dimen/list_item_subitem_margin"
-            android:layout_gravity="start|center_vertical"
-            android:layout_weight="3"
+            android:layout_marginEnd="@dimen/list_item_subitem_margin" />
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/list_item_title_font_size"
-            android:text="Title" />
+            android:layout_gravity="start|center_vertical"
+            android:layout_weight="3">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/list_item_title_font_size"
+                android:text="Title" />
+
+            <TextView
+                android:id="@+id/item_subtitle"
+                android:layout_marginTop="@dimen/list_item_subitem_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/list_item_subtitle_font_size"
+                android:text="Subtitle" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/item_info"
