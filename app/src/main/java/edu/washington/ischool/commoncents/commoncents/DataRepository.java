@@ -1,5 +1,7 @@
 package edu.washington.ischool.commoncents.commoncents;
 
+import android.app.Application;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -13,6 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
@@ -51,16 +55,31 @@ public class DataRepository {
     }
 
     //----------------------------------------------------------------------------------------------
-    // Data - fields holding all data
+    // Fields
     //----------------------------------------------------------------------------------------------
+
+    private static String FIREBASE_CHILD_RESOURCE__EVENTS = "events";
+    private static String FIREBASE_CHILD_RESOURCE__FRIENDS = "friends";
+    private static String FIREBASE_CHILD_RESOURCE__USERS = "users";
 
     // Firebase database
     private DatabaseReference databaseReference;
 
+    // Repository Data
     private Map<String, User> users = new HashMap<>();
     private Map<String, Event> events = new HashMap<>();
 
     private List<Friend> friends = new ArrayList<>();
+
+    // Observers
+    private Observable eventCollectionUpdates = new AlwaysChangedObservable();
+    private Observable friendCollectionUpdates = new AlwaysChangedObservable();
+    private Observable userCollectionUpdates = new AlwaysChangedObservable();
+
+    // Mock Data
+    private List<String> mockEventIds = new ArrayList<>();
+    private List<String> mockFriendIds = new ArrayList<>();
+    private List<String> mockUserIds = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
@@ -82,26 +101,34 @@ public class DataRepository {
     // Observers - for the client to watch data in repo
     //----------------------------------------------------------------------------------------------
 
+    public void subscribeToEventCollectionUpdates(Observer o) {
+        eventCollectionUpdates.addObserver(o);
+    }
+
+    public void unsubscribeFromEventCollectionUpdates(Observer o) {
+        eventCollectionUpdates.deleteObserver(o);
+    }
+
     //----------------------------------------------------------------------------------------------
     // Mutators - for the client to modify data in repo
     //----------------------------------------------------------------------------------------------
 
     public void addEvent(Event newEvent) {
         events.put(newEvent.getIndexKey(), newEvent);
-        databaseReference.child("events").child(newEvent.getIndexKey()).setValue(newEvent);
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__EVENTS).child(newEvent.getIndexKey()).setValue(newEvent);
     }
 
     public void addUser(User newUser) {
         users.put(newUser.getIndexKey(), newUser);
-        databaseReference.child("users").child(newUser.getIndexKey()).setValue(newUser);
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__USERS).child(newUser.getIndexKey()).setValue(newUser);
     }
 
     public void deleteEvent(String indexKey) {
-        databaseReference.child("events").child(indexKey).removeValue();
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__EVENTS).child(indexKey).removeValue();
     }
 
     public void deleteUser(String indexKey) {
-        databaseReference.child("users").child(indexKey).removeValue();
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__USERS).child(indexKey).removeValue();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -112,14 +139,14 @@ public class DataRepository {
         users = new HashMap<>();
 
         // Use Firebase to populate the list.
-        databaseReference.child("users").addChildEventListener(getChildEventListener(User.class, users));
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__USERS).addChildEventListener(getChildEventListener(User.class, users, userCollectionUpdates));
     }
 
     private void loadEvents() {
         events = new HashMap<>();
 
         // Use Firebase to populate the list.
-        databaseReference.child("events").addChildEventListener(getChildEventListener(Event.class, events));
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__EVENTS).addChildEventListener(getChildEventListener(Event.class, events, eventCollectionUpdates));
     }
 
     /**
@@ -139,9 +166,6 @@ public class DataRepository {
     // Developer Methods
     //----------------------------------------------------------------------------------------------
 
-    private List<String> mockUserIds = new ArrayList<>();
-    private List<String> mockEventIds = new ArrayList<>();
-
     public void addMockData() {
         addMockUsers();
         addMockEvents();
@@ -158,8 +182,8 @@ public class DataRepository {
     }
 
     public void clearDB() {
-        databaseReference.child("users").removeValue();
-        databaseReference.child("events").removeValue();
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__USERS).removeValue();
+        databaseReference.child(FIREBASE_CHILD_RESOURCE__EVENTS).removeValue();
     }
 
     // Adds us into the database as defaults
@@ -219,7 +243,7 @@ public class DataRepository {
     // Private Helpers
     //----------------------------------------------------------------------------------------------
 
-    private <T extends Indexable> ChildEventListener getChildEventListener(final Class<T> DataType, final Map<String, T> dataStore) {
+    private <T extends Indexable> ChildEventListener getChildEventListener(final Class<T> DataType, final Map<String, T> dataStore, final Observable collectionUpdates) {
 
         return new ChildEventListener() {
             @Override
@@ -229,6 +253,8 @@ public class DataRepository {
                 Log.i("Firebase", "   key: " + newData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
                 dataStore.put(newData.getIndexKey(), newData);
+
+                collectionUpdates.notifyObservers();
             }
 
             @Override
@@ -239,6 +265,8 @@ public class DataRepository {
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
                 dataStore.remove(changedData.getIndexKey());
                 dataStore.put(changedData.getIndexKey(), changedData);
+
+                collectionUpdates.notifyObservers();
             }
 
             @Override
@@ -248,6 +276,8 @@ public class DataRepository {
                 Log.i("Firebase", "   key: " + removedData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
                 dataStore.remove(removedData.getIndexKey());
+
+                collectionUpdates.notifyObservers();
             }
 
             @Override
@@ -258,5 +288,13 @@ public class DataRepository {
             public void onCancelled(DatabaseError databaseError) {
             }
         };
+    }
+
+    private class AlwaysChangedObservable extends Observable {
+        @Override
+        public void notifyObservers() {
+            super.hasChanged();
+            super.notifyObservers();
+        }
     }
 }

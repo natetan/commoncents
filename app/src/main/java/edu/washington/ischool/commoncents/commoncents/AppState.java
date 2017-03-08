@@ -34,7 +34,7 @@ public class AppState {
     // State - fields holding the current app state
     //----------------------------------------------------------------------------------------------
 
-    private Friend selectedFriend;
+    private User selectedUser;
     private Event selectedEvent;
     private User currentUser = new User("me");
     private LineItem selectedLineItem;
@@ -49,8 +49,8 @@ public class AppState {
     }
 
     @Nullable
-    public Friend getSelectedFriend() {
-        return selectedFriend;
+    public User getSelectedUser() {
+        return selectedUser;
     }
 
     @Nullable
@@ -74,8 +74,8 @@ public class AppState {
         selectedEvent = event;
     }
 
-    public void selectFriend(Friend friend) {
-        selectedFriend = friend;
+    public void selectUser(User user) {
+        selectedUser = user;
     }
 
     public void selectCurrentUser(User user) {

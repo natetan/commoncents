@@ -15,8 +15,9 @@ import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
-public class FriendProfileActivity extends AppCompatActivity implements EventsForFriendAdapter.Listener {
+public class UserProfileActivity extends AppCompatActivity implements EventsForFriendAdapter.Listener {
 
     EventsForFriendAdapter adapter;
 
@@ -29,30 +30,30 @@ public class FriendProfileActivity extends AppCompatActivity implements EventsFo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile);
 
-        Friend selectedFriend = AppState.getCurrentState().getSelectedFriend();
+        User selectedUser = AppState.getCurrentState().getSelectedUser();
 
         // Exit if there's no selected friend
-        if (selectedFriend == null) {
+        if (selectedUser == null) {
             finish();
             return;
         }
 
-        initializeViews(selectedFriend);
+        initializeViews(selectedUser);
         initializeLineItemList();
     }
 
-    private void initializeViews(Friend selectedFriend) {
+    private void initializeViews(User selectedUser) {
         // Profile pic
         ImageView profilePictureView = (ImageView) findViewById(R.id.profile_picture);
-        ComponentHelper.getInstance().setProfilePicture(profilePictureView, selectedFriend, ComponentHelper.PictureType.AS_BACKGROUND);
+        ComponentHelper.getInstance().setProfilePicture(profilePictureView, selectedUser, ComponentHelper.PictureType.AS_BACKGROUND);
 
         // Friend name
         TextView friendNameView = (TextView) findViewById(R.id.friend_name);
-        friendNameView.setText(selectedFriend.getName());
+        friendNameView.setText(selectedUser.getName());
 
         // Amount owed
         TextView friendOweAmountView = (TextView) findViewById(R.id.friend_owe_amount);
-        ComponentHelper.getInstance().setOweAmount(this, friendOweAmountView, selectedFriend.getAmountOwed(), false);
+        ComponentHelper.getInstance().setOweAmount(this, friendOweAmountView, selectedUser.getAmountOwed(), false);
     }
 
     private void initializeLineItemList() {

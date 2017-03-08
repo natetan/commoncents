@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
-import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
  * Created by keegomyneego on 3/5/17.
  */
 
-public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> {
+public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> {
 
-    static final String TAG = "FriendsListAdapter";
+    static final String TAG = "UsersListAdapter";
 
     private static final int ITEM_LAYOUT_ID = R.layout.item_friend_for_friends_list;
     private static final int NAME_VIEW_ID = R.id.item_title;
@@ -30,7 +30,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     private Context context;
     private Listener listener;
-    private List<Friend> friends = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Client Interface
@@ -40,8 +40,8 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
      * Listener to which event handling logic is delegated
      */
     public interface Listener {
-        void onFriendClicked(View view, Friend friend);
-        List<Friend> getUpdatedDataSet();
+        void onUserClicked(View view, User user);
+        List<User> getUpdatedDataSet();
     }
 
     /**
@@ -64,7 +64,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public FriendsListAdapter(Context context, Listener listener) {
+    public UsersListAdapter(Context context, Listener listener) {
         this.context = context;
         this.listener = listener;
 
@@ -72,7 +72,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
-                FriendsListAdapter.this.updateDataSet();
+                UsersListAdapter.this.updateDataSet();
             }
         });
 
@@ -95,30 +95,30 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Friend friend = friends.get(position);
+        final User user = users.get(position);
 
         // Set the view properties for this cell
-        holder.nameView.setText(friend.getName());
-        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed(), true);
-        ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, friend, ComponentHelper.PictureType.IN_LIST_ITEM);
+        holder.nameView.setText(user.getName());
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, user.getAmountOwed(), true);
+        ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, user, ComponentHelper.PictureType.IN_LIST_ITEM);
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Delegate click logic to listener
-                listener.onFriendClicked(view, friend);
+                listener.onUserClicked(view, user);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return users.size();
     }
 
-    // Update our local collection of friends with those from the repo
+    // Update our local collection of users with those from the repo
     private void updateDataSet() {
-        friends = listener.getUpdatedDataSet();
+        users = listener.getUpdatedDataSet();
     }
 }

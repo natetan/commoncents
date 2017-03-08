@@ -10,6 +10,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
  * Created by keegomyneego on 3/6/17.
@@ -70,6 +71,22 @@ public class ComponentHelper {
     public void setProfilePicture(ImageView imageView, Friend friend, PictureType pictureType) {
 
         String name = friend.getName();
+        float saturation = 0.35f;
+        float value = 0.85f;
+
+        setPicture(imageView, name, saturation, value, pictureType);
+    }
+
+    /**
+     * Generates a picture for the given friend and stores
+     * it in the given image view.
+     *
+     * @param imageView ImageView to put the pic in
+     * @param user The User to generate the picture for
+     */
+    public void setProfilePicture(ImageView imageView, User user, PictureType pictureType) {
+
+        String name = user.getName();
         float saturation = 0.35f;
         float value = 0.85f;
 
