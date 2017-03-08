@@ -60,9 +60,9 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
     @Override
     public void onBindViewHolder(FriendsInEventAdapter.ViewHolder holder, final int position) {
         holder.name.setText(friendsInEvent.get(position).getUser().getName());
-        holder.amount.setText("" + new DecimalFormat("#.##").format(friendsInEvent.get(position).getAmount()));
+        holder.amount.setText("$" + new DecimalFormat("#.##").format(friendsInEvent.get(position).getAmount() / 100.0));
         //Divide by total friends in event.
-        holder.percentage.setText("" + new DecimalFormat("#.##").format(100.0 / friendsInEvent.size()));
+        holder.percentage.setText(new DecimalFormat("#.##").format(100.0 / friendsInEvent.size()) + "%");
 
         //CALCULATE PERCENTAGE HERE
         Log.v("ON BIND", friendsInEvent.get(position).getUser().getName());

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class SplitBySumActivity extends AppCompatActivity {
     private int totalFriends;
     private int costInCents;
 
+//TODO: implement a better form validation for entering money amounts.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +103,31 @@ public class SplitBySumActivity extends AppCompatActivity {
                 totalDollars = dollar.getText().toString();
 
                 //If the user is splitting equally
+//                if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
+//                    costInCents = Integer.valueOf(totalDollars) * 100;
+//                    Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
+//
+//                    portion = costInCents / totalFriends;
+//                    percent = (double) portion / costInCents;
+//                }
+//
+//                if (splitEqually.isChecked() && totalCents != null && !totalCents.equals("")) {
+//                    costInCents = Integer.valueOf(totalDollars) + Integer.valueOf(totalCents);
+//
+//                    //update portion and percent
+//                    portion = costInCents / totalFriends;
+//                    percent = (double) portion / costInCents;
+//                }
+
                 if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
-                    costInCents = Integer.valueOf(totalDollars) * 100;
+                    costInCents = Integer.valueOf(totalDollars) * 100 ;
                     Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
 
                     portion = costInCents / totalFriends;
-                    percent = (double) portion / costInCents;
+                    percent = (double) portion * 100 / costInCents;
                 }
-                amount.setText("$" + portion);
+
+                amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
                 percentage.setText("" + percent + "%");
                 return false;
                 //CHECK TO SEE OF THE CENTS EDIT TEXT IS EMPTY OR NOT
@@ -153,19 +172,32 @@ public class SplitBySumActivity extends AppCompatActivity {
                 if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     Log.v("TAG", "ENTER KEY PRESSED");
                 }
-                if (splitEqually.isChecked() && totalCents != null && !totalCents.equals("")) {
-                    //costInCents += Integer.valueOf(totalCents);
-                    Log.v("TOTAL DOLLARS IN CENTS", "" + Integer.valueOf(totalCents));
+//                if (splitEqually.isChecked() && totalCents != null && !totalCents.equals("")) {
+//                    //costInCents += Integer.valueOf(totalCents);
+//                    Log.v("TOTAL DOLLARS IN CENTS", "" + Integer.valueOf(totalCents));
+//
+//                    portion = costInCents / totalFriends;
+//                    percent = (double) portion / costInCents;
+//                }
 
-                    portion = costInCents / totalFriends;
-                    percent = (double) portion / costInCents;
-                }
                 totalCents = cents.getText().toString();
                 Log.v(TAG, cents.getText().toString());
 
+                if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("") && totalCents != null && !totalCents.equals("")) {
+                    costInCents = Integer.valueOf(totalDollars) * 100 + Integer.valueOf(totalCents);
+                    Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
+
+                    portion = costInCents / totalFriends;
+                    percent = (double) portion * 100 / costInCents;
+                }
+
+                //Set the editText fields?
+
+                amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
+                percentage.setText("" + percent + "%");
+
                 return false;
-                //CHECK TO SEE IF THE DOLLARS EDIT TEXT FIELD IS EMPTY OR NOT
-                //if it is not empty then update the costincents field
+
             }
         });
 
@@ -198,8 +230,6 @@ public class SplitBySumActivity extends AppCompatActivity {
         // Once total price fields have been filled, enable the button to add a person to the event
         //----------------------------------------------------------------------------------------------
 
-        //If the edit text fields have values in them, enable the add person button.
-
 
         addPerson.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,12 +249,21 @@ public class SplitBySumActivity extends AppCompatActivity {
                 String newAmount = amount.getText().toString().substring(1);
                 String newPercentage = amount.getText().toString();
 
+                if (newAmount.contains(".")) {
+                    Log.v("CONTAINS A DOT", "CONTAINS A DOT");
+//                    String s = newAmount.split("\\.")[0];
+//                    String s2 = newAmount.split("\\.")[1];
+//                    Log.v("NEW AMOUNT ARRAY", s + s2);
+                    newAmount = newAmount.split("\\.")[0] + newAmount.split("\\.")[1];
+                    Log.v("NEW AMMOUNT", newAmount);
+                }
+
                 Log.v(TAG, newAmount);
 
                 User user = new User(newName);
                 Payment payment = new Payment(user, Integer.valueOf(newAmount));
 
-                adapter.addToFriendsInEvent(payment, Integer.valueOf(totalDollars));
+                adapter.addToFriendsInEvent(payment, Integer.valueOf(costInCents));
                 
                 name.setText("");
                 amount.setText("$" + portion);
@@ -232,8 +271,9 @@ public class SplitBySumActivity extends AppCompatActivity {
             }
         });
 
-        doneBtn.setEnabled(false);
-        doneBtn.setClickable(false);
+
+//        doneBtn.setEnabled(false);
+//        doneBtn.setClickable(false);
 
         //Check if the user has entered a name, amount, and percentage before adding a person to the event
 //        if () {
