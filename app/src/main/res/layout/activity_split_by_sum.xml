@@ -71,29 +71,32 @@
         android:padding="8dp">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:hint="Name"
             android:id="@+id/edit_name"
-            android:layout_weight="1"/>
-        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:hint="Amount"
+            android:layout_weight="1"
+            android:hint="Name"
+            android:textAlignment="center" />
+
+        <EditText
             android:id="@+id/edit_amount"
-            android:layout_weight="1"/>
-        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:hint="Percentage"
+            android:layout_weight="1"
+            android:hint="Amount"
+            android:inputType="numberDecimal"
+            android:textAlignment="center" />
+
+        <EditText
             android:id="@+id/edit_percentage"
-            android:layout_weight="1"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:hint="Percentage"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <Button

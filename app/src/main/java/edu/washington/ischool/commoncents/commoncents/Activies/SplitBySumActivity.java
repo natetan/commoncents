@@ -49,6 +49,7 @@ public class SplitBySumActivity extends AppCompatActivity {
     private int costInCents;
 
 //TODO: implement a better form validation for entering money amounts.
+    //TODO: how do we divy up remain cents if the remain cents is more than one cent?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,35 +104,22 @@ public class SplitBySumActivity extends AppCompatActivity {
                 totalDollars = dollar.getText().toString();
 
                 //If the user is splitting equally
-//                if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
-//                    costInCents = Integer.valueOf(totalDollars) * 100;
-//                    Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
-//
-//                    portion = costInCents / totalFriends;
-//                    percent = (double) portion / costInCents;
-//                }
-//
-//                if (splitEqually.isChecked() && totalCents != null && !totalCents.equals("")) {
-//                    costInCents = Integer.valueOf(totalDollars) + Integer.valueOf(totalCents);
-//
-//                    //update portion and percent
-//                    portion = costInCents / totalFriends;
-//                    percent = (double) portion / costInCents;
-//                }
-
                 if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("")) {
                     costInCents = Integer.valueOf(totalDollars) * 100 ;
                     Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
 
                     portion = costInCents / totalFriends;
                     percent = (double) portion * 100 / costInCents;
+
+                    amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
+                    percentage.setText("" + percent + "%");
+                }
+                //The user is splitting unequally
+                else {
+
                 }
 
-                amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
-                percentage.setText("" + percent + "%");
                 return false;
-                //CHECK TO SEE OF THE CENTS EDIT TEXT IS EMPTY OR NOT
-                //if it is not empty update the costincents field
             }
         });
 
@@ -172,29 +160,24 @@ public class SplitBySumActivity extends AppCompatActivity {
                 if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     Log.v("TAG", "ENTER KEY PRESSED");
                 }
-//                if (splitEqually.isChecked() && totalCents != null && !totalCents.equals("")) {
-//                    //costInCents += Integer.valueOf(totalCents);
-//                    Log.v("TOTAL DOLLARS IN CENTS", "" + Integer.valueOf(totalCents));
-//
-//                    portion = costInCents / totalFriends;
-//                    percent = (double) portion / costInCents;
-//                }
 
                 totalCents = cents.getText().toString();
-                Log.v(TAG, cents.getText().toString());
 
+                //If the user is splitting equally
                 if (splitEqually.isChecked() && totalDollars != null && !totalDollars.equals("") && totalCents != null && !totalCents.equals("")) {
                     costInCents = Integer.valueOf(totalDollars) * 100 + Integer.valueOf(totalCents);
                     Log.v("TOTAL DOLLARS IN CENTS", "" + costInCents);
 
                     portion = costInCents / totalFriends;
                     percent = (double) portion * 100 / costInCents;
+
+                    amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
+                    percentage.setText("" + percent + "%");
                 }
+                //The user is splitting unequally
+                else {
 
-                //Set the editText fields?
-
-                amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
-                percentage.setText("" + percent + "%");
+                }
 
                 return false;
 
@@ -219,6 +202,64 @@ public class SplitBySumActivity extends AppCompatActivity {
                 totalCents = cents.getText().toString();
                 Log.v(TAG, cents.getText().toString());
 
+                return false;
+            }
+        });
+
+        //----------------------------------------------------------------------------------------------
+        // Amount EditText Listeners
+        //----------------------------------------------------------------------------------------------
+
+        amount.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                String amtStr = amount.getText().toString();
+                if (amtStr.contains(".") && amtStr.split("\\.").length > 1) {
+                    if (amtStr.split("\\.")[1].length() > 2) {
+                        amtStr = amtStr.split("\\.")[0] + "." + amtStr.split("\\.")[1].substring(0, 1);
+                        amount.setText(amtStr);
+                    }
+
+                }
+                if (!splitEqually.isChecked()) {
+                    String amountText = amount.getText().toString();
+                    double percent = 0;
+                    if (amountText.contains("$")) {
+                        amount.setText("");
+                        amountText = amount.getText().toString();
+
+                        Log.v("COST IN CENTS", "" + costInCents);
+                        Log.v("AMOUNT TEXT", amountText);
+                        if (amountText != null && !amountText.equals("")) {
+                            int portion = Integer.valueOf(amountText) * 100;
+                            percent = (double) portion / costInCents;
+                        }
+                    }
+
+                    if (amountText != null && !amountText.equals("")) {
+                        int portion = Integer.valueOf(amountText) * 100;
+                        Log.v("PORTION", "" + portion);
+                        percent = (double) portion / costInCents * 100;
+                        Log.v("PERCENT", "" + percent);
+                    }
+                    percentage.setText(new DecimalFormat("#.##").format(percent) + "%");
+                }
+
+
+                return false;
+            }
+        });
+
+        //----------------------------------------------------------------------------------------------
+        // Percentage EditText Listeners
+        //----------------------------------------------------------------------------------------------
+
+        percentage.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (!splitEqually.isChecked()) {
+
+                }
                 return false;
             }
         });
