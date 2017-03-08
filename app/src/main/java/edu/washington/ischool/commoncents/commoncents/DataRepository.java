@@ -102,16 +102,11 @@ public class DataRepository {
         databaseReference.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d("loadUsers", dataSnapshot.getValue().toString());
+                Log.d("Snapshot", dataSnapshot.toString());
 
-                try {
-                    User u = (User) dataSnapshot.getValue();
-                    Log.d("GOT USER", u.toString());
-                } catch (Exception e) {
-
-                }
-
-//                users.add(new User())
+                // NOT ADDING INTO THE ARRAY? LOGGING ON THE BOTTOM (SCROLL DOWN)
+                // INDICATES THAT THE ARRAY IS LENGTH 0
+                users.add(new User(dataSnapshot.getKey()));
             }
 
             @Override
@@ -121,7 +116,7 @@ public class DataRepository {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                users.remove((String) dataSnapshot.child("title").getValue());
+                // users.remove((String) dataSnapshot.child("title").getValue());
             }
 
             @Override
@@ -135,19 +130,21 @@ public class DataRepository {
             }
         });
 
-
+        // IF U UNCOMMENT THIS, THE USERS ARRAY ACTUALLY FILLS
+        Log.d("Users array before", users.toString());
 //        users.add(new User("Hamzah"));
 //        users.add(new User("Hai"));
 //        users.add(new User("Yulong"));
 //        users.add(new User("Irene"));
 //        users.add(new User("Keegan"));
+        Log.d("users array after", users.toString());
 
         // Adds us into the database as defaults
-        databaseReference.child("users").child("Hamzah").setValue(new User("Hamzah"));
-        databaseReference.child("users").child("Hai").setValue(new User("Hai"));
-        databaseReference.child("users").child("Yulong").setValue(new User("Yulong"));
-        databaseReference.child("users").child("Irene").setValue(new User("Irene"));
-        databaseReference.child("users").child("Keegan").setValue(new User("Keegan"));
+//        databaseReference.child("users").child("Hamzah").setValue(new User("Hamzah"));
+//        databaseReference.child("users").child("Hai").setValue(new User("Hai"));
+//        databaseReference.child("users").child("Yulong").setValue(new User("Yulong"));
+//        databaseReference.child("users").child("Irene").setValue(new User("Irene"));
+//        databaseReference.child("users").child("Keegan").setValue(new User("Keegan"));
 
 
         // TODO emit broadcast Repo Updated - New Data - Users
