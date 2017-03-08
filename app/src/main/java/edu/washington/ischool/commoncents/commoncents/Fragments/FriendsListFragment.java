@@ -22,6 +22,7 @@ import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity
 import edu.washington.ischool.commoncents.commoncents.Activies.FriendProfileActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsListAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
 
@@ -98,5 +99,10 @@ public class FriendsListFragment extends Fragment implements FriendsListAdapter.
         // Go to selected friends profile page
         AppState.getCurrentState().selectFriend(friend);
         startActivity(new Intent(getContext(), FriendProfileActivity.class));
+    }
+
+    @Override
+    public List<Friend> getUpdatedDataSet() {
+        return DataRepository.getInstance().getFriends();
     }
 }

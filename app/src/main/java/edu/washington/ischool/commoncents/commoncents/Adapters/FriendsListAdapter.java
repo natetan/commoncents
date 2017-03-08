@@ -42,6 +42,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
      */
     public interface Listener {
         void onFriendClicked(View view, Friend friend);
+        List<Friend> getUpdatedDataSet();
     }
 
     /**
@@ -119,6 +120,6 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     // Update our local collection of friends with those from the repo
     private void updateDataSet() {
-        friends = DataRepository.getInstance().getFriends();
+        friends = listener.getUpdatedDataSet();
     }
 }
