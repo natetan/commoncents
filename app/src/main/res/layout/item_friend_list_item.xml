@@ -19,8 +19,8 @@
         <ImageView
             android:id="@+id/profile_picture"
             android:scaleType="fitCenter"
-            android:layout_width="@dimen/profile_picture_size_in_item"
-            android:layout_height="@dimen/profile_picture_size_in_item" />
+            android:layout_width="@dimen/list_item_profile_picture_size"
+            android:layout_height="@dimen/list_item_profile_picture_size" />
 
         <TextView
             android:id="@+id/item_title"
