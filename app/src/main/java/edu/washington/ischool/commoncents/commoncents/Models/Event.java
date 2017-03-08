@@ -48,18 +48,32 @@ public class Event {
     }
 
     //List of friends involved with the event
+    public List<User> getFriendsInvolved() {
+        return usersInvolved;
+    }
+
     public List<User> getUsersInvolved() {
         return usersInvolved;
     }
 
     //List of items involved with this event
     public List<LineItem> getLineItems() {
-        return lineItems;
+            return lineItems;
     }
 
     // Gets the amount of money owed to the current user from this event
     public int getAmountOwed(User user) {
         // TODO implement
         return (int)((Math.random() - 0.5) * 200) * 100;
+    }
+
+    //Sets the friends involved in the event
+    public void setFriendsInvolved(List<User> friendsInvolved) {
+        this.usersInvolved = friendsInvolved;
+    }
+
+    //Sets the lines items in the events
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
     }
 }
