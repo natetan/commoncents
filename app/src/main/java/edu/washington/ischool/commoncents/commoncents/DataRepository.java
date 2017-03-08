@@ -2,7 +2,6 @@ package edu.washington.ischool.commoncents.commoncents;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,16 +116,18 @@ public class DataRepository {
         events = new ArrayList<>();
 
         User currentUser = AppState.getCurrentState().getCurrentUser();
+        List<User> users = new ArrayList<>();
+        users.add(currentUser);
 
         List<LineItem> cupcakeItems = new ArrayList<>();
         cupcakeItems.add(new LineItem("cupcake 1", 10));
         cupcakeItems.add(new LineItem("cupcake 2", 20));
-        events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", friends, cupcakeItems));
+        events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", users, cupcakeItems));
 
         List<LineItem> birthdayPartyItems = new ArrayList<>();
         birthdayPartyItems.add(new LineItem("birthday cake 1", 15));
         birthdayPartyItems.add(new LineItem("birthday cake 2", 25));
-        events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", friends, birthdayPartyItems));
+        events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", users, birthdayPartyItems));
 
         // TODO emit broadcast Repo Updated - New Data - Events
     }

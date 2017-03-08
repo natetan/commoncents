@@ -10,58 +10,58 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
             android:padding="10dp"
-            android:layout_weight="1">
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Friends"/>
+                android:text="Friends" />
 
             <EditText
                 android:id="@+id/new_friend_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/add_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxHeight="10dp"
-                android:layout_weight="0"
                 android:text="ADD FRIEND" />
 
-
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/friends_in_event_list"
+                android:id="@+id/user_in_event_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"/>
+                android:layout_height="match_parent"
+                android:padding="10dp" />
+
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
             android:padding="10dp"
-            android:layout_weight="2">
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Items"/>
+                android:text="Items" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,50 +71,52 @@
 
                 <EditText
                     android:id="@+id/new_lineitem_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"/>
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" $"/>
+                    android:text=" $" />
+
                 <EditText
                     android:id="@+id/new_lineitem_dollar"
-                    android:layout_width="30dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:layout_weight="0.5"/>
+                    android:inputType="number" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="."/>
+                    android:text="." />
+
                 <EditText
                     android:id="@+id/new_lineitem_cents"
-                    android:layout_width="10dp"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
                     android:hint="00"
-                    android:layout_weight="0.5"/>
-
+                    android:inputType="number"
+                    android:maxLength="2" />
 
 
             </LinearLayout>
+
             <Button
                 android:id="@+id/add_lineitem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="10dp"
                 android:layout_weight="0"
-                android:text="ADD LINE ITEM"/>
+                android:maxHeight="10dp"
+                android:text="ADD LINE ITEM" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lineitems_in_event"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="10dp" />
 
         </LinearLayout>
+
 
     </LinearLayout>
 
@@ -122,6 +124,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp"
+        android:layout_weight="0"/>
 
 </LinearLayout>
