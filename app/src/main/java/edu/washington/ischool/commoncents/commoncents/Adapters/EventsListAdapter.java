@@ -4,12 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
+import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
 
@@ -43,11 +45,13 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameView;
         public TextView descrView;
+        public ImageView imageView;
 
-        public ViewHolder(View itemView, TextView nameView, TextView descrView) {
+        public ViewHolder(View itemView, TextView nameView, TextView descrView, ImageView imageView) {
             super(itemView);
             this.nameView = nameView;
             this.descrView = descrView;
+            this.imageView = imageView;
         }
     }
 
@@ -77,8 +81,9 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         // Get important views for this item
         TextView nameView = (TextView) itemView.findViewById(NAME_VIEW_ID);
         TextView descrView = (TextView) itemView.findViewById(DESCRIPTION_VIEW_ID);
+        ImageView imageView = (ImageView) itemView.findViewById(PIC_VIEW_ID);
 
-        return new EventsListAdapter.ViewHolder(itemView, nameView, descrView);
+        return new EventsListAdapter.ViewHolder(itemView, nameView, descrView, imageView);
     }
 
     @Override
@@ -88,6 +93,8 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         // Set the view properties for this cell
         holder.nameView.setText(event.getName());
         holder.descrView.setText("$100");
+        ComponentHelper.getInstance().setEventPicture(holder.imageView, event,
+                ComponentHelper.PictureType.IN_LIST_ITEM);
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
