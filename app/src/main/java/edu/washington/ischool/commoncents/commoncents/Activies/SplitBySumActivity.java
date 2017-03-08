@@ -111,6 +111,8 @@ public class SplitBySumActivity extends AppCompatActivity {
                 amount.setText("$" + portion);
                 percentage.setText("" + percent + "%");
                 return false;
+                //CHECK TO SEE OF THE CENTS EDIT TEXT IS EMPTY OR NOT
+                //if it is not empty update the costincents field
             }
         });
 
@@ -162,6 +164,8 @@ public class SplitBySumActivity extends AppCompatActivity {
                 Log.v(TAG, cents.getText().toString());
 
                 return false;
+                //CHECK TO SEE IF THE DOLLARS EDIT TEXT FIELD IS EMPTY OR NOT
+                //if it is not empty then update the costincents field
             }
         });
 
@@ -189,23 +193,13 @@ public class SplitBySumActivity extends AppCompatActivity {
 
         initializeFriendsInEventView();
 
-        //If the user is splitting equally, adding new people should automatically fill values.
-//        if (splitEqually.isChecked()) {
-//            name.setOnKeyListener(new View.OnKeyListener() {
-//                @Override
-//                public boolean onKey(View view, int i, KeyEvent keyEvent) {
-//                    int portion = Integer.valueOf(totalDollars) / totalFriends;
-//                    amount.setText("" + portion/ totalFriends);
-//                    percentage.setText("" + portion / Integer.valueOf(totalDollars));
-//                    return false;
-//                }
-//            });
-//        }
-
 
         //----------------------------------------------------------------------------------------------
         // Once total price fields have been filled, enable the button to add a person to the event
         //----------------------------------------------------------------------------------------------
+
+        //If the edit text fields have values in them, enable the add person button.
+
 
         addPerson.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,9 +214,6 @@ public class SplitBySumActivity extends AppCompatActivity {
                 Log.v("PERCENTS?", "" + percent);
 
                 Log.v("PORTIONS?", "" + portion);
-                //IMPLEMENT LATER USING PAYMENT OBJECT
-//                adapter.add(amount.getText().toString());
-//                adapter.add(percentage.getText().toString());
 
                 String newName = name.getText().toString();
                 String newAmount = amount.getText().toString().substring(1);
@@ -234,9 +225,7 @@ public class SplitBySumActivity extends AppCompatActivity {
                 Payment payment = new Payment(user, Integer.valueOf(newAmount));
 
                 adapter.addToFriendsInEvent(payment, Integer.valueOf(totalDollars));
-
-//                adapter.addToFriendsInEvent();
-//                adapter.addToFriendsInEvent();
+                
                 name.setText("");
                 amount.setText("$" + portion);
                 percentage.setText(percent + "%");
