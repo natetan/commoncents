@@ -13,11 +13,16 @@ import edu.washington.ischool.commoncents.commoncents.Indexable;
  */
 
 public class Event implements Indexable {
+
     private String name;
     private Date date;
     private String description;
     private List<User> usersInvolved;
     private List<LineItem> lineItems;
+
+    public Event() {
+        // Default constructor required for Firebase calls to DataSnapshot.getValue(Event.class)
+    }
 
     public Event(String eventName, Date eventDate) {
         this(eventName, eventDate, "", new ArrayList<User>(), new ArrayList<LineItem>());

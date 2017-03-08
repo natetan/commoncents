@@ -22,9 +22,6 @@ public class User implements Indexable {
     @NonNull private String phoneNumber;
 
     public User() {
-        Log.i("User", "");
-        Log.i("User", "Default constructor called!");
-        Log.i("User", "");
         // Default constructor required for Firebase calls to DataSnapshot.getValue(User.class)
     }
 
