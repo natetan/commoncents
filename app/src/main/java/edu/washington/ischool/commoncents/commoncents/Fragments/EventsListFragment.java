@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity;
+import edu.washington.ischool.commoncents.commoncents.Activies.EventSummaryActivity;
 import edu.washington.ischool.commoncents.commoncents.Activies.SplitCostsActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.EventsListAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
@@ -90,6 +91,8 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
     public void onEventClicked(View view, Event event) {
         // TODO: go to detail activity
         Toast.makeText(getContext(), "TODO: show details for " + event.getName(), Toast.LENGTH_SHORT).show();
+        AppState.getCurrentState().selectEvent(event);
+        startActivity(new Intent(getActivity(), EventSummaryActivity.class));
     }
 
 
