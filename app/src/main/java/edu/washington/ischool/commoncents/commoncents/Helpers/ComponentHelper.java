@@ -54,8 +54,8 @@ public class ComponentHelper {
     public void setEventPicture(ImageView imageView, Event event, PictureType pictureType) {
 
         String name = event.getName();
-        float saturation = 0.5f;
-        float value = 0.5f;
+        float saturation = 0.35f;
+        float value = 0.4f;
 
         setPicture(imageView, name, saturation, value, pictureType);
     }
@@ -70,8 +70,8 @@ public class ComponentHelper {
     public void setProfilePicture(ImageView imageView, Friend friend, PictureType pictureType) {
 
         String name = friend.getName();
-        float saturation = 0.5f;
-        float value = 0.8f;
+        float saturation = 0.35f;
+        float value = 0.85f;
 
         setPicture(imageView, name, saturation, value, pictureType);
     }
@@ -79,21 +79,21 @@ public class ComponentHelper {
     /**
      * Stylizes a string based on the amount of cents owed and puts it
      * in the given TextView
-     * @param textView
-     * @param centsOwed
      */
-    public void setOweAmount(Context context, TextView textView, int centsOwed) {
+    public void setOweAmount(Context context, TextView textView, int centsOwed, boolean useColor) {
         String amountOwed;
+        int color;
 
         if (centsOwed >= 0) {
             amountOwed = "$" + (centsOwed / 100) + "." + (centsOwed % 100);
-            textView.setTextColor(ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_POSITIVE);
+            color = ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_POSITIVE;
         } else {
             amountOwed = "($" + (-centsOwed / 100) + "." + (-centsOwed % 100) + ")";
-            textView.setTextColor(ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_NEGATIVE);
+            color = ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_NEGATIVE;
         }
 
         textView.setText(amountOwed);
+        textView.setTextColor(useColor ? color : ThemeHelper.getInstance(context).COLOR_WHITE);
     }
 
     //----------------------------------------------------------------------------------------------

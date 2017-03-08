@@ -24,7 +24,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     static final String TAG = "FriendsListAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_friend_list_item;
+    private static final int ITEM_LAYOUT_ID = R.layout.item_friend_for_friends_list;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int MONEY_VIEW_ID = R.id.item_info;
     private static final int PROFILE_PIC_VIEW_ID = R.id.profile_picture;
@@ -99,7 +99,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
         // Set the view properties for this cell
         holder.nameView.setText(friend.getName());
-        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed());
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed(), true);
         ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, friend, ComponentHelper.PictureType.IN_LIST_ITEM);
 
         // Set this cell's onClickListener

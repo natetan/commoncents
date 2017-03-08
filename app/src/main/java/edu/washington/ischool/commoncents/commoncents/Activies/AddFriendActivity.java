@@ -2,11 +2,14 @@ package edu.washington.ischool.commoncents.commoncents.Activies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,6 +53,30 @@ public class AddFriendActivity extends AppCompatActivity {
             }
         });
 
+        friendName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                submitBtn.setEnabled(true);
+                submitBtn.setClickable(true);
+                String friendNameString = friendName.getText().toString();
+
+                if (friendNameString == null || friendNameString.equals("")) {
+                    submitBtn.setEnabled(false);
+                    submitBtn.setClickable(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,37 +85,23 @@ public class AddFriendActivity extends AppCompatActivity {
                 String phoneString = phone.getText().toString();
 
                 ArrayList<User> users = (ArrayList<User>) DataRepository.getInstance().getUsers();
-                //Log.v("USERS", users.);
-                Iterator<User> iterator = users.iterator();
-                int count = 0;
+
                 User user = new User(friendNameString);
                 if (!users.contains(user)) {
                     Toast.makeText(AddFriendActivity.this, "Friend does not exist, adding the new friend...", Toast.LENGTH_SHORT).show();
+                    //If the email field is filled out, then add the email to the User object
+                    if (!emailString.equals("")) {
+                        user.setEmail(emailString);
+                    }
+                    //If the phone number field is filled out, then add the phone number to the User object
+                    if (!phoneString.equals("")) {
+                        user.setPhoneNumber(phoneString);
+                    }
                     DataRepository.getInstance().addUser(user);
                 } else {
                     Toast.makeText(AddFriendActivity.this, "Friend already exists", Toast.LENGTH_SHORT).show();
                 }
-//                for (User user: users) {
-//                    Log.v("USER", user.getName());
-//                    count++;
-//                    Log.v("COUNT", "" + count);
-//                    if (user.getName().equals(friendNameString)) {
-//                        Toast.makeText(AddFriendActivity.this, "That friend already exisits", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Log.v("ELSE", "ELSE");
-//                        DataRepository.getInstance().addUser(new User(friendNameString));
-//                        //If the email field is filled out, then add the email to the User object
-//                        if (!emailString.equals("")) {
-//                            Toast.makeText(AddFriendActivity.this, "The email field is filled out with something...", Toast.LENGTH_SHORT).show();
-//                            user.setEmail(emailString);
-//                        }
-//                        //If the phone number field is filled out, then add the phone number to the User object
-//                        if (!phoneString.equals("")) {
-//                            Toast.makeText(AddFriendActivity.this, "The phone field is filled out with something...", Toast.LENGTH_SHORT).show();
-//                            user.setPhoneNumber(phoneString);
-//                        }
-//                    }
-//                }
+
             }
         });
     }
