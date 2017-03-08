@@ -104,7 +104,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         splitItemView.setLayoutManager(layoutManager);
 
-        adapter = new SplitItemsListAdapter(R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
+        adapter = new SplitItemsListAdapter(this, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
         splitItemView.setAdapter(adapter);
     }
 

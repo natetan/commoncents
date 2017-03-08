@@ -20,6 +20,7 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 
+import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -115,7 +116,7 @@ public class SplitCostsActivity extends AppCompatActivity {
         String eventName = txtEventName.getText().toString();
         if (selectedDate != null && !eventName.equalsIgnoreCase("")) {
             Event thisEvent = new Event(eventName, selectedDate);
-            DataRepository.getInstance().setCurrentEvent(thisEvent);
+            AppState.getCurrentState().selectEvent(thisEvent);
             return true;
         }
         return false;

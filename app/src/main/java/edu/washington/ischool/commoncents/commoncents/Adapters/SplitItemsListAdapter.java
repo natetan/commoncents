@@ -42,7 +42,8 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
         }
     }
 
-    public SplitItemsListAdapter(int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
+    public SplitItemsListAdapter(Listener listener, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
+        this.listener = listener;
         this.itemLayoutId = itemLayoutId;
         this.lineItemId = lineItemId;
         this.priceId = priceId;
