@@ -49,10 +49,16 @@
         <!-- Setting Activities -->
         <activity
             android:name=".activites.LoginActivity"
-            android:theme="@style/SettingsTheme"/>
+            android:theme="@style/SettingsTheme"
+            android:label="Sign In"/>
         <activity
             android:name=".activites.SignUpActivity"
-            android:theme="@style/SettingsTheme"/>
+            android:theme="@style/SettingsTheme"
+            android:label="Sign Up"/>
+        <activity
+            android:name=".activites.DeveloperSettingsActivity"
+            android:theme="@style/SettingsTheme"
+            android:label="Developer Settings"/>
     </application>
 
 </manifest>
