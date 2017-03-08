@@ -50,4 +50,35 @@ public class User {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    //Set user's email
+    public void setEmail(@NonNull String email) {
+        this.email = email;
+    }
+
+    //Set user's phone number
+    public void setPhoneNumber(@NonNull String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        User other = (User) o;
+        if (other == null) {
+            if (this == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (this.getName().equals(other.getName())) {
+            return true;
+        } else {
+            return false;
+        }
+
+//        if (this.getName().equals(other.getName()) && this.phoneNumber.equals(other.getPhoneNumber()) && this.getEmail().equals(other.getEmail())) {
+//
+//        }
+    }
 }
