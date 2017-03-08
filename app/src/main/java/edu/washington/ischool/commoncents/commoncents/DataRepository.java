@@ -8,9 +8,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
@@ -54,41 +56,45 @@ public class DataRepository {
     // Firebase database
     private DatabaseReference databaseReference;
 
+    private Map<String, User> users = new HashMap<>();
+    private  Map<String, Event> events = new HashMap<>();
+
+    @Deprecated
     private List<Friend> friends = new ArrayList<>();
-    private List<User> users = new ArrayList<>();
-    private List<Event> events = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
     //----------------------------------------------------------------------------------------------
 
+    @Deprecated
     public List<Friend> getFriends() {
         return friends;
     }
 
     public List<User> getUsers() {
-        return users;
+        return new ArrayList<>(users.values());
     }
 
     public List<Event> getEvents() {
-        return events;
+        return new ArrayList<>(events.values());
     }
+
+    //----------------------------------------------------------------------------------------------
+    // Observers - for the client to watch data in repo
+    //----------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
     // Mutators - for the client to modify data in repo
     //----------------------------------------------------------------------------------------------
 
     public void addEvent(Event newEvent) {
-        events.add(newEvent);
-    }
-
-    public void addFriend(Friend newFriend) {
-        friends.add(newFriend);
+        events.put(newEvent.getKey(), newEvent);
+        databaseReference.child("events").child(newEvent.getKey()).setValue(newEvent);
     }
 
     public void addUser(User newUser) {
-        users.add(newUser);
-        databaseReference.child("users").push().child(newUser.getName()).setValue(newUser);
+        users.put(newUser.getKey(), newUser);
+        databaseReference.child("users").child(newUser.getKey()).setValue(newUser);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -96,90 +102,127 @@ public class DataRepository {
     //----------------------------------------------------------------------------------------------
 
     private void loadUsers() {
-        users = new ArrayList<>();
+        users = new HashMap<>();
 
         // Use Firebase to populate the list.
-        databaseReference.child("users").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d("Snapshot", dataSnapshot.toString());
+        databaseReference.child("users").addChildEventListener(getChildEventListener(User.class, users));
 
-                // NOT ADDING INTO THE ARRAY? LOGGING ON THE BOTTOM (SCROLL DOWN)
-                // INDICATES THAT THE ARRAY IS LENGTH 0
-                users.add(new User(dataSnapshot.getKey()));
-            }
+        addMockUsers();
+    }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+    private void loadEvents() {
+        events = new HashMap<>();
 
-            }
+        // Use Firebase to populate the list.
+        databaseReference.child("events").addChildEventListener(getChildEventListener(Event.class, events));
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                // users.remove((String) dataSnapshot.child("title").getValue());
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // IF U UNCOMMENT THIS, THE USERS ARRAY ACTUALLY FILLS
-        Log.d("Users array before", users.toString());
-//        users.add(new User("Hamzah"));
-//        users.add(new User("Hai"));
-//        users.add(new User("Yulong"));
-//        users.add(new User("Irene"));
-//        users.add(new User("Keegan"));
-        Log.d("users array after", users.toString());
-
-        // Adds us into the database as defaults
-//        databaseReference.child("users").child("Hamzah").setValue(new User("Hamzah"));
-//        databaseReference.child("users").child("Hai").setValue(new User("Hai"));
-//        databaseReference.child("users").child("Yulong").setValue(new User("Yulong"));
-//        databaseReference.child("users").child("Irene").setValue(new User("Irene"));
-//        databaseReference.child("users").child("Keegan").setValue(new User("Keegan"));
-
-
-        // TODO emit broadcast Repo Updated - New Data - Users
+        addMockEvents();
     }
 
     /**
      * Note: must be called after loadUsers!
      */
+    @Deprecated
     private void loadFriends() {
         friends = new ArrayList<>();
 
-        for (User user : users) {
+        for (User user : getUsers()) {
             friends.add(new Friend(AppState.getCurrentState().getCurrentUser(), user));
         }
 
         // TODO emit broadcast Repo Updated - New Data - Friends
     }
 
-    private void loadEvents() {
-        events = new ArrayList<>();
+    //----------------------------------------------------------------------------------------------
+    // Mock Data Helpers
+    //----------------------------------------------------------------------------------------------
+
+    // Adds us into the database as defaults
+    private void addMockUsers() {
+
+        addUser(new User("Hamzah"));
+        addUser(new User("Hai"));
+        addUser(new User("Yulong"));
+        addUser(new User("Irene"));
+        addUser(new User("Keegan"));
+    }
+
+    // Adds bs into the database as defaults
+    private void addMockEvents() {
 
         User currentUser = AppState.getCurrentState().getCurrentUser();
-        List<User> users = new ArrayList<>();
-        users.add(currentUser);
 
-        List<LineItem> cupcakeItems = new ArrayList<>();
-        cupcakeItems.add(new LineItem("cupcake 1", 10));
-        cupcakeItems.add(new LineItem("cupcake 2", 20));
-        events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", users, cupcakeItems));
+        Event cupcakeEvent = new Event(
+                "Cupcake Party",
+                new Date(),
+                "It's a cupcake party dude!",
+                new ArrayList<>(Arrays.asList(
+                        currentUser
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new LineItem("cupcake 1", 10),
+                        new LineItem("cupcake 2", 20)
+                ))
+        );
+        events.put(cupcakeEvent.getKey(), cupcakeEvent);
 
-        List<LineItem> birthdayPartyItems = new ArrayList<>();
-        birthdayPartyItems.add(new LineItem("birthday cake 1", 15));
-        birthdayPartyItems.add(new LineItem("birthday cake 2", 25));
-        events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", users, birthdayPartyItems));
+        Event birthdayPartyEvent = new Event(
+                "Birthday Party",
+                new Date(),
+                "It's everyone's birthday!",
+                new ArrayList<>(Arrays.asList(
+                        currentUser
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new LineItem("birthday cake 1", 15),
+                        new LineItem("birthday cake 2", 25)
+                ))
+        );
+        events.put(birthdayPartyEvent.getKey(), birthdayPartyEvent);
+    }
 
-        // TODO emit broadcast Repo Updated - New Data - Events
+    //----------------------------------------------------------------------------------------------
+    // Private Helpers
+    //----------------------------------------------------------------------------------------------
+
+    private <T extends Indexable> ChildEventListener getChildEventListener(final Class<T> DataType, final Map<String, T> dataStore) {
+
+        return new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                T newData = dataSnapshot.getValue(DataType);
+                Log.i("Firebase", "onChildAdded: (" + DataType.getSimpleName() + ")");
+                Log.i("Firebase", "   key: " + newData.getKey());
+                Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
+                dataStore.put(newData.getKey(), newData);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                T changedData = dataSnapshot.getValue(DataType);
+                Log.i("Firebase", "onChildChanged: (" + DataType.getSimpleName() + ")");
+                Log.i("Firebase", "   key: " + changedData.getKey());
+                Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
+                dataStore.remove(changedData.getKey());
+                dataStore.put(changedData.getKey(), changedData);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                T removedData = dataSnapshot.getValue(DataType);
+                Log.i("Firebase", "onChildRemoved: (" + DataType.getSimpleName() + ")");
+                Log.i("Firebase", "   key: " + removedData.getKey());
+                Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
+                dataStore.remove(removedData);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
     }
 }

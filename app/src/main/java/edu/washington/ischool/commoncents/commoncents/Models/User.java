@@ -8,11 +8,13 @@ import com.google.firebase.database.Exclude;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.washington.ischool.commoncents.commoncents.Indexable;
+
 /**
  * Created by iguest on 3/5/17.
  */
 
-public class User {
+public class User implements Indexable {
 
     @NonNull private String name;
     @NonNull private List<Event> eventList;
@@ -20,9 +22,6 @@ public class User {
     @NonNull private String phoneNumber;
 
     public User() {
-        Log.i("User", "");
-        Log.i("User", "Default constructor called!");
-        Log.i("User", "");
         // Default constructor required for Firebase calls to DataSnapshot.getValue(User.class)
     }
 
@@ -35,6 +34,15 @@ public class User {
         this.eventList = eventList;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Indexable Implementation
+    //----------------------------------------------------------------------------------------------
+
+    @Exclude
+    public String getKey() {
+        return name;
     }
 
     //----------------------------------------------------------------------------------------------
