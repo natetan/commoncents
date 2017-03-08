@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/FriendsTheme"
-    tools:context="edu.washington.ischool.commoncents.commoncents.Fragments.FriendsListFragment">
+    tools:context="edu.washington.ischool.commoncents.commoncents.fragments1.FriendsListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/friends_list"

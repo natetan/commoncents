@@ -1,24 +1,30 @@
 package edu.washington.ischool.commoncents.commoncents;
 
+import android.util.Log;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import edu.washington.ischool.commoncents.commoncents.Models.Event;
-import edu.washington.ischool.commoncents.commoncents.Models.Friend;
-import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.Models.User;
+import edu.washington.ischool.commoncents.commoncents.models1.Event;
+import edu.washington.ischool.commoncents.commoncents.models1.Friend;
+import edu.washington.ischool.commoncents.commoncents.models1.Indexable;
+import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
  * Created by keegomyneego on 3/5/17.
  */
 
 public class DataRepository {
-
-    // Firebase database
-    private DatabaseReference databaseReference;
 
     //----------------------------------------------------------------------------------------------
     // Singleton Pattern
@@ -35,6 +41,8 @@ public class DataRepository {
     }
 
     private DataRepository() {
+
+        // Initialize firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         loadUsers();
@@ -46,9 +54,13 @@ public class DataRepository {
     // Data - fields holding all data
     //----------------------------------------------------------------------------------------------
 
+    // Firebase database
+    private DatabaseReference databaseReference;
+
+    private Map<String, User> users = new HashMap<>();
+    private Map<String, Event> events = new HashMap<>();
+
     private List<Friend> friends = new ArrayList<>();
-    private List<User> users = new ArrayList<>();
-    private List<Event> events = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
@@ -59,28 +71,37 @@ public class DataRepository {
     }
 
     public List<User> getUsers() {
-        return users;
+        return new ArrayList<>(users.values());
     }
 
     public List<Event> getEvents() {
-        return events;
+        return new ArrayList<>(events.values());
     }
+
+    //----------------------------------------------------------------------------------------------
+    // Observers - for the client to watch data in repo
+    //----------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
     // Mutators - for the client to modify data in repo
     //----------------------------------------------------------------------------------------------
 
     public void addEvent(Event newEvent) {
-        events.add(newEvent);
-    }
-
-    public void addFriend(Friend newFriend) {
-        friends.add(newFriend);
+        events.put(newEvent.getIndexKey(), newEvent);
+        databaseReference.child("events").child(newEvent.getIndexKey()).setValue(newEvent);
     }
 
     public void addUser(User newUser) {
-        users.add(newUser);
-        databaseReference.child("users").push().child(newUser.getName()).setValue(newUser);
+        users.put(newUser.getIndexKey(), newUser);
+        databaseReference.child("users").child(newUser.getIndexKey()).setValue(newUser);
+    }
+
+    public void deleteEvent(String indexKey) {
+        databaseReference.child("events").child(indexKey).removeValue();
+    }
+
+    public void deleteUser(String indexKey) {
+        databaseReference.child("users").child(indexKey).removeValue();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -88,15 +109,17 @@ public class DataRepository {
     //----------------------------------------------------------------------------------------------
 
     private void loadUsers() {
-        users = new ArrayList<>();
+        users = new HashMap<>();
 
-        users.add(new User("Hamzah"));
-        users.add(new User("Hai"));
-        users.add(new User("Yulong"));
-        users.add(new User("Irene"));
-        users.add(new User("Keegan"));
+        // Use Firebase to populate the list.
+        databaseReference.child("users").addChildEventListener(getChildEventListener(User.class, users));
+    }
 
-        // TODO emit broadcast Repo Updated - New Data - Users
+    private void loadEvents() {
+        events = new HashMap<>();
+
+        // Use Firebase to populate the list.
+        databaseReference.child("events").addChildEventListener(getChildEventListener(Event.class, events));
     }
 
     /**
@@ -105,30 +128,135 @@ public class DataRepository {
     private void loadFriends() {
         friends = new ArrayList<>();
 
-        for (User user : users) {
+        for (User user : getUsers()) {
             friends.add(new Friend(AppState.getCurrentState().getCurrentUser(), user));
         }
 
         // TODO emit broadcast Repo Updated - New Data - Friends
     }
 
-    private void loadEvents() {
-        events = new ArrayList<>();
+    //----------------------------------------------------------------------------------------------
+    // Developer Methods
+    //----------------------------------------------------------------------------------------------
+
+    private List<String> mockUserIds = new ArrayList<>();
+    private List<String> mockEventIds = new ArrayList<>();
+
+    public void addMockData() {
+        addMockUsers();
+        addMockEvents();
+    }
+
+    public void deleteMockData() {
+        for (String userId : mockUserIds) {
+            deleteUser(userId);
+        }
+
+        for (String eventId : mockEventIds) {
+            deleteEvent(eventId);
+        }
+    }
+
+    public void clearDB() {
+        databaseReference.child("users").removeValue();
+        databaseReference.child("events").removeValue();
+    }
+
+    // Adds us into the database as defaults
+    private void addMockUsers() {
+        String[] newUserNames = new String[] {
+                "Hamzah",
+                "Hai",
+                "Yulong",
+                "Irene",
+                "Keegan"
+        };
+
+        for (String name: newUserNames) {
+            User newUser = new User(name);
+            mockUserIds.add(newUser.getIndexKey());
+            addUser(newUser);
+        }
+    }
+
+    // Adds bs into the database as defaults
+    private void addMockEvents() {
 
         User currentUser = AppState.getCurrentState().getCurrentUser();
-        List<User> users = new ArrayList<>();
-        users.add(currentUser);
 
-        List<LineItem> cupcakeItems = new ArrayList<>();
-        cupcakeItems.add(new LineItem("cupcake 1", 10));
-        cupcakeItems.add(new LineItem("cupcake 2", 20));
-        events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", users, cupcakeItems));
+        Event cupcakeEvent = new Event(
+                "Cupcake Party",
+                new Date(),
+                "It's a cupcake party dude!",
+                new ArrayList<>(Arrays.asList(
+                        currentUser
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new LineItem("cupcake 1", 10),
+                        new LineItem("cupcake 2", 20)
+                ))
+        );
+        mockEventIds.add(cupcakeEvent.getIndexKey());
+        addEvent(cupcakeEvent);
 
-        List<LineItem> birthdayPartyItems = new ArrayList<>();
-        birthdayPartyItems.add(new LineItem("birthday cake 1", 15));
-        birthdayPartyItems.add(new LineItem("birthday cake 2", 25));
-        events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", users, birthdayPartyItems));
+        Event birthdayPartyEvent = new Event(
+                "Birthday Party",
+                new Date(),
+                "It's everyone's birthday!",
+                new ArrayList<>(Arrays.asList(
+                        currentUser
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new LineItem("birthday cake 1", 15),
+                        new LineItem("birthday cake 2", 25)
+                ))
+        );
+        mockEventIds.add(birthdayPartyEvent.getIndexKey());
+        addEvent(birthdayPartyEvent);
+    }
 
-        // TODO emit broadcast Repo Updated - New Data - Events
+    //----------------------------------------------------------------------------------------------
+    // Private Helpers
+    //----------------------------------------------------------------------------------------------
+
+    private <T extends Indexable> ChildEventListener getChildEventListener(final Class<T> DataType, final Map<String, T> dataStore) {
+
+        return new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                T newData = dataSnapshot.getValue(DataType);
+                Log.i("Firebase", "onChildAdded: (" + DataType.getSimpleName() + ")");
+                Log.i("Firebase", "   key: " + newData.getIndexKey());
+                Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
+                dataStore.put(newData.getIndexKey(), newData);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                T changedData = dataSnapshot.getValue(DataType);
+                Log.i("Firebase", "onChildChanged: (" + DataType.getSimpleName() + ")");
+                Log.i("Firebase", "   key: " + changedData.getIndexKey());
+                Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
+                dataStore.remove(changedData.getIndexKey());
+                dataStore.put(changedData.getIndexKey(), changedData);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                T removedData = dataSnapshot.getValue(DataType);
+                Log.i("Firebase", "onChildRemoved: (" + DataType.getSimpleName() + ")");
+                Log.i("Firebase", "   key: " + removedData.getIndexKey());
+                Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
+                dataStore.remove(removedData.getIndexKey());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
     }
 }
