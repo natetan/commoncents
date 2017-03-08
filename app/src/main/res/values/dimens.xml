@@ -5,9 +5,18 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <!-- Standard app-wide dimensions -->
+
+    <!-- Items in RecyclerViews and other lists -->
+    <dimen name="list_section_header_margin">16dp</dimen>
     <dimen name="list_item_min_height">64dp</dimen>
-    <dimen name="profile_picture_size_in_item">56dp</dimen>
+    <dimen name="list_item_picture_size">56dp</dimen>
     <dimen name="list_item_margin_half">4dp</dimen>
     <dimen name="list_item_padding">8dp</dimen>
     <dimen name="list_item_subitem_margin">8dp</dimen>
+    <dimen name="list_item_title_font_size">24sp</dimen>
+    <dimen name="list_item_subtitle_font_size">14sp</dimen>
+    <dimen name="list_item_info_font_size">18sp</dimen>
+
+    <!-- Friend Profile View -->
+    <dimen name="profile_view_profile_picture_size">128dp</dimen>
 </resources>

@@ -20,4 +20,7 @@
     <string name="phone_number_hint">Phone (Optional)</string>
     <string name="email">Email (Optional)</string>
     <string name="submit_label">Submit</string>
+
+    <!-- Simple Text -->
+    <string name="text_history">History</string>
 </resources>
