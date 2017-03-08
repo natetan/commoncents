@@ -34,7 +34,8 @@
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
+                    android:textColor="@color/colorMaterialUIWhite"
+                    android:textSize="@dimen/font_size_big_title"
                     android:text="Friend" />
 
                 <TextView
@@ -43,6 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textSize="@dimen/font_size_title"
                     android:text="$ Amount Owed" />
 
             </LinearLayout>
@@ -57,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="@string/text_history" />
+        android:text="@string/text_past_events" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/line_item_list"

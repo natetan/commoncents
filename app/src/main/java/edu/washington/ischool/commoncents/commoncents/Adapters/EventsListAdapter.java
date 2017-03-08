@@ -1,14 +1,10 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +21,11 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
     static final String TAG = "EventsListAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_event_list;
-    private static final int NAME_VIEW_ID = R.id.event_name;
-    private static final int DESCR_VIEW_ID = R.id.event_descr;
+    private static final int ITEM_LAYOUT_ID = R.layout.item_event_for_events_list;
+    private static final int PIC_VIEW_ID = R.id.item_picture;
+    private static final int NAME_VIEW_ID = R.id.item_title;
+    private static final int DESCRIPTION_VIEW_ID = R.id.item_subtitle;
+    private static final int MONEY_VIEW_ID = R.id.item_info;
 
     private Listener listener;
     private List<Event> events = new ArrayList<>();
@@ -78,7 +76,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
         // Get important views for this item
         TextView nameView = (TextView) itemView.findViewById(NAME_VIEW_ID);
-        TextView descrView = (TextView) itemView.findViewById(DESCR_VIEW_ID);
+        TextView descrView = (TextView) itemView.findViewById(DESCRIPTION_VIEW_ID);
 
         return new EventsListAdapter.ViewHolder(itemView, nameView, descrView);
     }

@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:theme="@style/SettingsTheme"
     tools:context="edu.washington.ischool.commoncents.commoncents.SettingsActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
-    <Button
-        android:id="@+id/signupLoginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inviteFriendsButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/inviteFriendsButton"
-        android:layout_marginTop="92dp"
-        android:padding="20sp"
-        android:text="Sign Up / Login"
-        android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/signupLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Sign Up / Login" />
 
-    <Button
-        android:id="@+id/inviteFriendsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signupLoginButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:padding="20sp"
-        android:text="Invite Friends"/>
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/changeCurrencyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/inviteFriendsButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:padding="20sp"
-        android:text="Change Currency"
-        android:textSize="12sp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
+        <Button
+            android:id="@+id/inviteFriendsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Invite Friends" />
 
-</RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/changeCurrencyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Change Currency" />
+
+    </FrameLayout>
+
+</LinearLayout>
