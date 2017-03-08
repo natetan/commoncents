@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,19 +32,15 @@ public class MakeChampionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_champion);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // Get reference to the database
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        EditText[] ets = {championNameEditText, ability1, ability2, ability3, ability4};
-        int[] ids = {R.id.championNameEditText, R.id.ability1EditText, R.id.ability2EditText,
-                R.id.ability3EditText, R.id.ability4EditText};
-
-        for (int i = 0; i < ets.length; i++) {
-            ets[i] = (EditText) findViewById(ids[i]);
-        }
+        championNameEditText = (EditText) findViewById(R.id.championNameEditText);
+        ability1 = (EditText) findViewById(R.id.ability1EditText);
+        ability2 = (EditText) findViewById(R.id.ability2EditText);
+        ability3 = (EditText) findViewById(R.id.ability3EditText);
+        ability4 = (EditText) findViewById(R.id.ability4EditText);
 
         createChampionButton = (Button) findViewById(R.id.createChampionButton);
         createChampionButton.setOnClickListener(new View.OnClickListener() {
@@ -55,10 +52,11 @@ public class MakeChampionActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // Creates a new Champion (adds to Firebase)
-                    Champion champion = new Champion(championNameEditText.getText().toString(),
+                    createNewChampion(championNameEditText.getText().toString(),
                             ability1.getText().toString(), ability2.getText().toString(),
                             ability3.getText().toString(), ability4.getText().toString());
-                    mDatabase.child("champions").setValue(champion);
+                    startActivity(new Intent(MakeChampionActivity.this, MainActivity.class));
+
                 }
             }
         });
@@ -66,6 +64,11 @@ public class MakeChampionActivity extends AppCompatActivity {
 
     public boolean isEmpty(EditText e) {
         return e.getText().toString().length() == 0;
+    }
+
+    private void createNewChampion(String name, String a1, String a2, String a3, String a4) {
+        Champion champion = new Champion(name, a1, a2, a3, a4);
+        mDatabase.child("champions").child(name).setValue(champion);
     }
 
 }
