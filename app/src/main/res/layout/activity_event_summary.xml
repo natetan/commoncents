@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.washington.ischool.commoncents.commoncents.Activies.EventSummaryActivity">
+    tools:context="edu.washington.ischool.commoncents.commoncents.Activies.EventSummaryActivity"
+    android:padding="10dp">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="Event Name: "
+            android:layout_weight="1"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-    <TextView
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Summary"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:textAlignment="center"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/send_sms_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Reminders"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/finish_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finish"/>
+
+    </LinearLayout>
+
+</LinearLayout>
