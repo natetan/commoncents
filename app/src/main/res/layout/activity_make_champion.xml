@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.washington.ischool.commoncents.commoncents.MakeChampionActivity">
+
+
+    <EditText
+        android:id="@+id/championNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Champion Name"/>
+
+    <EditText
+        android:id="@+id/ability1EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/championNameEditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Ability 1"/>
+
+    <EditText
+        android:id="@+id/ability2EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ability1EditText"
+        android:layout_alignRight="@+id/ability1EditText"
+        android:layout_below="@+id/ability1EditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Ability 2"/>
+
+    <EditText
+        android:id="@+id/ability3EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ability2EditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Ability 3"/>
+
+    <EditText
+        android:id="@+id/ability4EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ability3EditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Ability 4"/>
+
+    <Button
+        android:id="@+id/createChampionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Create"
+        android:layout_below="@+id/ability4EditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+</RelativeLayout>

@@ -119,6 +119,7 @@ public class SplitCostsActivity extends AppCompatActivity {
             AppState.getCurrentState().selectEvent(thisEvent);
             return true;
         }
+
         return false;
     }
 }

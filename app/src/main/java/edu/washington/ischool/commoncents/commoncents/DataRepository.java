@@ -1,6 +1,7 @@
 package edu.washington.ischool.commoncents.commoncents;
 
-import java.lang.reflect.Array;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,9 @@ import edu.washington.ischool.commoncents.commoncents.Models.User;
 
 public class DataRepository {
 
+    // Firebase database
+    private DatabaseReference databaseReference;
+
     //----------------------------------------------------------------------------------------------
     // Singleton Pattern
     //----------------------------------------------------------------------------------------------
@@ -25,12 +29,17 @@ public class DataRepository {
     public static DataRepository getInstance() {
         if (instance == null) {
             instance = new DataRepository();
-            instance.loadUsers();
-            instance.loadFriends(); // must be called *after* users are loaded
-            instance.loadEvents();
         }
 
         return instance;
+    }
+
+    private DataRepository() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        loadUsers();
+        loadFriends(); // must be called *after* users are loaded
+        loadEvents();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -71,6 +80,7 @@ public class DataRepository {
 
     public void addUser(User newUser) {
         users.add(newUser);
+        databaseReference.child("users").push().child(newUser.getName()).setValue(newUser);
     }
 
     //----------------------------------------------------------------------------------------------
