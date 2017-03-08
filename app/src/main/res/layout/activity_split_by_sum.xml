@@ -19,8 +19,8 @@
             android:id="@+id/sum_label"
             android:layout_width="11dp"
             android:layout_height="20dp"
-            android:textSize="18dp"
-            android:text="$"/>
+            android:text="$"
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/dollar_input"
@@ -28,14 +28,12 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Dollars"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."
-            />
+            android:text="." />
 
         <EditText
             android:id="@+id/cent_input"
@@ -43,18 +41,17 @@
             android:layout_height="40dp"
             android:layout_weight="2"
             android:ems="10"
-            android:hint="Cents"
-            android:maxLength="2"
-            android:inputType="number" />
+            android:hint="00"
+            android:inputType="number"
+            android:maxLength="2" />
 
         <Switch
             android:id="@+id/split_equally_switch"
             android:layout_width="123dp"
             android:layout_height="40dp"
             android:text="Split Equally"
-            android:textOn="Splitting Equally"
             android:textOff="Splitting Unequally"
-            />
+            android:textOn="Splitting Equally" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

@@ -258,7 +258,21 @@ public class SplitBySumActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (!splitEqually.isChecked()) {
+                    double amt = 0;
+                    String percentText = percentage.getText().toString();
+                    Log.v("PERCENT TEXT", percentText);
 
+                    if (percentText.contains("%")) {
+                        percentage.setText("");
+                        percentText = percentage.getText().toString();
+                    }
+
+                    if (percentText != null && !percentText.equals("")) {
+                        double percent = Integer.valueOf(percentText);
+                        amt = costInCents * (percent / 100.0) / 100.0;
+                        Log.v("AMOUNT", "" + amt);
+                        amount.setText("$" + new DecimalFormat("#.##").format(amt));
+                    }
                 }
                 return false;
             }
