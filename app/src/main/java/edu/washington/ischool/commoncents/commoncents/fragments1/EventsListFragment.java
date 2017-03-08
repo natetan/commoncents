@@ -126,14 +126,14 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
     public void onEventLongClicked(View view, Event event) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(R.string.delete_caution)
-                .setTitle("Warning")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.warning_title)
+                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getContext(), "Delete feature coming soon!", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(R.string.dialog_cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

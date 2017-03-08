@@ -92,6 +92,11 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
     }
 
     @Override
+    public void onUserLongClicked(View view, User user) {
+        
+    }
+
+    @Override
     public List<User> getUpdatedDataSet() {
         return AppState.getCurrentState().getSelectedEvent().getUsersInvolved();
     }

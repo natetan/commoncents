@@ -41,6 +41,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
      */
     public interface Listener {
         void onUserClicked(View view, User user);
+        void onUserLongClicked(View view, User user);
         List<User> getUpdatedDataSet();
     }
 
@@ -108,6 +109,15 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
             public void onClick(View view) {
                 // Delegate click logic to listener
                 listener.onUserClicked(view, user);
+            }
+        });
+
+        // Long click
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                listener.onUserLongClicked(view, user);
+                return true;
             }
         });
     }
