@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
@@ -29,6 +33,9 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
     private int userId;
     private int removeUserId;
     private Event currentEvent;
+    private User selectedUser;
+    private Map<User, List<LineItem>> pairings = new HashMap<User, List<LineItem>>();
+
 
     private SplitByItemsFriendsAdapter.Listener listener;
 
@@ -50,6 +57,11 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
         this.removeUserId = removeUserId;
         this.currentEvent = currentEvent;
         this.usersList = currentEvent.getUsersInvolved(); //initialize user list to be edited later
+
+        //set the userLineItemPairing
+        AppState.getCurrentState().setUserLineItemPairing(this.pairings);
+        this.pairings = AppState.getCurrentState().getCurrentUserLineItemPairing();
+
     }
 
     @Override
@@ -64,10 +76,10 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
     @Override
     public void onBindViewHolder(SplitByItemsFriendsAdapter.ViewHolder holder, int position) {
         final int index = position;
-        final User selectedUser = usersList.get(position);
+        final User thisUser = usersList.get(position);
 
 
-        holder.user.setText(selectedUser.getName());
+        holder.user.setText(thisUser.getName());
 
         //Button
         holder.removeUser.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +93,7 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                AppState.getCurrentState().selectCurrentUser(thisUser);
             }
         });
     }
@@ -93,13 +105,16 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
 
     public void addToUsersList(User u) {
         this.usersList.add(u);
+        this.pairings.put(u, new ArrayList<LineItem>());
         notifyDataSetChanged();
-        Log.e(TAG, usersList.toString());
+        Log.e(TAG, pairings.size() + "/" + usersList.size());
         Log.e(TAG, usersList.get(0).getName());
     }
 
     public void removeFromUsersList(int index) {
-        this.usersList.remove(index);
+        User thisUser = this.usersList.get(index);
+        this.usersList.remove(thisUser);
+        this.pairings.remove(thisUser);
         notifyDataSetChanged();
         Log.e(TAG, usersList.toString());
     }
