@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 
 /**
- * Created by keegomyneego on 3/4/17.
+ * Created by IreneW on 2017-03-07.
  */
 
-public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAdapter.ViewHolder> {
+public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItemsFriendsAdapter.ViewHolder>{
+
 
     private final String TAG = "SPLIT_ITEMS_ADAPTER";
 
@@ -29,7 +29,7 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
     private int removeLineItemId;
     private Event currentEvent;
 
-    private Listener listener;
+    private SplitByItemsLineAdapter.Listener listener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView lineItemName;
@@ -44,7 +44,7 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
         }
     }
 
-    public SplitItemsListAdapter(Listener listener, Event currentEvent, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
+    public SplitByItemsFriendsAdapter(SplitByItemsLineAdapter.Listener listener, Event currentEvent, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
         this.listener = listener;
         this.itemLayoutId = itemLayoutId;
         this.lineItemId = lineItemId;
@@ -55,16 +55,17 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
     }
 
     @Override
-    public SplitItemsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SplitByItemsFriendsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(itemLayoutId, parent, false);
         TextView lineItem = (TextView) view.findViewById(lineItemId);
         TextView price = (TextView) view.findViewById(priceId);
         Button removeLineItem = (Button) view.findViewById(removeLineItemId);
-        return new SplitItemsListAdapter.ViewHolder(view, lineItem, price, removeLineItem);
+        return new SplitByItemsFriendsAdapter.ViewHolder(view, lineItem, price, removeLineItem);
     }
 
+
     @Override
-    public void onBindViewHolder(SplitItemsListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SplitByItemsFriendsAdapter.ViewHolder holder, int position) {
         final int index = position;
         final LineItem selectedLineItem = lineItemList.get(position);
 
@@ -107,6 +108,7 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
         notifyDataSetChanged();
         Log.e(TAG, lineItemList.toString());
     }
+
     @Override
     public int getItemCount() {
         return lineItemList.size();

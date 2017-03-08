@@ -13,16 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
-import edu.washington.ischool.commoncents.commoncents.Adapters.SplitItemsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.Adapters.SplitByItemsFriendsAdapter;
+import edu.washington.ischool.commoncents.commoncents.Adapters.SplitByItemsLineAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.Models.Payment;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
 import edu.washington.ischool.commoncents.commoncents.R;
 
-public class SplitByItemActivity extends AppCompatActivity implements SplitItemsListAdapter.Listener {
+public class SplitByItemActivity extends AppCompatActivity implements SplitByItemsLineAdapter.Listener, SplitByItemsFriendsAdapter.Listener {
 
     private final String TAG = "SPLIT_BY_ITEM_ACTIVITY";
 
@@ -37,7 +36,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
     private TextView friendName;
     private TextView lineItemName;
 
-    private SplitItemsListAdapter adapter;
+    private SplitByItemsLineAdapter adapter;
     private RecyclerView splitItemView;
 
 
@@ -56,15 +55,18 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
         newDollar = (EditText) findViewById(R.id.new_lineitem_dollar);
         newCents = (EditText) findViewById(R.id.new_lineitem_cents);
 
+
+
+        initializeSplitItemView();
+
         btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nFriend = newFriend.getText().toString();
                 newFriend.setText("");
+
             }
         });
-
-        initializeSplitItemView();
 
         btnAddLineItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +108,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         splitItemView.setLayoutManager(layoutManager);
 
-        adapter = new SplitItemsListAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
+        adapter = new SplitByItemsLineAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
         splitItemView.setAdapter(adapter);
     }
 
