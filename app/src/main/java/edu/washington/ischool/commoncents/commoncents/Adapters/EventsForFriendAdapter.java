@@ -11,27 +11,30 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
+import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
+import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
 
 /**
- * Created by keegomyneego on 3/5/17.
+ * Created by keegomyneego on 3/7/17.
  */
 
-public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> {
+public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriendAdapter.ViewHolder> {
 
-    static final String TAG = "FriendsListAdapter";
+    static final String TAG = "EventsForFriendAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_friend_list_item;
+    private static final int ITEM_LAYOUT_ID = R.layout.item_event_for_friend;
+    private static final int PIC_VIEW_ID = R.id.item_picture;
     private static final int NAME_VIEW_ID = R.id.item_title;
+    private static final int DESCRIPTION_VIEW_ID = R.id.item_subtitle;
     private static final int MONEY_VIEW_ID = R.id.item_info;
-    private static final int PROFILE_PIC_VIEW_ID = R.id.profile_picture;
 
     private Context context;
     private Listener listener;
-    private List<Friend> friends = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Client Interface
@@ -41,22 +44,24 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
      * Listener to which event handling logic is delegated
      */
     public interface Listener {
-        void onFriendClicked(View view, Friend friend);
+        void onEventClicked(View view, Event event);
     }
 
     /**
      * Custom view holder for this adapter
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView picView;
         public TextView nameView;
+        public TextView descriptionView;
         public TextView moneyView;
-        public ImageView profilePicView;
 
-        public ViewHolder(View itemView, TextView nameView, TextView moneyView, ImageView profilePicView) {
+        public ViewHolder(View itemView, ImageView picView, TextView nameView, TextView descriptionView, TextView moneyView) {
             super(itemView);
+            this.picView = picView;
             this.nameView = nameView;
+            this.descriptionView = descriptionView;
             this.moneyView = moneyView;
-            this.profilePicView = profilePicView;
         }
     }
 
@@ -64,7 +69,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public FriendsListAdapter(Context context, Listener listener) {
+    public EventsForFriendAdapter(Context context, Listener listener) {
         this.context = context;
         this.listener = listener;
 
@@ -72,7 +77,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
-                FriendsListAdapter.this.updateDataSet();
+                EventsForFriendAdapter.this.updateDataSet();
             }
         });
 
@@ -86,39 +91,41 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
                 .inflate(ITEM_LAYOUT_ID, parent, false);
 
         // Get important views for this item
+        ImageView picView = (ImageView) itemView.findViewById(PIC_VIEW_ID);
         TextView nameView = (TextView) itemView.findViewById(NAME_VIEW_ID);
+        TextView descriptionView = (TextView) itemView.findViewById(DESCRIPTION_VIEW_ID);
         TextView moneyView = (TextView) itemView.findViewById(MONEY_VIEW_ID);
-        ImageView profilePicView = (ImageView) itemView.findViewById(PROFILE_PIC_VIEW_ID);
 
-        return new ViewHolder(itemView, nameView, moneyView, profilePicView);
+        return new ViewHolder(itemView, picView, nameView, descriptionView, moneyView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Friend friend = friends.get(position);
+        final Event event = events.get(position);
 
         // Set the view properties for this cell
-        holder.nameView.setText(friend.getName());
-        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed());
-        ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, friend, ComponentHelper.PictureType.IN_LIST_ITEM);
+        ComponentHelper.getInstance().setEventPicture(holder.picView, event, ComponentHelper.PictureType.IN_LIST_ITEM);
+        holder.nameView.setText(event.getName());
+        holder.descriptionView.setText(event.getDescription());
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, event.getAmountOwed(AppState.getCurrentState().getCurrentUser()));
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Delegate click logic to listener
-                listener.onFriendClicked(view, friend);
+                listener.onEventClicked(view, event);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return events.size();
     }
 
-    // Update our local collection of friends with those from the repo
+    // Update our local collection of events with those from the repo
     private void updateDataSet() {
-        friends = DataRepository.getInstance().getFriends();
+        events = DataRepository.getInstance().getEvents();
     }
 }
