@@ -68,10 +68,10 @@ public class ComponentHelper {
         String amountOwed;
 
         if (centsOwed >= 0) {
-            amountOwed = (centsOwed / 100) + "." + (centsOwed % 100);
+            amountOwed = "$" + (centsOwed / 100) + "." + (centsOwed % 100);
             textView.setTextColor(ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_POSITIVE);
         } else {
-            amountOwed = "(" + (-centsOwed / 100) + "." + (-centsOwed % 100) + ")";
+            amountOwed = "($" + (-centsOwed / 100) + "." + (-centsOwed % 100) + ")";
             textView.setTextColor(ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_NEGATIVE);
         }
 
