@@ -14,22 +14,25 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.MainActivity;
+import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
+import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.R;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
-public class EventSummaryActivity extends AppCompatActivity implements FriendsListAdapter.Listener{
+public class EventSummaryActivity extends AppCompatActivity implements UsersListAdapter.Listener{
 
     private Button sendSmsBtn;
     private Button finishBtn;
     private TextView eventName;
     private TextView eventTotal;
     private RecyclerView eventSummaryView;
-    private FriendsListAdapter adapter;
+    private UsersListAdapter adapter;
     private int total;
 
     @Override
@@ -59,7 +62,7 @@ public class EventSummaryActivity extends AppCompatActivity implements FriendsLi
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EventSummaryActivity.this, AddEventActivity.class);
+                Intent intent = new Intent(EventSummaryActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -75,20 +78,20 @@ public class EventSummaryActivity extends AppCompatActivity implements FriendsLi
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         eventSummaryView.setLayoutManager(layoutManager);
 
-        adapter = new FriendsListAdapter(getBaseContext(), this);
+        adapter = new UsersListAdapter(getBaseContext(), this);
         eventSummaryView.setAdapter(adapter);
     }
 
     @Override
-    public void onFriendClicked(View view, Friend friend) {
+    public void onUserClicked(View view, User user) {
         // Go to selected friends profile page
-        AppState.getCurrentState().selectFriend(friend);
+        AppState.getCurrentState().selectUser(user);
         //SHOW LINE ITEMS, CREATE ACTIVITY FOR LINE ITEMS
         //startActivity(new Intent(getBaseContext(), FriendProfileActivity.class));
     }
 
     @Override
-    public List<Friend> getUpdatedDataSet() {
-        return null;
+    public List<User> getUpdatedDataSet() {
+        return AppState.getCurrentState().getSelectedEvent().getUsersInvolved();
     }
 }
