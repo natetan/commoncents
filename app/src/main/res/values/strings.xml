@@ -23,6 +23,7 @@
     <string name="phone_number_hint">Phone (Optional)</string>
     <string name="email">Email (Optional)</string>
     <string name="submit_label">Submit</string>
+    <string name="delete_caution">Are you sure you want to delete this?</string>
 
     <!-- Simple Text -->
     <string name="text_past_events">PAST EVENTS TOGETHER</string>
