@@ -51,8 +51,7 @@
             android:name=".Activies.SignUpActivity"
             android:theme="@style/SettingsTheme"/>
         <activity
-            android:name=".MakeChampionActivity"
-            android:label="@string/title_activity_make_champion">
+            android:name=".MakeChampionActivity">
         </activity>
     </application>
 

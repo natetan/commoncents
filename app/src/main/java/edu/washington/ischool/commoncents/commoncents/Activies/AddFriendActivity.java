@@ -58,16 +58,25 @@ public class AddFriendActivity extends AppCompatActivity {
                 String phoneString = phone.getText().toString();
 
                 ArrayList<User> users = (ArrayList<User>) DataRepository.getInstance().getUsers();
-                //Log.v("USERS", users.);
-                Iterator<User> iterator = users.iterator();
-                int count = 0;
+
                 User user = new User(friendNameString);
                 if (!users.contains(user)) {
                     Toast.makeText(AddFriendActivity.this, "Friend does not exist, adding the new friend...", Toast.LENGTH_SHORT).show();
+                    //If the email field is filled out, then add the email to the User object
+                    if (!emailString.equals("")) {
+                        Toast.makeText(AddFriendActivity.this, "The email field is filled out with something...", Toast.LENGTH_SHORT).show();
+                        user.setEmail(emailString);
+                    }
+                    //If the phone number field is filled out, then add the phone number to the User object
+                    if (!phoneString.equals("")) {
+                        Toast.makeText(AddFriendActivity.this, "The phone field is filled out with something...", Toast.LENGTH_SHORT).show();
+                        user.setPhoneNumber(phoneString);
+                    }
                     DataRepository.getInstance().addUser(user);
                 } else {
                     Toast.makeText(AddFriendActivity.this, "Friend already exists", Toast.LENGTH_SHORT).show();
                 }
+
 //                for (User user: users) {
 //                    Log.v("USER", user.getName());
 //                    count++;
