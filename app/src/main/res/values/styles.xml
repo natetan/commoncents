@@ -8,6 +8,18 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="EventsTheme" parent="AppTheme">
+    <item name="colorAccent">@color/colorEventsAccent</item>
+  </style>
+
+  <style name="FriendsTheme" parent="AppTheme">
+    <item name="colorAccent">@color/colorFriendsAccent</item>
+  </style>
+
+  <style name="SettingsTheme" parent="AppTheme">
+    <item name="colorAccent">@color/colorSettingsAccent</item>
+  </style>
+
   <style name="AppTheme.NoActionBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>

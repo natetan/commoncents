@@ -1,6 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -30,6 +29,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     private static final int MONEY_VIEW_ID = R.id.item_description;
     private static final int PROFILE_PIC_VIEW_ID = R.id.profile_picture;
 
+    private Context context;
     private Listener listener;
     private List<Friend> friends = new ArrayList<>();
 
@@ -64,7 +64,8 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public FriendsListAdapter(Listener listener) {
+    public FriendsListAdapter(Context context, Listener listener) {
+        this.context = context;
         this.listener = listener;
 
         // Listen to calls to notifyDataSetChanged() so we can keep our local data up to date
@@ -95,20 +96,11 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Friend friend = friends.get(position);
-        int centsOwed = friend.getAmountOwed();
-        String amountOwed;
-
-        if (centsOwed >= 0) {
-            amountOwed = (centsOwed / 100) + "." + (centsOwed % 100);
-        } else {
-            amountOwed = "(" + (-centsOwed / 100) + "." + (-centsOwed % 100) + ")";
-        }
-
 
         // Set the view properties for this cell
         holder.nameView.setText(friend.getName());
-        holder.moneyView.setText(amountOwed);
-        holder.profilePicView.setImageDrawable(generateProfilePic(friend));
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed());
+        ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, friend);
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -118,22 +110,6 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
                 listener.onFriendClicked(view, friend);
             }
         });
-    }
-
-    private TextDrawable generateProfilePic(Friend friend) {
-
-        // Generate arbitrary color based on friends name
-        float h = (float)Math.abs(friend.getName().hashCode()) % 360;
-        float s = 0.5f;
-        float v = 0.8f;
-
-        // Calculate the initials for this friends name
-        String initials = friend.getName().substring(0, 2);
-
-        TextDrawable drawable = TextDrawable.builder()
-                .buildRound(initials, Color.HSVToColor(new float[]{ h, s, v }));
-
-        return drawable;
     }
 
     @Override
