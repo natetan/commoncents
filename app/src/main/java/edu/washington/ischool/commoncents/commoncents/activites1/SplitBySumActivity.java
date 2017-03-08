@@ -364,7 +364,7 @@ public class SplitBySumActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         friendsInEventView.setLayoutManager(layoutManager);
 
-        adapter = new FriendsInEventAdapter(R.layout.item_friend_for_event, R.id.name, R.id.amount, R.id.percentage);
+        adapter = new FriendsInEventAdapter(R.layout.list_item_friend_for_event, R.id.name, R.id.amount, R.id.percentage);
         friendsInEventView.setAdapter(adapter);
     }
 

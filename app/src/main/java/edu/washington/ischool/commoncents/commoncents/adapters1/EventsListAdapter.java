@@ -25,7 +25,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
     static final String TAG = "EventsListAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_event_for_events_list;
+    private static final int ITEM_LAYOUT_ID = R.layout.list_item_pic_title_info;
     private static final int PIC_VIEW_ID = R.id.item_picture;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int DESCRIPTION_VIEW_ID = R.id.item_subtitle;
@@ -98,12 +98,23 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     public void onBindViewHolder(EventsListAdapter.ViewHolder holder, int position) {
         final Event event = events.get(position);
 
-        // Set the view properties for this cell
+        // Set title
         holder.nameView.setText(event.getName());
-        holder.descrView.setText(event.getDescription());
-        // Not sure where to go get the calculated costs
+
+        // Set subtitle (hiding it empty)
+        String description = event.getDescription();
+        if (description == null || description.isEmpty()) {
+            holder.descrView.setVisibility(View.GONE);
+        } else {
+            holder.descrView.setText(event.getDescription());
+        }
+
+        // Set info to be the amount of money owed to the current
+        // user in this event
         ComponentHelper.getInstance().setOweAmount(context, holder.moneyView,
                 event.getAmountOwed(AppState.getCurrentState().getCurrentUser()), true);
+
+        // Set event picture
         ComponentHelper.getInstance().setEventPicture(holder.imageView, event,
                 ComponentHelper.PictureType.IN_LIST_ITEM);
 

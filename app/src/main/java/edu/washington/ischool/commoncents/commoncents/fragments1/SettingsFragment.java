@@ -110,7 +110,7 @@ public class SettingsFragment extends Fragment {
     private void promptForEmail() {
         // get prompts xml view
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        View promptView = layoutInflater.inflate(R.layout.email_input_dialog, null);
+        View promptView = layoutInflater.inflate(R.layout.dialog_email_input, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setView(promptView);
 

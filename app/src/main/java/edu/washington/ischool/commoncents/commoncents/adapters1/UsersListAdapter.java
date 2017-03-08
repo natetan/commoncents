@@ -23,7 +23,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
 
     static final String TAG = "UsersListAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_friend_for_friends_list;
+    private static final int ITEM_LAYOUT_ID = R.layout.list_item_friend_for_friends_list;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int MONEY_VIEW_ID = R.id.item_info;
     private static final int PROFILE_PIC_VIEW_ID = R.id.profile_picture;

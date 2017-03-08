@@ -25,7 +25,7 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
 
     static final String TAG = "EventsForFriendAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_event_for_friend;
+    private static final int ITEM_LAYOUT_ID = R.layout.list_item_pic_title_info;
     private static final int PIC_VIEW_ID = R.id.item_picture;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int DESCRIPTION_VIEW_ID = R.id.item_subtitle;
@@ -104,8 +104,17 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
 
         // Set the view properties for this cell
         ComponentHelper.getInstance().setEventPicture(holder.picView, event, ComponentHelper.PictureType.IN_LIST_ITEM);
+
         holder.nameView.setText(event.getName());
-        holder.descriptionView.setText(event.getDescription());
+
+        // Set subtitle (hiding it empty)
+        String description = event.getDescription();
+        if (description == null || description.isEmpty()) {
+            holder.descriptionView.setVisibility(View.GONE);
+        } else {
+            holder.descriptionView.setText(event.getDescription());
+        }
+
         ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, event.getAmountOwed(AppState.getCurrentState().getCurrentUser()), true);
 
         // Set this cell's onClickListener

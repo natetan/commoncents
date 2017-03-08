@@ -160,7 +160,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
         RecyclerView.LayoutManager layoutManagerRight = new LinearLayoutManager(this);
         splitItemView.setLayoutManager(layoutManagerRight);
 
-        adapterRight = new SplitByItemsLineAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
+        adapterRight = new SplitByItemsLineAdapter(this, currentEvent, R.layout.list_item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
         splitItemView.setAdapter(adapterRight);
 
         //User List
@@ -168,7 +168,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
         splitItemViewFriend.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManagerLeft = new LinearLayoutManager(this);
         splitItemViewFriend.setLayoutManager(layoutManagerLeft);
-        adapterLeft = new SplitByItemsFriendsAdapter(this, currentEvent, R.layout.item_friend_for_split_item, R.id.user, R.id.remove_user);
+        adapterLeft = new SplitByItemsFriendsAdapter(this, currentEvent, R.layout.list_item_friend_for_split_item, R.id.user, R.id.remove_user);
         splitItemViewFriend.setAdapter(adapterLeft);
     }
 
