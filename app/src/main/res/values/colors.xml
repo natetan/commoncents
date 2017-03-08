@@ -7,23 +7,28 @@
   <color name="colorEventsAccent">@color/colorMaterialUIBlue</color>
   <color name="colorFriendsAccent">@color/colorMaterialUICyan</color>
   <color name="colorSettingsAccent">@color/colorMaterialUIBlueGrey</color>
+  <color name="colorSectionHeader">@color/colorMaterialUISuperLightBlueGrey</color>
 
   <!-- Components -->
   <color name="colorAmountOwedPositive">@color/colorMaterialUIGreen</color>
   <color name="colorAmountOwedNegative">@color/colorMaterialUIRed</color>
+  <color name="colorDeleteButton">@color/colorMaterialUIDarkRed</color>
 
   <!-- Material UI Color Palette -->
   <color name="colorMaterialUIRed">#F44336</color>
+  <color name="colorMaterialUIDarkRed">#B71C1C</color>
   <color name="colorMaterialUIPink">#E91E63</color>
   <color name="colorMaterialUIPurple">#9C27B0</color>
   <color name="colorMaterialUIDeepPurple">#673AB7</color>
   <color name="colorMaterialUIIndigo">#3F51B5</color>
-  <color name="colorMaterialUIBlue">#2196F3</color>
   <color name="colorMaterialUILightBlue">#03A9F4</color>
+  <color name="colorMaterialUIBlue">#2196F3</color>
+  <color name="colorMaterialUIDarkBlue">#0D47A1</color>
   <color name="colorMaterialUICyan">#00BCD4</color>
   <color name="colorMaterialUITeal">#009688</color>
-  <color name="colorMaterialUIGreen">#4CAF50</color>
   <color name="colorMaterialUILightGreen">#8BC34A</color>
+  <color name="colorMaterialUIGreen">#4CAF50</color>
+  <color name="colorMaterialUIDarkGreen">#1B5E20</color>
   <color name="colorMaterialUILime">#CDDC39</color>
   <color name="colorMaterialUIYellow">#FFEB3B</color>
   <color name="colorMaterialUIAmber">#FFC107</color>

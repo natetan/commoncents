@@ -2,31 +2,45 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="EventsTheme" parent="AppTheme">
-        <item name="colorAccent">@color/colorEventsAccent</item>
-    </style>
-
-    <style name="FriendsTheme" parent="AppTheme">
-        <item name="colorAccent">@color/colorFriendsAccent</item>
-    </style>
-
-    <style name="SettingsTheme" parent="AppTheme">
-        <item name="colorAccent">@color/colorSettingsAccent</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
+
+    <!-- Themes for Events Pages -->
+    <style name="EventsTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/colorEventsAccent</item>
+        <item name="colorAccent">@color/colorEventsAccent</item>
+    </style>
+    <style name="EventsTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Themes for Friends Pages -->
+    <style name="FriendsTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/colorFriendsAccent</item>
+        <item name="colorAccent">@color/colorFriendsAccent</item>
+    </style>
+    <style name="FriendsTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Themes for Settings Pages -->
+    <style name="SettingsTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/colorSettingsAccent</item>
+        <item name="colorAccent">@color/colorSettingsAccent</item>
+    </style>
+    <style name="SettingsTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>
