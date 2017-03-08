@@ -14,11 +14,11 @@
       android:layout_weight="2">
 
     <Button
-        android:id="@+id/option1"
+        android:id="@+id/add_mock_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Option 1" />
+        android:text="Add Mock Data" />
 
   </FrameLayout>
 
@@ -28,11 +28,11 @@
       android:layout_weight="1">
 
     <Button
-        android:id="@+id/option2"
+        android:id="@+id/delete_mock_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Option 2" />
+        android:text="Delete Mock Data" />
 
   </FrameLayout>
 
@@ -42,11 +42,11 @@
       android:layout_weight="2">
 
     <Button
-        android:id="@+id/option3"
+        android:id="@+id/clear_db"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Option 3" />
+        android:text="Clear DB" />
 
   </FrameLayout>
 

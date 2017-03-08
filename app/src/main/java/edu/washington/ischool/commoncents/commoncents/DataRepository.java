@@ -96,6 +96,14 @@ public class DataRepository {
         databaseReference.child("users").child(newUser.getIndexKey()).setValue(newUser);
     }
 
+    public void deleteEvent(String indexKey) {
+        databaseReference.child("events").child(indexKey).removeValue();
+    }
+
+    public void deleteUser(String indexKey) {
+        databaseReference.child("users").child(indexKey).removeValue();
+    }
+
     //----------------------------------------------------------------------------------------------
     // Loaders - for the repo to get data from external sources
     //----------------------------------------------------------------------------------------------
@@ -105,8 +113,6 @@ public class DataRepository {
 
         // Use Firebase to populate the list.
         databaseReference.child("users").addChildEventListener(getChildEventListener(User.class, users));
-
-        addMockUsers();
     }
 
     private void loadEvents() {
@@ -114,8 +120,6 @@ public class DataRepository {
 
         // Use Firebase to populate the list.
         databaseReference.child("events").addChildEventListener(getChildEventListener(Event.class, events));
-
-        addMockEvents();
     }
 
     /**
@@ -132,17 +136,47 @@ public class DataRepository {
     }
 
     //----------------------------------------------------------------------------------------------
-    // Mock Data Helpers
+    // Developer Methods
     //----------------------------------------------------------------------------------------------
+
+    private List<String> mockUserIds = new ArrayList<>();
+    private List<String> mockEventIds = new ArrayList<>();
+
+    public void addMockData() {
+        addMockUsers();
+        addMockEvents();
+    }
+
+    public void deleteMockData() {
+        for (String userId : mockUserIds) {
+            deleteUser(userId);
+        }
+
+        for (String eventId : mockEventIds) {
+            deleteEvent(eventId);
+        }
+    }
+
+    public void clearDB() {
+        databaseReference.child("users").removeValue();
+        databaseReference.child("events").removeValue();
+    }
 
     // Adds us into the database as defaults
     private void addMockUsers() {
+        String[] newUserNames = new String[] {
+                "Hamzah",
+                "Hai",
+                "Yulong",
+                "Irene",
+                "Keegan"
+        };
 
-        addUser(new User("Hamzah"));
-        addUser(new User("Hai"));
-        addUser(new User("Yulong"));
-        addUser(new User("Irene"));
-        addUser(new User("Keegan"));
+        for (String name: newUserNames) {
+            User newUser = new User(name);
+            mockUserIds.add(newUser.getIndexKey());
+            addUser(newUser);
+        }
     }
 
     // Adds bs into the database as defaults
@@ -162,6 +196,7 @@ public class DataRepository {
                         new LineItem("cupcake 2", 20)
                 ))
         );
+        mockEventIds.add(cupcakeEvent.getIndexKey());
         addEvent(cupcakeEvent);
 
         Event birthdayPartyEvent = new Event(
@@ -176,6 +211,7 @@ public class DataRepository {
                         new LineItem("birthday cake 2", 25)
                 ))
         );
+        mockEventIds.add(birthdayPartyEvent.getIndexKey());
         addEvent(birthdayPartyEvent);
     }
 
