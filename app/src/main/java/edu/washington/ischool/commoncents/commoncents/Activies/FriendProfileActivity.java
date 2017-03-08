@@ -52,7 +52,7 @@ public class FriendProfileActivity extends AppCompatActivity implements EventsFo
 
         // Amount owed
         TextView friendOweAmountView = (TextView) findViewById(R.id.friend_owe_amount);
-        ComponentHelper.getInstance().setOweAmount(this, friendOweAmountView, selectedFriend.getAmountOwed());
+        ComponentHelper.getInstance().setOweAmount(this, friendOweAmountView, selectedFriend.getAmountOwed(), false);
     }
 
     private void initializeLineItemList() {
