@@ -2,14 +2,13 @@ package edu.washington.ischool.commoncents.commoncents;
 
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import edu.washington.ischool.commoncents.commoncents.Models.Event;
-import edu.washington.ischool.commoncents.commoncents.Models.Friend;
-import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.Models.User;
+import edu.washington.ischool.commoncents.commoncents.models.Event;
+import edu.washington.ischool.commoncents.commoncents.models.Friend;
+import edu.washington.ischool.commoncents.commoncents.models.LineItem;
+import edu.washington.ischool.commoncents.commoncents.models.User;
 
 /**
  * Created by keegomyneego on 3/7/17.

@@ -20,39 +20,33 @@
 
         <!-- Event Activities -->
         <activity
-            android:name=".Activies.EventSummaryActivity"
+            android:name=".activites.EventSummaryActivity"
             android:theme="@style/EventsTheme"/>
         <activity
-            android:name=".Activies.SplitCostsActivity"
+            android:name=".activites.SplitCostsActivity"
             android:theme="@style/EventsTheme"/>
         <activity
-            android:name=".Activies.SplitByItemActivity"
+            android:name=".activites.SplitByItemActivity"
             android:theme="@style/EventsTheme"/>
         <activity
-            android:name=".Activies.SplitBySumActivity"
+            android:name=".activites.SplitBySumActivity"
             android:theme="@style/EventsTheme"/>
 
         <!-- Friend Activities -->
         <activity
-            android:name=".Activies.AddFriendActivity"
+            android:name=".activites.AddFriendActivity"
             android:theme="@style/FriendsTheme"/>
         <activity
-            android:name=".Activies.FriendProfileActivity"
+            android:name=".activites.FriendProfileActivity"
             android:theme="@style/FriendsTheme"/>
 
         <!-- Setting Activities -->
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activites.LoginActivity"
             android:theme="@style/SettingsTheme"/>
         <activity
-            android:name=".Activies.LoginActivity"
+            android:name=".activites.SignUpActivity"
             android:theme="@style/SettingsTheme"/>
-        <activity
-            android:name=".Activies.SignUpActivity"
-            android:theme="@style/SettingsTheme"/>
-        <activity
-            android:name=".MakeChampionActivity">
-        </activity>
     </application>
 
 </manifest>

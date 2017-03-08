@@ -14,10 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.washington.ischool.commoncents.commoncents.Models.Event;
-import edu.washington.ischool.commoncents.commoncents.Models.Friend;
-import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.Models.User;
+import edu.washington.ischool.commoncents.commoncents.models.Event;
+import edu.washington.ischool.commoncents.commoncents.models.Friend;
+import edu.washington.ischool.commoncents.commoncents.models.Indexable;
+import edu.washington.ischool.commoncents.commoncents.models.LineItem;
+import edu.washington.ischool.commoncents.commoncents.models.User;
 
 /**
  * Created by keegomyneego on 3/5/17.
