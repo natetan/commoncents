@@ -40,6 +40,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
      */
     public interface Listener {
         void onEventClicked(View view, Event event);
+        void onEventLongClicked(View view, Event event);
     }
 
     /**
@@ -113,6 +114,14 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             public void onClick(View view) {
                 // Delegate click logic to listener
                 listener.onEventClicked(view, event);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                listener.onEventLongClicked(view, event);
+                return true;
             }
         });
     }
