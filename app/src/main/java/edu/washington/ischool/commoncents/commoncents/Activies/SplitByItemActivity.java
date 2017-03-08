@@ -23,6 +23,9 @@ import edu.washington.ischool.commoncents.commoncents.R;
 
 public class SplitByItemActivity extends AppCompatActivity implements SplitByItemsLineAdapter.Listener, SplitByItemsFriendsAdapter.Listener {
 
+    //missing the LOGIC for pairing LineItem's with User's
+
+
     private final String TAG = "SPLIT_BY_ITEM_ACTIVITY";
 
     private Event currentEvent;

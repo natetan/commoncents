@@ -14,11 +14,12 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <Button
+            android:id="@+id/remove_user"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:maxHeight="5dp"
