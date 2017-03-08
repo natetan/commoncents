@@ -77,6 +77,13 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
             }
 
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public interface Listener {
