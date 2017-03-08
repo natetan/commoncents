@@ -1,6 +1,9 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,13 @@ public class User {
     @NonNull private List<Event> eventList;
     @NonNull private String email;
     @NonNull private String phoneNumber;
+
+    public User() {
+        Log.i("User", "");
+        Log.i("User", "Default constructor called!");
+        Log.i("User", "");
+        // Default constructor required for Firebase calls to DataSnapshot.getValue(User.class)
+    }
 
     public User(@NonNull String name) {
         this(name, new ArrayList<Event>(), "", "");
