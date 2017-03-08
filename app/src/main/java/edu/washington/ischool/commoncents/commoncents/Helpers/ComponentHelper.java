@@ -1,8 +1,6 @@
-package edu.washington.ischool.commoncents.commoncents;
+package edu.washington.ischool.commoncents.commoncents.Helpers;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,27 +21,19 @@ public class ComponentHelper {
 
     private static ComponentHelper instance;
 
-    public static ComponentHelper getInstance(Context context) {
+    public static ComponentHelper getInstance() {
         if (instance == null) {
-            instance = new ComponentHelper(context);
+            instance = new ComponentHelper();
         }
 
         return instance;
     }
 
-    private ComponentHelper(Context context) {
-        Resources resources = context.getResources();
-
-        COLOR_AMOUNT_OWED_POSITIVE = resources.getColor(R.color.colorAmountOwedPositive);
-        COLOR_AMOUNT_OWED_NEGATIVE = resources.getColor(R.color.colorAmountOwedNegative);
-    }
+    private ComponentHelper() {}
 
     //----------------------------------------------------------------------------------------------
     // Public Helper Methods
     //----------------------------------------------------------------------------------------------
-
-    private final int COLOR_AMOUNT_OWED_POSITIVE;
-    private final int COLOR_AMOUNT_OWED_NEGATIVE;
 
     /**
      * Generates a profile picture for the given friend and stores
@@ -74,15 +64,15 @@ public class ComponentHelper {
      * @param textView
      * @param centsOwed
      */
-    public void setOweAmount(TextView textView, int centsOwed) {
+    public void setOweAmount(Context context, TextView textView, int centsOwed) {
         String amountOwed;
 
         if (centsOwed >= 0) {
             amountOwed = (centsOwed / 100) + "." + (centsOwed % 100);
-            textView.setTextColor(COLOR_AMOUNT_OWED_POSITIVE);
+            textView.setTextColor(ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_POSITIVE);
         } else {
             amountOwed = "(" + (-centsOwed / 100) + "." + (-centsOwed % 100) + ")";
-            textView.setTextColor(COLOR_AMOUNT_OWED_NEGATIVE);
+            textView.setTextColor(ThemeHelper.getInstance(context).COLOR_AMOUNT_OWED_NEGATIVE);
         }
 
         textView.setText(amountOwed);

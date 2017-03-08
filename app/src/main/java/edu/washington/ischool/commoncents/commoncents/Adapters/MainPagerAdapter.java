@@ -19,8 +19,8 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public static final String TAG = "MainPagerAdapter";
     int numOfTabs;
 
-    public MainPagerAdapter(FragmentManager fm, int numOfTabs) {
-        super(fm);
+    public MainPagerAdapter(FragmentManager fragmentManager, int numOfTabs) {
+        super(fragmentManager);
         this.numOfTabs = numOfTabs;
     }
 
