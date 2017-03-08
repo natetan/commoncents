@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,12 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
+import edu.washington.ischool.commoncents.commoncents.Models.User;
+import edu.washington.ischool.commoncents.commoncents.R;
 
 /**
  * Created by keegomyneego on 3/4/17.
@@ -28,6 +35,7 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
     private int priceId;
     private int removeLineItemId;
     private Event currentEvent;
+    private Map<User, List<LineItem>> pairings;
 
     private Listener listener;
 
@@ -66,10 +74,10 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
     @Override
     public void onBindViewHolder(SplitByItemsLineAdapter.ViewHolder holder, int position) {
         final int index = position;
-        final LineItem selectedLineItem = lineItemList.get(position);
+        final LineItem thisLineItem = lineItemList.get(position);
 
-        holder.lineItemName.setText(selectedLineItem.getName());
-        int priceInCents = selectedLineItem.getPrice();
+        holder.lineItemName.setText(thisLineItem.getName());
+        int priceInCents = thisLineItem.getPrice();
         int dollar = priceInCents / 100;
         int cents = priceInCents % 100;
         String strCents = "";
@@ -84,7 +92,7 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
         holder.removeLineItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onLineItemClicked(view, index);
+            listener.onLineItemClicked(view, index);
             }
 
         });
@@ -92,7 +100,26 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //get most updated pairings
+                pairings = AppState.getCurrentState().getCurrentUserLineItemPairing();
+                User thisUser = AppState.getCurrentState().getCurrentUser();
+                if (thisUser == null) {
+                    //don't do anything
+                } else {
+                    //a USER is selected
+                    for (User u : pairings.keySet()) {
+                        if (pairings.get(u).contains(thisLineItem)) {
+                            pairings.get(u).remove(thisLineItem);
+                        }
+                    }
+                    //key is already added when user is created
+                    LineItem thisLineItem = lineItemList.get(index);
+                    if (!pairings.get(thisUser).contains(thisLineItem) ) {
+                        pairings.get(thisUser).add(thisLineItem);
+                    } else {
+                        pairings.get(thisUser).remove(thisLineItem);
+                    }
+                }
             }
         });
     }
@@ -106,11 +133,18 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
         this.lineItemList.add(li);
         notifyDataSetChanged();
         Log.e(TAG, lineItemList.toString());
-        Log.e(TAG, lineItemList.get(0).getName());
     }
 
     public void removeFromLineItemList(int index) {
-        this.lineItemList.remove(index);
+        LineItem thisLineItem = this.lineItemList.get(index);
+        //remove from the line item list
+        this.lineItemList.remove(thisLineItem);
+        //remove all occurrences of this line item
+        for (User u: pairings.keySet()) {
+            if (pairings.get(u).contains(thisLineItem)) {
+                pairings.get(u).remove(thisLineItem);
+            }
+        }
         notifyDataSetChanged();
         Log.e(TAG, lineItemList.toString());
     }
