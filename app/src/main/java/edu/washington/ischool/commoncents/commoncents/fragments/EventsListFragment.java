@@ -27,11 +27,13 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
 
     private EventsListAdapter adapter;
 
+    //----------------------------------------------------------------------------------------------
+    // Fragment Lifecycle
+    //----------------------------------------------------------------------------------------------
 
     public EventsListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +45,22 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
 
         return mainView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Fragment Implementation
+    //----------------------------------------------------------------------------------------------
 
     private void initializeFab(final Context context, View mainView) {
         FloatingActionButton fab = (FloatingActionButton) mainView.findViewById(R.id.fab);
