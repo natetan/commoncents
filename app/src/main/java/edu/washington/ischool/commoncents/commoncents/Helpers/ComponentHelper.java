@@ -2,11 +2,13 @@ package edu.washington.ischool.commoncents.commoncents.Helpers;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 
 /**
@@ -14,6 +16,8 @@ import edu.washington.ischool.commoncents.commoncents.Models.Friend;
  */
 
 public class ComponentHelper {
+
+    static String TAG = "ComponentHelper";
 
     //----------------------------------------------------------------------------------------------
     // Singleton Pattern
@@ -35,27 +39,41 @@ public class ComponentHelper {
     // Public Helper Methods
     //----------------------------------------------------------------------------------------------
 
+    public enum PictureType {
+        IN_LIST_ITEM,
+        AS_BACKGROUND
+    }
+
     /**
-     * Generates a profile picture for the given friend and stores
+     * Generates a profile picture for the given event and stores
+     * it in the given image view.
+     *
+     * @param imageView ImageView to put the pic in
+     * @param event The Event to generate the picture for
+     */
+    public void setEventPicture(ImageView imageView, Event event, PictureType pictureType) {
+
+        String name = event.getName();
+        float saturation = 0.5f;
+        float value = 0.5f;
+
+        setPicture(imageView, name, saturation, value, pictureType);
+    }
+
+    /**
+     * Generates a picture for the given friend and stores
      * it in the given image view.
      *
      * @param imageView ImageView to put the pic in
      * @param friend The Friend to generate the picture for
      */
-    public void setProfilePicture(ImageView imageView, Friend friend) {
+    public void setProfilePicture(ImageView imageView, Friend friend, PictureType pictureType) {
 
-        // Generate arbitrary color based on friends name
-        float h = (float)Math.abs(friend.getName().hashCode()) % 360;
-        float s = 0.5f;
-        float v = 0.8f;
+        String name = friend.getName();
+        float saturation = 0.5f;
+        float value = 0.8f;
 
-        // Calculate the initials for this friends name
-        String initials = friend.getName().substring(0, 2);
-
-        TextDrawable drawable = TextDrawable.builder()
-                .buildRound(initials, Color.HSVToColor(new float[]{ h, s, v }));
-
-        imageView.setImageDrawable(drawable);
+        setPicture(imageView, name, saturation, value, pictureType);
     }
 
     /**
@@ -76,5 +94,43 @@ public class ComponentHelper {
         }
 
         textView.setText(amountOwed);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Private Helper Methods
+    //----------------------------------------------------------------------------------------------
+
+    /**
+     * Generates a picture for the given friend and stores
+     * it in the given image view.
+     */
+    private void setPicture(ImageView imageView, String name, float saturation, float value, PictureType pictureType) {
+
+        // Generate arbitrary color based on friends name
+        float hue = (float)Math.abs(name.hashCode()) % 360;
+
+        // Calculate the initials for this friends name
+        String initials;
+        TextDrawable drawable;
+
+        switch (pictureType) {
+            case IN_LIST_ITEM:
+                initials = name.substring(0, 2);
+                drawable = TextDrawable.builder()
+                        .buildRound(initials, Color.HSVToColor(new float[]{ hue, saturation, value }));
+                break;
+
+            case AS_BACKGROUND:
+                initials = "";
+                drawable = TextDrawable.builder()
+                        .buildRect(initials, Color.HSVToColor(new float[]{ hue, saturation, value }));
+                break;
+
+            default:
+                Log.e(TAG, "Unknown Picture Type!!!");
+                return;
+        }
+
+        imageView.setImageDrawable(drawable);
     }
 }
