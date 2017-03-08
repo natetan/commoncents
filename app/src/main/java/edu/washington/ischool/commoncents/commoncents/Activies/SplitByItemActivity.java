@@ -13,11 +13,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import edu.washington.ischool.commoncents.commoncents.Adapters.SplitByItemsFriendsAdapter;
 import edu.washington.ischool.commoncents.commoncents.Adapters.SplitByItemsLineAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
+import edu.washington.ischool.commoncents.commoncents.Models.Payment;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
 import edu.washington.ischool.commoncents.commoncents.R;
 
@@ -32,6 +39,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
 
     private Button btnAddFriend;
     private Button btnAddLineItem;
+    private Button btnDone;
     private EditText newFriend;
     private EditText newLineItem;
     private EditText newDollar;
@@ -55,12 +63,11 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
         //UI elements
         btnAddFriend = (Button) findViewById(R.id.add_friend);
         btnAddLineItem = (Button) findViewById(R.id.add_lineitem);
+        btnDone = (Button) findViewById(R.id.to_event_summary);
         newFriend = (EditText) findViewById(R.id.new_friend_name);
         newLineItem = (EditText) findViewById(R.id.new_lineitem_name);
         newDollar = (EditText) findViewById(R.id.new_lineitem_dollar);
         newCents = (EditText) findViewById(R.id.new_lineitem_cents);
-
-
 
         initializeSplitItemView();
 
@@ -102,6 +109,32 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
                 newLineItem.setText("");
                 newDollar.setText("");
                 newCents.setText("");
+            }
+        });
+
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<User, List<LineItem>> pairings = AppState.getCurrentState().getCurrentUserLineItemPairing();
+                Event e = AppState.getCurrentState().getSelectedEvent();
+                List<LineItem> lineItemList = e.getLineItems();
+                for (User u : pairings.keySet()) {
+                    List<LineItem> values = pairings.get(u);
+                    for (int i = 0; i < values.size(); i++) {
+                        Payment p = new Payment(u, values.get(i).getPrice());
+                        lineItemList.get(i).getPayments().add(p);
+                    }
+                }
+                for (User u : pairings.keySet()) {
+                    Log.e(TAG, u.getName());
+                    for (LineItem li: pairings.get(u)) {
+                        Log.e(TAG, li.getName());
+                    }
+
+                }
+                DataRepository.getInstance().addEvent(currentEvent);
+                Intent intent = new Intent(SplitByItemActivity.this, EventSummaryActivity.class);
+                startActivity(intent);
             }
         });
 

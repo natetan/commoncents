@@ -2,10 +2,13 @@ package edu.washington.ischool.commoncents.commoncents;
 
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.Friend;
+import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
 
 /**
@@ -35,6 +38,8 @@ public class AppState {
     private Friend selectedFriend;
     private Event selectedEvent;
     private User currentUser = new User("me");
+    private LineItem selectedLineItem;
+    private Map<User, List<LineItem>> currentUserLineItemPairing; //tracks index of LineItem fromEvent object
 
     //----------------------------------------------------------------------------------------------
     // Getters
@@ -54,6 +59,14 @@ public class AppState {
         return currentUser;
     }
 
+    public LineItem getSelectedLineItem() {
+        return selectedLineItem;
+    }
+
+    public Map<User, List<LineItem>> getCurrentUserLineItemPairing() {
+        return currentUserLineItemPairing;
+    }
+
     //----------------------------------------------------------------------------------------------
     // Setters
     //----------------------------------------------------------------------------------------------
@@ -66,7 +79,11 @@ public class AppState {
         selectedFriend = friend;
     }
 
-    public void setCurrentUser(User user) {
+    public void selectCurrentUser(User user) {
         currentUser = user;
     }
+
+    public void selectLineItem(LineItem lineItem) { selectedLineItem = lineItem; }
+
+    public void setUserLineItemPairing(Map<User, List<LineItem>> pairing) { currentUserLineItemPairing = pairing; }
 }
