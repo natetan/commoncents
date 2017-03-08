@@ -99,7 +99,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
         // Set the view properties for this cell
         holder.nameView.setText(friend.getName());
-        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed());
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, friend.getAmountOwed(), true);
         ComponentHelper.getInstance().setProfilePicture(holder.profilePicView, friend, ComponentHelper.PictureType.IN_LIST_ITEM);
 
         // Set this cell's onClickListener

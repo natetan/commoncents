@@ -35,7 +35,7 @@
                 android:id="@+id/item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/list_item_title_font_size"
+                android:textSize="@dimen/font_size_title"
                 android:text="Title" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_marginTop="@dimen/list_item_subitem_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/list_item_subtitle_font_size"
+                android:textSize="@dimen/font_size_subtitle"
                 android:text="Subtitle" />
 
         </LinearLayout>
@@ -59,7 +59,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/list_item_info_font_size"
+            android:textSize="@dimen/font_size_list_item_info"
             android:text="Info"/>
 
     </LinearLayout>
