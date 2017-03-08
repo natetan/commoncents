@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import edu.washington.ischool.commoncents.commoncents.activites.DeveloperSettingsActivity;
-import edu.washington.ischool.commoncents.commoncents.controllers.MainPagerController;
+import edu.washington.ischool.commoncents.commoncents.activites1.DeveloperSettingsActivity;
+import edu.washington.ischool.commoncents.commoncents.controllers1.MainPagerController;
 
 public class MainActivity extends AppCompatActivity {
 
