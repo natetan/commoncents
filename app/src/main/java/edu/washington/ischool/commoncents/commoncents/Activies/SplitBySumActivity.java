@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Activies;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import javax.security.auth.login.LoginException;
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
+import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 import edu.washington.ischool.commoncents.commoncents.Models.Payment;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -342,8 +344,15 @@ public class SplitBySumActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AppState.getCurrentState().getSelectedEvent();
+                AppState.getCurrentState().getSelectedEvent().setFriendsInvolved(adapter.getfriends());
 
+                ArrayList<LineItem> eventLineItem = new ArrayList<LineItem>();
+                eventLineItem.add(new LineItem(AppState.getCurrentState().getSelectedEvent().getName(), costInCents));
+                
+                AppState.getCurrentState().getSelectedEvent().setLineItems(eventLineItem);
+
+                Intent intent = new Intent(SplitBySumActivity.this, EventSummaryActivity.class);
+                startActivity(intent);
             }
         });
     }
