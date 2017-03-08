@@ -1,14 +1,18 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import edu.washington.ischool.commoncents.commoncents.Indexable;
 
 /**
  * Created by iguest on 3/5/17.
  */
 
-public class Event {
+public class Event implements Indexable {
     private String name;
     private Date date;
     private String description;
@@ -27,6 +31,14 @@ public class Event {
         this.lineItems = lineItems;
     }
 
+    //----------------------------------------------------------------------------------------------
+    // Indexable Implementation
+    //----------------------------------------------------------------------------------------------
+
+    @Exclude
+    public String getKey() {
+        return name + " - " + date.toString();
+    }
 
     //----------------------------------------------------------------------------------------------
     // Getters
