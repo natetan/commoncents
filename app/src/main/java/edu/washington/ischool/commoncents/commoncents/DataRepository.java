@@ -165,7 +165,7 @@ public class DataRepository {
                         new LineItem("cupcake 2", 20)
                 ))
         );
-        events.put(cupcakeEvent.getKey(), cupcakeEvent);
+        addEvent(cupcakeEvent);
 
         Event birthdayPartyEvent = new Event(
                 "Birthday Party",
@@ -179,7 +179,7 @@ public class DataRepository {
                         new LineItem("birthday cake 2", 25)
                 ))
         );
-        events.put(birthdayPartyEvent.getKey(), birthdayPartyEvent);
+        addEvent(birthdayPartyEvent);
     }
 
     //----------------------------------------------------------------------------------------------
