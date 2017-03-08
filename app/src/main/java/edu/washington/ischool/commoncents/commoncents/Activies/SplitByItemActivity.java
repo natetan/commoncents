@@ -13,18 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
-import edu.washington.ischool.commoncents.commoncents.Adapters.SplitItemsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.Adapters.SplitByItemsFriendsAdapter;
+import edu.washington.ischool.commoncents.commoncents.Adapters.SplitByItemsLineAdapter;
+import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.Models.Payment;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
 import edu.washington.ischool.commoncents.commoncents.R;
 
-public class SplitByItemActivity extends AppCompatActivity implements SplitItemsListAdapter.Listener {
+public class SplitByItemActivity extends AppCompatActivity implements SplitByItemsLineAdapter.Listener, SplitByItemsFriendsAdapter.Listener {
+
+    //missing the LOGIC for pairing LineItem's with User's
+    //Not selecting existing users yet
 
     private final String TAG = "SPLIT_BY_ITEM_ACTIVITY";
 
-    String[] dataset = {"one", "two", "third", "fourth"};
+    private Event currentEvent;
 
     private Button btnAddFriend;
     private Button btnAddLineItem;
@@ -35,14 +39,18 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
     private TextView friendName;
     private TextView lineItemName;
 
-    private SplitItemsListAdapter adapter;
+    private SplitByItemsLineAdapter adapterRight;
+    private SplitByItemsFriendsAdapter adapterLeft;
     private RecyclerView splitItemView;
+    private RecyclerView splitItemViewFriend;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_split_by_item);
+
+        currentEvent = AppState.getCurrentState().getSelectedEvent();
 
         //UI elements
         btnAddFriend = (Button) findViewById(R.id.add_friend);
@@ -52,15 +60,20 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
         newDollar = (EditText) findViewById(R.id.new_lineitem_dollar);
         newCents = (EditText) findViewById(R.id.new_lineitem_cents);
 
+
+
+        initializeSplitItemView();
+
         btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nFriend = newFriend.getText().toString();
+                User thisUser = new User(nFriend);
+                adapterLeft.addToUsersList(thisUser);
+                Toast.makeText(SplitByItemActivity.this, "" + currentEvent.getUsersInvolved().size(), Toast.LENGTH_SHORT).show();
                 newFriend.setText("");
             }
         });
-
-        initializeSplitItemView();
 
         btnAddLineItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +97,11 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
                 int priceInCents = (nDollarInt * 100) + nCentsInt;
 
                 LineItem thisLineItem = new LineItem(nLineItem, priceInCents);
-                adapter.addToLineItemList(thisLineItem);
+                adapterRight.addToLineItemList(thisLineItem);
 
                 newLineItem.setText("");
                 newDollar.setText("");
                 newCents.setText("");
-
-                Toast.makeText(SplitByItemActivity.this, "" + adapter.getItemCount(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -101,17 +112,29 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
 
         splitItemView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        splitItemView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManagerRight = new LinearLayoutManager(this);
+        splitItemView.setLayoutManager(layoutManagerRight);
 
-        adapter = new SplitItemsListAdapter(this, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
-        splitItemView.setAdapter(adapter);
+        adapterRight = new SplitByItemsLineAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
+        splitItemView.setAdapter(adapterRight);
+
+        //User List
+        splitItemViewFriend = (RecyclerView) findViewById(R.id.user_in_event_list);
+        splitItemViewFriend.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManagerLeft = new LinearLayoutManager(this);
+        splitItemViewFriend.setLayoutManager(layoutManagerLeft);
+        adapterLeft = new SplitByItemsFriendsAdapter(this, currentEvent, R.layout.item_friend_for_split_item, R.id.user, R.id.remove_user);
+        splitItemViewFriend.setAdapter(adapterLeft);
     }
 
     @Override
     public void onLineItemClicked(View view, int index) {
-        Toast.makeText(this, TAG + " on lineitem clicked " + index, Toast.LENGTH_SHORT).show();
-//        Log.e(TAG, lineItem.getName());
-        adapter.removeFromLineItemList(index);
+        adapterRight.removeFromLineItemList(index);
+    }
+
+    @Override
+    public void onUserClicked(View view, int index) {
+        Log.e(TAG, "removing user??????");
+        adapterLeft.removeFromUsersList(index);
     }
 }

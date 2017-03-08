@@ -12,18 +12,18 @@ public class Event {
     private String name;
     private Date date;
     private String description;
-    private List<User> friendsInvolved;
+    private List<User> usersInvolved;
     private List<LineItem> lineItems;
 
     public Event(String eventName, Date eventDate) {
         this(eventName, eventDate, "", new ArrayList<User>(), new ArrayList<LineItem>());
     }
 
-    public Event(String eventName, Date eventDate, String eventDescription, List<User> friendsInvolved, List<LineItem> lineItems) {
+    public Event(String eventName, Date eventDate, String eventDescription, List<User> usersInvolved, List<LineItem> lineItems) {
         this.name = eventName;
         this.date = eventDate;
         this.description = eventDescription;
-        this.friendsInvolved = friendsInvolved;
+        this.usersInvolved = usersInvolved;
         this.lineItems = lineItems;
     }
 
@@ -49,12 +49,16 @@ public class Event {
 
     //List of friends involved with the event
     public List<User> getFriendsInvolved() {
-        return friendsInvolved;
+        return usersInvolved;
+    }
+
+    public List<User> getUsersInvolved() {
+        return usersInvolved;
     }
 
     //List of items involved with this event
     public List<LineItem> getLineItems() {
-        return lineItems;
+            return lineItems;
     }
 
     // Gets the amount of money owed to the current user from this event
@@ -65,7 +69,7 @@ public class Event {
 
     //Sets the friends involved in the event
     public void setFriendsInvolved(List<User> friendsInvolved) {
-        this.friendsInvolved = friendsInvolved;
+        this.usersInvolved = friendsInvolved;
     }
 
     //Sets the lines items in the events
