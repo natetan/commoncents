@@ -45,12 +45,15 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameView;
         public TextView descrView;
+        public TextView moneyView;
         public ImageView imageView;
 
-        public ViewHolder(View itemView, TextView nameView, TextView descrView, ImageView imageView) {
+        public ViewHolder(View itemView, TextView nameView, TextView descrView, TextView moneyView,
+                          ImageView imageView) {
             super(itemView);
             this.nameView = nameView;
             this.descrView = descrView;
+            this.moneyView = moneyView;
             this.imageView = imageView;
         }
     }
@@ -81,9 +84,10 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         // Get important views for this item
         TextView nameView = (TextView) itemView.findViewById(NAME_VIEW_ID);
         TextView descrView = (TextView) itemView.findViewById(DESCRIPTION_VIEW_ID);
+        TextView moneyView = (TextView) itemView.findViewById(MONEY_VIEW_ID);
         ImageView imageView = (ImageView) itemView.findViewById(PIC_VIEW_ID);
 
-        return new EventsListAdapter.ViewHolder(itemView, nameView, descrView, imageView);
+        return new EventsListAdapter.ViewHolder(itemView, nameView, descrView, moneyView, imageView);
     }
 
     @Override
@@ -92,7 +96,9 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
         // Set the view properties for this cell
         holder.nameView.setText(event.getName());
-        holder.descrView.setText("$100");
+        holder.descrView.setText(event.getDescription());
+        // Not sure where to go get the calculated costs
+        holder.moneyView.setText("$100");
         ComponentHelper.getInstance().setEventPicture(holder.imageView, event,
                 ComponentHelper.PictureType.IN_LIST_ITEM);
 
