@@ -42,7 +42,7 @@
             android:theme="@style/FriendsTheme"
             android:label="Add A New Friend"/>
         <activity
-            android:name=".activites1.FriendProfileActivity"
+            android:name=".activites1.UserProfileActivity"
             android:theme="@style/FriendsTheme.NoActionBar"
             android:label=""/>
 
