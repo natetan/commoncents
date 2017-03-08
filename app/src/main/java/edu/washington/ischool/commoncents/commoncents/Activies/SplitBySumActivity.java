@@ -348,7 +348,7 @@ public class SplitBySumActivity extends AppCompatActivity {
 
                 ArrayList<LineItem> eventLineItem = new ArrayList<LineItem>();
                 eventLineItem.add(new LineItem(AppState.getCurrentState().getSelectedEvent().getName(), costInCents));
-                
+
                 AppState.getCurrentState().getSelectedEvent().setLineItems(eventLineItem);
 
                 Intent intent = new Intent(SplitBySumActivity.this, EventSummaryActivity.class);
