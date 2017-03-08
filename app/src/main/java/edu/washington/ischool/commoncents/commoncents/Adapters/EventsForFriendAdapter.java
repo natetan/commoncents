@@ -15,7 +15,6 @@ import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
-import edu.washington.ischool.commoncents.commoncents.Models.Friend;
 import edu.washington.ischool.commoncents.commoncents.R;
 
 /**
@@ -107,7 +106,7 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
         ComponentHelper.getInstance().setEventPicture(holder.picView, event, ComponentHelper.PictureType.IN_LIST_ITEM);
         holder.nameView.setText(event.getName());
         holder.descriptionView.setText(event.getDescription());
-        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, event.getAmountOwed(AppState.getCurrentState().getCurrentUser()));
+        ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, event.getAmountOwed(AppState.getCurrentState().getCurrentUser()), true);
 
         // Set this cell's onClickListener
         holder.itemView.setOnClickListener(new View.OnClickListener() {

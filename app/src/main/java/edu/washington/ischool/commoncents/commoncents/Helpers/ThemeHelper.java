@@ -34,6 +34,8 @@ public class ThemeHelper {
         COLOR_FOR_TAB_EVENTS = resources.getColor(R.color.colorMaterialUIBlue);
         COLOR_FOR_TAB_FRIENDS = resources.getColor(R.color.colorMaterialUILightBlue);
         COLOR_FOR_TAB_SETTINGS = resources.getColor(R.color.colorMaterialUICyan);
+
+        COLOR_WHITE = resources.getColor(R.color.colorMaterialUIWhite);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -46,4 +48,6 @@ public class ThemeHelper {
     public final int COLOR_FOR_TAB_EVENTS;
     public final int COLOR_FOR_TAB_FRIENDS;
     public final int COLOR_FOR_TAB_SETTINGS;
+
+    public final int COLOR_WHITE;
 }
