@@ -6,7 +6,7 @@
   <color name="colorAccent">@color/colorMaterialUILime</color>
   <color name="colorEventsAccent">@color/colorMaterialUIBlue</color>
   <color name="colorFriendsAccent">@color/colorMaterialUICyan</color>
-  <color name="colorSettingsAccent">@color/colorMaterialUIGrey</color>
+  <color name="colorSettingsAccent">@color/colorMaterialUIBlueGrey</color>
 
   <!-- Components -->
   <color name="colorAmountOwedPositive">@color/colorMaterialUIGreen</color>
