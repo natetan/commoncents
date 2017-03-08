@@ -25,11 +25,10 @@
 
                 <TextView
                     android:id="@+id/event_name"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="@dimen/list_item_subitem_margin"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorMaterialUIWhite"
                     android:textSize="@dimen/font_size_big_title"
                     android:text="Event" />
 
