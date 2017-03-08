@@ -62,7 +62,6 @@ public class SplitBySumActivity extends AppCompatActivity {
         percentage = (EditText) findViewById(R.id.edit_percentage);
         addPerson = (Button) findViewById(R.id.add_button);
         doneBtn = (Button) findViewById(R.id.done_button);
-        totalPercentage = (TextView) findViewById(R.id.total_percentage);
 
         splitEqually.setChecked(true);
         totalFriends = 1;
