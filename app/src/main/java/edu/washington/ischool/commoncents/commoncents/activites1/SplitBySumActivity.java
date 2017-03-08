@@ -62,7 +62,6 @@ public class SplitBySumActivity extends AppCompatActivity {
         percentage = (EditText) findViewById(R.id.edit_percentage);
         addPerson = (Button) findViewById(R.id.add_button);
         doneBtn = (Button) findViewById(R.id.done_button);
-        totalPercentage = (TextView) findViewById(R.id.total_percentage);
 
         splitEqually.setChecked(true);
         totalFriends = 1;
@@ -109,7 +108,7 @@ public class SplitBySumActivity extends AppCompatActivity {
                     percent = (double) portion * 100 / costInCents;
 
                     amount.setText("$" + new DecimalFormat("#.##").format(portion / 100.0));
-                    percentage.setText("" + percent + "%");
+                    percentage.setText("" + new DecimalFormat("#.##").format(percent) + "%");
                 }
                 //The user is splitting unequally
                 else {
@@ -319,7 +318,7 @@ public class SplitBySumActivity extends AppCompatActivity {
                 
                 name.setText("");
                 amount.setText("$" + portion);
-                percentage.setText(percent + "%");
+                percentage.setText(new DecimalFormat("#.##").format(percent) + "%");
             }
         });
 
@@ -344,6 +343,7 @@ public class SplitBySumActivity extends AppCompatActivity {
 
                 AppState.getCurrentState().getSelectedEvent().setLineItems(eventLineItem);
 
+                finish();
                 Intent intent = new Intent(SplitBySumActivity.this, EventSummaryActivity.class);
                 startActivity(intent);
             }
