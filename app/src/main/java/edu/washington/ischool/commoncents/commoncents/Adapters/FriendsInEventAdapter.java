@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 import edu.washington.ischool.commoncents.commoncents.Models.Payment;
+import edu.washington.ischool.commoncents.commoncents.Models.User;
 
 /**
  * Created by iguest on 3/5/17.
@@ -75,6 +78,14 @@ public class FriendsInEventAdapter extends RecyclerView.Adapter<FriendsInEventAd
         Log.v("GET ITEM COUNT", "" + friendsInEvent.size());
         return friendsInEvent.size();
 
+    }
+
+    public ArrayList<User> getfriends() {
+        ArrayList<User> friends = new ArrayList<User>();
+        for (Payment payment: friendsInEvent) {
+            friends.add(payment.getUser());
+        }
+        return friends;
     }
 
     public void addToFriendsInEvent(Payment payment, int total) {

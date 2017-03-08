@@ -11,13 +11,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 
 /**
  * Created by keegomyneego on 3/4/17.
  */
 
-public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAdapter.ViewHolder> {
+public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLineAdapter.ViewHolder> {
 
     private final String TAG = "SPLIT_ITEMS_ADAPTER";
 
@@ -26,6 +27,7 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
     private int lineItemId;
     private int priceId;
     private int removeLineItemId;
+    private Event currentEvent;
 
     private Listener listener;
 
@@ -42,26 +44,27 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
         }
     }
 
-    public SplitItemsListAdapter(Listener listener, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
+    public SplitByItemsLineAdapter(Listener listener, Event currentEvent, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
         this.listener = listener;
         this.itemLayoutId = itemLayoutId;
         this.lineItemId = lineItemId;
         this.priceId = priceId;
         this.removeLineItemId = removeLineItemId;
-        this.lineItemList = new ArrayList<>(); //initialize lineItem list to be edited later
+        this.currentEvent = currentEvent;
+        this.lineItemList = currentEvent.getLineItems(); //initialize lineItem list to be edited later
     }
 
     @Override
-    public SplitItemsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SplitByItemsLineAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(itemLayoutId, parent, false);
         TextView lineItem = (TextView) view.findViewById(lineItemId);
         TextView price = (TextView) view.findViewById(priceId);
         Button removeLineItem = (Button) view.findViewById(removeLineItemId);
-        return new SplitItemsListAdapter.ViewHolder(view, lineItem, price, removeLineItem);
+        return new SplitByItemsLineAdapter.ViewHolder(view, lineItem, price, removeLineItem);
     }
 
     @Override
-    public void onBindViewHolder(SplitItemsListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SplitByItemsLineAdapter.ViewHolder holder, int position) {
         final int index = position;
         final LineItem selectedLineItem = lineItemList.get(position);
 
@@ -85,6 +88,13 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
             }
 
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public interface Listener {
@@ -104,6 +114,7 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
         notifyDataSetChanged();
         Log.e(TAG, lineItemList.toString());
     }
+
     @Override
     public int getItemCount() {
         return lineItemList.size();
