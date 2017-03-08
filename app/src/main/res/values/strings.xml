@@ -18,6 +18,10 @@
     <string name="add_item">Add New Item</string>
     <string name="action_logout">Logout</string>
     <string name="title_activity_make_champion">MakeChampionActivity</string>
+    <string name="phone_number_hint">Phone (Optional)</string>
+    <string name="email">Email (Optional)</string>
+    <string name="submit_label">Submit</string>
+
 
     <!-- Simple Text -->
     <string name="text_history">History</string>
