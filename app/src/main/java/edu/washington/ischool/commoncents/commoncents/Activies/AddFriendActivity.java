@@ -2,11 +2,14 @@ package edu.washington.ischool.commoncents.commoncents.Activies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -47,6 +50,30 @@ public class AddFriendActivity extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        friendName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                submitBtn.setEnabled(true);
+                submitBtn.setClickable(true);
+                String friendNameString = friendName.getText().toString();
+
+                if (friendNameString == null || friendNameString.equals("")) {
+                    submitBtn.setEnabled(false);
+                    submitBtn.setClickable(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
