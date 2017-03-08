@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
-import edu.washington.ischool.commoncents.commoncents.models.Event;
-import edu.washington.ischool.commoncents.commoncents.models.Friend;
-import edu.washington.ischool.commoncents.commoncents.models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.models.User;
+import edu.washington.ischool.commoncents.commoncents.models1.Event;
+import edu.washington.ischool.commoncents.commoncents.models1.Friend;
+import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
+import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
  * Created by keegomyneego on 3/7/17.
