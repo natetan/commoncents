@@ -95,7 +95,7 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         eventsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new EventsListAdapter(this);
+        adapter = new EventsListAdapter(getContext(), this);
         eventsList.setAdapter(adapter);
 
         eventsListUpdated();
