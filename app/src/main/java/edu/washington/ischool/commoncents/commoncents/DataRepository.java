@@ -1,10 +1,16 @@
 package edu.washington.ischool.commoncents.commoncents;
 
+import android.util.Log;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
@@ -91,11 +97,57 @@ public class DataRepository {
     private void loadUsers() {
         users = new ArrayList<>();
 
-        users.add(new User("Hamzah"));
-        users.add(new User("Hai"));
-        users.add(new User("Yulong"));
-        users.add(new User("Irene"));
-        users.add(new User("Keegan"));
+        // Use Firebase to populate the list.
+        databaseReference.child("users").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d("loadUsers", dataSnapshot.getValue().toString());
+
+                try {
+                    User u = (User) dataSnapshot.getValue();
+                    Log.d("GOT USER", u.toString());
+                } catch (Exception e) {
+
+                }
+
+//                users.add(new User())
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                users.remove((String) dataSnapshot.child("title").getValue());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+//        users.add(new User("Hamzah"));
+//        users.add(new User("Hai"));
+//        users.add(new User("Yulong"));
+//        users.add(new User("Irene"));
+//        users.add(new User("Keegan"));
+
+        // Adds us into the database as defaults
+        databaseReference.child("users").child("Hamzah").setValue(new User("Hamzah"));
+        databaseReference.child("users").child("Hai").setValue(new User("Hai"));
+        databaseReference.child("users").child("Yulong").setValue(new User("Yulong"));
+        databaseReference.child("users").child("Irene").setValue(new User("Irene"));
+        databaseReference.child("users").child("Keegan").setValue(new User("Keegan"));
+
 
         // TODO emit broadcast Repo Updated - New Data - Users
     }
