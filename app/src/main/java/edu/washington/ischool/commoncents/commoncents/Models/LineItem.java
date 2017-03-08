@@ -1,5 +1,6 @@
 package edu.washington.ischool.commoncents.commoncents.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,19 +11,14 @@ public class LineItem {
 
     private String name;
     private int price;
-    private User user;
-    private List<Payment> payments;
+    private List<Payment> payments; //associate user at the Payment level
 
     //constructor for split by items
     //user will be added as line items are associated
     public LineItem(String lineItemName, int price) {
-        this(lineItemName, price, null);
-    }
-
-    public LineItem(String lineItemName, int price, User user) {
         this.name = lineItemName;
         this.price = price;
-        this.user = user;
+        this.payments = new ArrayList<>();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -39,10 +35,6 @@ public class LineItem {
         return price;
     }
 
-    //User associated with the item, the user that should pay for the particular item
-    public User getUser() {
-        return user;
-    }
 
     //List of payments for a single line item (multiple users splitting a single line item) if applicable, otherwise is just a list with one payment
     public List<Payment> getPayments() {

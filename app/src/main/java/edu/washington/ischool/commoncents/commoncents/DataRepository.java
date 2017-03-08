@@ -108,13 +108,13 @@ public class DataRepository {
         events = new ArrayList<>();
 
         List<LineItem> cupcakeItems = new ArrayList<>();
-        cupcakeItems.add(new LineItem("cupcake 1", 10, currentUser));
-        cupcakeItems.add(new LineItem("cupcake 2", 20, currentUser));
+        cupcakeItems.add(new LineItem("cupcake 1", 10));
+        cupcakeItems.add(new LineItem("cupcake 2", 20));
         events.add(new Event("Cupcake Party", new Date(), "It's a cupcake party dude!", friends, cupcakeItems));
 
         List<LineItem> birthdayPartyItems = new ArrayList<>();
-        birthdayPartyItems.add(new LineItem("birthday cake 1", 15, currentUser));
-        birthdayPartyItems.add(new LineItem("birthday cake 2", 25, currentUser));
+        birthdayPartyItems.add(new LineItem("birthday cake 1", 15));
+        birthdayPartyItems.add(new LineItem("birthday cake 2", 25));
         events.add(new Event("Birthday Party", new Date(), "It's everyone's birthday!", friends, birthdayPartyItems));
 
         // TODO emit broadcast Repo Updated - New Data - Events
