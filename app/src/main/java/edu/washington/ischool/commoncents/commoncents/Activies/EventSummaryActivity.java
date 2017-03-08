@@ -16,7 +16,7 @@ public class EventSummaryActivity extends AppCompatActivity {
 
     private Button sendSmsBtn;
     private Button finishBtn;
-    private RecyclerView friendsInEventView;
+    private RecyclerView eventSummaryView;
     private FriendsInEventAdapter adapter;
 
     @Override
@@ -43,9 +43,18 @@ public class EventSummaryActivity extends AppCompatActivity {
             }
         });
 
+        initializeEventSummaryView();
+
     }
 
-    private void initializeFriendsInEventView() {
+    private void initializeEventSummaryView() {
+        eventSummaryView = (RecyclerView) findViewById(R.id.event_summary_list);
+        eventSummaryView.setHasFixedSize(true);
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        eventSummaryView.setLayoutManager(layoutManager);
+
+        adapter = new FriendsInEventAdapter(R.layout.item_friend_for_event, R.id.name, R.id.amount, R.id.percentage);
+        eventSummaryView.setAdapter(adapter);
     }
 }
