@@ -89,6 +89,6 @@ public class EventSummaryActivity extends AppCompatActivity implements FriendsLi
 
     @Override
     public List<Friend> getUpdatedDataSet() {
-        return null;
+
     }
 }
