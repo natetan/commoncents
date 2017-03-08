@@ -140,9 +140,12 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
         //remove from the line item list
         this.lineItemList.remove(thisLineItem);
         //remove all occurrences of this line item
-        for (User u: pairings.keySet()) {
-            if (pairings.get(u).contains(thisLineItem)) {
-                pairings.get(u).remove(thisLineItem);
+        pairings = AppState.getCurrentState().getCurrentUserLineItemPairing();
+        if (!pairings.keySet().isEmpty()) {
+            for (User u: pairings.keySet()) {
+                if (pairings.get(u).contains(thisLineItem)) {
+                    pairings.get(u).remove(thisLineItem);
+                }
             }
         }
         notifyDataSetChanged();
