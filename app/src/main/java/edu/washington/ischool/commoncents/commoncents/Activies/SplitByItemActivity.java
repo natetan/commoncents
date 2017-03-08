@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import edu.washington.ischool.commoncents.commoncents.Adapters.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.Adapters.SplitItemsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 import edu.washington.ischool.commoncents.commoncents.Models.Payment;
 import edu.washington.ischool.commoncents.commoncents.Models.User;
@@ -24,7 +26,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
 
     private final String TAG = "SPLIT_BY_ITEM_ACTIVITY";
 
-    String[] dataset = {"one", "two", "third", "fourth"};
+    private Event currentEvent;
 
     private Button btnAddFriend;
     private Button btnAddLineItem;
@@ -43,6 +45,8 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_split_by_item);
+
+        currentEvent = AppState.getCurrentState().getSelectedEvent();
 
         //UI elements
         btnAddFriend = (Button) findViewById(R.id.add_friend);
@@ -86,11 +90,9 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
                 LineItem thisLineItem = new LineItem(nLineItem, priceInCents);
                 adapter.addToLineItemList(thisLineItem);
 
-                newLineItem.setText("");
-                newDollar.setText("");
+                //newLineItem.setText("");
+                //newDollar.setText("");
                 newCents.setText("");
-
-                Toast.makeText(SplitByItemActivity.this, "" + adapter.getItemCount(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,14 +106,12 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitItems
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         splitItemView.setLayoutManager(layoutManager);
 
-        adapter = new SplitItemsListAdapter(this, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
+        adapter = new SplitItemsListAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
         splitItemView.setAdapter(adapter);
     }
 
     @Override
     public void onLineItemClicked(View view, int index) {
-        Toast.makeText(this, TAG + " on lineitem clicked " + index, Toast.LENGTH_SHORT).show();
-//        Log.e(TAG, lineItem.getName());
         adapter.removeFromLineItemList(index);
     }
 }

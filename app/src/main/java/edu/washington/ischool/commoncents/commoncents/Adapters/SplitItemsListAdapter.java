@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
 
 /**
@@ -26,6 +27,7 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
     private int lineItemId;
     private int priceId;
     private int removeLineItemId;
+    private Event currentEvent;
 
     private Listener listener;
 
@@ -42,13 +44,14 @@ public class SplitItemsListAdapter extends RecyclerView.Adapter<SplitItemsListAd
         }
     }
 
-    public SplitItemsListAdapter(Listener listener, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
+    public SplitItemsListAdapter(Listener listener, Event currentEvent, int itemLayoutId, int lineItemId, int priceId, int removeLineItemId) {
         this.listener = listener;
         this.itemLayoutId = itemLayoutId;
         this.lineItemId = lineItemId;
         this.priceId = priceId;
         this.removeLineItemId = removeLineItemId;
-        this.lineItemList = new ArrayList<>(); //initialize lineItem list to be edited later
+        this.currentEvent = currentEvent;
+        this.lineItemList = currentEvent.getLineItems(); //initialize lineItem list to be edited later
     }
 
     @Override
