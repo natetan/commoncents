@@ -20,43 +20,43 @@
 
         <!-- Event Activities -->
         <activity
-            android:name=".activites1.EventSummaryActivity"
+            android:name=".activites.EventSummaryActivity"
             android:theme="@style/EventsTheme"
             android:label="Event Summary"/>
         <activity
-            android:name=".activites1.AddEventActivity"
+            android:name=".activites.AddEventActivity"
             android:theme="@style/EventsTheme"
             android:label="Create An Event"/>
         <activity
-            android:name=".activites1.SplitByItemActivity"
+            android:name=".activites.SplitByItemActivity"
             android:theme="@style/EventsTheme"
             android:label="Split By Item"/>
         <activity
-            android:name=".activites1.SplitBySumActivity"
+            android:name=".activites.SplitBySumActivity"
             android:theme="@style/EventsTheme"
             android:label="Split By Sum"/>
 
         <!-- Friend Activities -->
         <activity
-            android:name=".activites1.AddFriendActivity"
+            android:name=".activites.AddFriendActivity"
             android:theme="@style/FriendsTheme"
             android:label="Add A New Friend"/>
         <activity
-            android:name=".activites1.FriendProfileActivity"
+            android:name=".activites.FriendProfileActivity"
             android:theme="@style/FriendsTheme.NoActionBar"
             android:label=""/>
 
         <!-- Setting Activities -->
         <activity
-            android:name=".activites1.LoginActivity"
+            android:name=".activites.LoginActivity"
             android:theme="@style/SettingsTheme"
             android:label="Sign In"/>
         <activity
-            android:name=".activites1.SignUpActivity"
+            android:name=".activites.SignUpActivity"
             android:theme="@style/SettingsTheme"
             android:label="Sign Up"/>
         <activity
-            android:name=".activites1.DeveloperSettingsActivity"
+            android:name=".activites.DeveloperSettingsActivity"
             android:theme="@style/SettingsTheme"
             android:label="Developer Settings"/>
     </application>
