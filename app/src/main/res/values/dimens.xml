@@ -7,7 +7,7 @@
     <!-- Standard app-wide dimensions -->
 
     <!-- Items in RecyclerViews and other lists -->
-    <dimen name="list_section_header_margin">12dp</dimen>
+    <dimen name="list_section_header_padding">8dp</dimen>
     <dimen name="list_item_min_height">64dp</dimen>
     <dimen name="list_item_picture_size">56dp</dimen>
     <dimen name="list_item_margin_half">4dp</dimen>

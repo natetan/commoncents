@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/EventsTheme"
-    tools:context="edu.washington.ischool.commoncents.commoncents.Fragments.EventsListFragment">
+    tools:context="edu.washington.ischool.commoncents.commoncents.fragments.EventsListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/events_list"

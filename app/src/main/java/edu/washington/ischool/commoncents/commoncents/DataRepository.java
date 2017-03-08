@@ -14,10 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.washington.ischool.commoncents.commoncents.Models.Event;
-import edu.washington.ischool.commoncents.commoncents.Models.Friend;
-import edu.washington.ischool.commoncents.commoncents.Models.LineItem;
-import edu.washington.ischool.commoncents.commoncents.Models.User;
+import edu.washington.ischool.commoncents.commoncents.models.Event;
+import edu.washington.ischool.commoncents.commoncents.models.Friend;
+import edu.washington.ischool.commoncents.commoncents.models.Indexable;
+import edu.washington.ischool.commoncents.commoncents.models.LineItem;
+import edu.washington.ischool.commoncents.commoncents.models.User;
 
 /**
  * Created by keegomyneego on 3/5/17.
@@ -57,16 +58,14 @@ public class DataRepository {
     private DatabaseReference databaseReference;
 
     private Map<String, User> users = new HashMap<>();
-    private  Map<String, Event> events = new HashMap<>();
+    private Map<String, Event> events = new HashMap<>();
 
-    @Deprecated
     private List<Friend> friends = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     // Getters - for clients to get data from the repo
     //----------------------------------------------------------------------------------------------
 
-    @Deprecated
     public List<Friend> getFriends() {
         return friends;
     }
@@ -88,13 +87,21 @@ public class DataRepository {
     //----------------------------------------------------------------------------------------------
 
     public void addEvent(Event newEvent) {
-        events.put(newEvent.getKey(), newEvent);
-        databaseReference.child("events").child(newEvent.getKey()).setValue(newEvent);
+        events.put(newEvent.getIndexKey(), newEvent);
+        databaseReference.child("events").child(newEvent.getIndexKey()).setValue(newEvent);
     }
 
     public void addUser(User newUser) {
-        users.put(newUser.getKey(), newUser);
-        databaseReference.child("users").child(newUser.getKey()).setValue(newUser);
+        users.put(newUser.getIndexKey(), newUser);
+        databaseReference.child("users").child(newUser.getIndexKey()).setValue(newUser);
+    }
+
+    public void deleteEvent(String indexKey) {
+        databaseReference.child("events").child(indexKey).removeValue();
+    }
+
+    public void deleteUser(String indexKey) {
+        databaseReference.child("users").child(indexKey).removeValue();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -106,8 +113,6 @@ public class DataRepository {
 
         // Use Firebase to populate the list.
         databaseReference.child("users").addChildEventListener(getChildEventListener(User.class, users));
-
-        addMockUsers();
     }
 
     private void loadEvents() {
@@ -115,14 +120,11 @@ public class DataRepository {
 
         // Use Firebase to populate the list.
         databaseReference.child("events").addChildEventListener(getChildEventListener(Event.class, events));
-
-        addMockEvents();
     }
 
     /**
      * Note: must be called after loadUsers!
      */
-    @Deprecated
     private void loadFriends() {
         friends = new ArrayList<>();
 
@@ -134,17 +136,47 @@ public class DataRepository {
     }
 
     //----------------------------------------------------------------------------------------------
-    // Mock Data Helpers
+    // Developer Methods
     //----------------------------------------------------------------------------------------------
+
+    private List<String> mockUserIds = new ArrayList<>();
+    private List<String> mockEventIds = new ArrayList<>();
+
+    public void addMockData() {
+        addMockUsers();
+        addMockEvents();
+    }
+
+    public void deleteMockData() {
+        for (String userId : mockUserIds) {
+            deleteUser(userId);
+        }
+
+        for (String eventId : mockEventIds) {
+            deleteEvent(eventId);
+        }
+    }
+
+    public void clearDB() {
+        databaseReference.child("users").removeValue();
+        databaseReference.child("events").removeValue();
+    }
 
     // Adds us into the database as defaults
     private void addMockUsers() {
+        String[] newUserNames = new String[] {
+                "Hamzah",
+                "Hai",
+                "Yulong",
+                "Irene",
+                "Keegan"
+        };
 
-        addUser(new User("Hamzah"));
-        addUser(new User("Hai"));
-        addUser(new User("Yulong"));
-        addUser(new User("Irene"));
-        addUser(new User("Keegan"));
+        for (String name: newUserNames) {
+            User newUser = new User(name);
+            mockUserIds.add(newUser.getIndexKey());
+            addUser(newUser);
+        }
     }
 
     // Adds bs into the database as defaults
@@ -164,7 +196,8 @@ public class DataRepository {
                         new LineItem("cupcake 2", 20)
                 ))
         );
-        events.put(cupcakeEvent.getKey(), cupcakeEvent);
+        mockEventIds.add(cupcakeEvent.getIndexKey());
+        addEvent(cupcakeEvent);
 
         Event birthdayPartyEvent = new Event(
                 "Birthday Party",
@@ -178,7 +211,8 @@ public class DataRepository {
                         new LineItem("birthday cake 2", 25)
                 ))
         );
-        events.put(birthdayPartyEvent.getKey(), birthdayPartyEvent);
+        mockEventIds.add(birthdayPartyEvent.getIndexKey());
+        addEvent(birthdayPartyEvent);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -192,26 +226,26 @@ public class DataRepository {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 T newData = dataSnapshot.getValue(DataType);
                 Log.i("Firebase", "onChildAdded: (" + DataType.getSimpleName() + ")");
-                Log.i("Firebase", "   key: " + newData.getKey());
+                Log.i("Firebase", "   key: " + newData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
-                dataStore.put(newData.getKey(), newData);
+                dataStore.put(newData.getIndexKey(), newData);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 T changedData = dataSnapshot.getValue(DataType);
                 Log.i("Firebase", "onChildChanged: (" + DataType.getSimpleName() + ")");
-                Log.i("Firebase", "   key: " + changedData.getKey());
+                Log.i("Firebase", "   key: " + changedData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
-                dataStore.remove(changedData.getKey());
-                dataStore.put(changedData.getKey(), changedData);
+                dataStore.remove(changedData.getIndexKey());
+                dataStore.put(changedData.getIndexKey(), changedData);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 T removedData = dataSnapshot.getValue(DataType);
                 Log.i("Firebase", "onChildRemoved: (" + DataType.getSimpleName() + ")");
-                Log.i("Firebase", "   key: " + removedData.getKey());
+                Log.i("Firebase", "   key: " + removedData.getIndexKey());
                 Log.i("Firebase", "   newValue: " + dataSnapshot.toString());
                 dataStore.remove(removedData);
             }

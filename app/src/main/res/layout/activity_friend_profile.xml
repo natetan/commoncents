@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.washington.ischool.commoncents.commoncents.Activies.FriendProfileActivity">
+    tools:context="edu.washington.ischool.commoncents.commoncents.activites.FriendProfileActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -54,11 +54,12 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:layout_margin="@dimen/list_section_header_margin"
+        android:padding="@dimen/list_section_header_padding"
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_size_subtitle"
+        android:background="@color/colorSectionHeader"
         android:text="@string/text_past_events" />
 
     <android.support.v7.widget.RecyclerView

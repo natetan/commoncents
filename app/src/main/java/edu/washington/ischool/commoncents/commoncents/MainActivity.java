@@ -1,6 +1,5 @@
 package edu.washington.ischool.commoncents.commoncents;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,9 +7,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
-import edu.washington.ischool.commoncents.commoncents.Controllers.MainPagerController;
+import edu.washington.ischool.commoncents.commoncents.activites.DeveloperSettingsActivity;
+import edu.washington.ischool.commoncents.commoncents.controllers.MainPagerController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         MainPagerController.setupViewPager(this, viewPager, tabLayout);
-
-        // Note to team: Fab click actions are now specified in the
-        // EventsListFragment and FriendsListFragment
     }
 
     @Override
@@ -46,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_settings:
-                startActivity(new Intent(this, MakeChampionActivity.class));
+                startActivity(new Intent(this, DeveloperSettingsActivity.class));
                 return true;
 
             default:
