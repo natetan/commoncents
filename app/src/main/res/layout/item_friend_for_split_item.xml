@@ -5,6 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/list_item_margin_half"
+    android:layout_marginTop="@dimen/list_item_margin_half"
     android:id="@+id/item_view"
     android:minHeight="25dp"
     card_view:cardCornerRadius="@dimen/cardview_default_elevation">
@@ -17,13 +19,14 @@
             android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1" />
         <Button
             android:id="@+id/remove_user"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:maxHeight="5dp"
-            android:drawableBottom="@android:drawable/ic_delete" />
+            android:text="X"/>
 
     </LinearLayout>
 

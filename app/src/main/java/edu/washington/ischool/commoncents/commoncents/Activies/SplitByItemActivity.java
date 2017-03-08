@@ -24,7 +24,7 @@ import edu.washington.ischool.commoncents.commoncents.R;
 public class SplitByItemActivity extends AppCompatActivity implements SplitByItemsLineAdapter.Listener, SplitByItemsFriendsAdapter.Listener {
 
     //missing the LOGIC for pairing LineItem's with User's
-
+    //Not selecting existing users yet
 
     private final String TAG = "SPLIT_BY_ITEM_ACTIVITY";
 
@@ -39,8 +39,10 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
     private TextView friendName;
     private TextView lineItemName;
 
-    private SplitByItemsLineAdapter adapter;
+    private SplitByItemsLineAdapter adapterRight;
+    private SplitByItemsFriendsAdapter adapterLeft;
     private RecyclerView splitItemView;
+    private RecyclerView splitItemViewFriend;
 
 
     @Override
@@ -66,8 +68,10 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
             @Override
             public void onClick(View v) {
                 String nFriend = newFriend.getText().toString();
+                User thisUser = new User(nFriend);
+                adapterLeft.addToUsersList(thisUser);
+                Toast.makeText(SplitByItemActivity.this, "" + currentEvent.getUsersInvolved().size(), Toast.LENGTH_SHORT).show();
                 newFriend.setText("");
-
             }
         });
 
@@ -93,10 +97,10 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
                 int priceInCents = (nDollarInt * 100) + nCentsInt;
 
                 LineItem thisLineItem = new LineItem(nLineItem, priceInCents);
-                adapter.addToLineItemList(thisLineItem);
+                adapterRight.addToLineItemList(thisLineItem);
 
-                //newLineItem.setText("");
-                //newDollar.setText("");
+                newLineItem.setText("");
+                newDollar.setText("");
                 newCents.setText("");
             }
         });
@@ -108,15 +112,29 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
 
         splitItemView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        splitItemView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManagerRight = new LinearLayoutManager(this);
+        splitItemView.setLayoutManager(layoutManagerRight);
 
-        adapter = new SplitByItemsLineAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
-        splitItemView.setAdapter(adapter);
+        adapterRight = new SplitByItemsLineAdapter(this, currentEvent, R.layout.item_line_item, R.id.item, R.id.price, R.id.remove_line_item);
+        splitItemView.setAdapter(adapterRight);
+
+        //User List
+        splitItemViewFriend = (RecyclerView) findViewById(R.id.user_in_event_list);
+        splitItemViewFriend.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManagerLeft = new LinearLayoutManager(this);
+        splitItemViewFriend.setLayoutManager(layoutManagerLeft);
+        adapterLeft = new SplitByItemsFriendsAdapter(this, currentEvent, R.layout.item_friend_for_split_item, R.id.user, R.id.remove_user);
+        splitItemViewFriend.setAdapter(adapterLeft);
     }
 
     @Override
     public void onLineItemClicked(View view, int index) {
-        adapter.removeFromLineItemList(index);
+        adapterRight.removeFromLineItemList(index);
+    }
+
+    @Override
+    public void onUserClicked(View view, int index) {
+        Log.e(TAG, "removing user??????");
+        adapterLeft.removeFromUsersList(index);
     }
 }

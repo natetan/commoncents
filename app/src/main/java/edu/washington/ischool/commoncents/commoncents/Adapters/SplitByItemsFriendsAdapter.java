@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
         this.userId = userId;
         this.removeUserId = removeUserId;
         this.currentEvent = currentEvent;
-        this.usersList = currentEvent.getUsersInvolved(); //initialize lineItem list to be edited later
+        this.usersList = currentEvent.getUsersInvolved(); //initialize user list to be edited later
     }
 
     @Override
@@ -65,41 +66,32 @@ public class SplitByItemsFriendsAdapter extends RecyclerView.Adapter<SplitByItem
         final int index = position;
         final User selectedUser = usersList.get(position);
 
-//        holder.lineItemName.setText(selectedUser.getName());
-//        int priceInCents = selectedUser.getPrice();
-//        int dollar = priceInCents / 100;
-//        int cents = priceInCents % 100;
-//        String strCents = "";
-//        if (cents <= 9) {
-//            strCents += "0" + cents;
-//        } else {
-//            strCents += cents;
-//        }
-//        holder.price.setText(dollar + "." + strCents);
-//
-//        //Button
-//        holder.removeLineItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                listener.onLineItemClicked(view, index);
-//            }
-//
-//        });
+
+        holder.user.setText(selectedUser.getName());
+
+        //Button
+        holder.removeUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onUserClicked(view, index);
+            }
+
+        });
     }
 
     public interface Listener {
-        void onLineItemClicked(View view, int index);
+        void onUserClicked(View view, int index);
     }
 
 
-    public void addToUserseList(User u) {
+    public void addToUsersList(User u) {
         this.usersList.add(u);
         notifyDataSetChanged();
         Log.e(TAG, usersList.toString());
         Log.e(TAG, usersList.get(0).getName());
     }
 
-    public void removeFromLineItemList(int index) {
+    public void removeFromUsersList(int index) {
         this.usersList.remove(index);
         notifyDataSetChanged();
         Log.e(TAG, usersList.toString());
