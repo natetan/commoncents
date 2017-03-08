@@ -11,11 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import edu.washington.ischool.commoncents.commoncents.Activies.AddFriendActivity;
 import edu.washington.ischool.commoncents.commoncents.Activies.SplitCostsActivity;
 import edu.washington.ischool.commoncents.commoncents.Adapters.EventsListAdapter;
+import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.Helpers.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.Models.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
 
@@ -39,6 +42,7 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         View mainView = inflater.inflate(R.layout.fragment_events_list, container, false);
         initializeFab(getContext(), mainView);
         initializeEventsList(mainView);
+
         return mainView;
     }
 
