@@ -2,31 +2,28 @@ package edu.washington.ischool.commoncents.commoncents.adapters1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import edu.washington.ischool.commoncents.commoncents.AppState;
-import edu.washington.ischool.commoncents.commoncents.DataRepository;
+import edu.washington.ischool.commoncents.commoncents.R;
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
-import edu.washington.ischool.commoncents.commoncents.R;
+import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
+import edu.washington.ischool.commoncents.commoncents.models1.Payment;
 
 /**
- * Created by IreneW on 2017-03-06.
+ * Created by keegomyneego on 3/8/17.
  */
 
-public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder> implements Observer {
+public class LineItemsListAdapter extends RecyclerView.Adapter<LineItemsListAdapter.ViewHolder> {
 
-    static final String TAG = "EventsListAdapter";
+    static final String TAG = "LineItemsListAdapter";
 
     private static final int ITEM_LAYOUT_ID = R.layout.list_item_pic_title_info;
     private static final int PIC_VIEW_ID = R.id.item_picture;
@@ -35,17 +32,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     private static final int MONEY_VIEW_ID = R.id.item_info;
 
     private Context context;
-    private Listener listener;
-    private List<Event> events;
-
-    /**
-     * Listener to which event handling logic is delegated
-     */
-    public interface Listener {
-        void onEventClicked(View view, Event event);
-        void onEventLongClicked(View view, Event event);
-        List<Event> getUpdatedDataSet();
-    }
+    private List<LineItem> lineItems;
 
     /**
      * Custom view holder for this adapter
@@ -67,32 +54,16 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     }
 
     //----------------------------------------------------------------------------------------------
-    // Observer Implementation
-    //----------------------------------------------------------------------------------------------
-
-    @Override
-    public void update(Observable observable, Object o) {
-        Log.i(TAG, ".");
-        Log.i(TAG, "update observed!");
-        Log.i(TAG, ".");
-
-        this.events.clear();
-        this.events.addAll(listener.getUpdatedDataSet());
-        notifyDataSetChanged();
-    }
-
-    //----------------------------------------------------------------------------------------------
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public EventsListAdapter(Context context, EventsListAdapter.Listener listener, List<Event> events) {
+    public LineItemsListAdapter(Context context, List<LineItem> lineItems) {
         this.context = context;
-        this.listener = listener;
-        this.events = events;
+        this.lineItems = lineItems;
     }
 
     @Override
-    public EventsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LineItemsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate container view for this item
         View itemView = LayoutInflater.from(parent.getContext()).inflate(ITEM_LAYOUT_ID, parent, false);
 
@@ -102,53 +73,46 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
         TextView moneyView = (TextView) itemView.findViewById(MONEY_VIEW_ID);
         ImageView imageView = (ImageView) itemView.findViewById(PIC_VIEW_ID);
 
-        return new EventsListAdapter.ViewHolder(itemView, nameView, descrView, moneyView, imageView);
+        return new LineItemsListAdapter.ViewHolder(itemView, nameView, descrView, moneyView, imageView);
     }
 
     @Override
-    public void onBindViewHolder(EventsListAdapter.ViewHolder holder, int position) {
-        final Event event = events.get(position);
+    public void onBindViewHolder(LineItemsListAdapter.ViewHolder holder, int position) {
+        final LineItem lineItem = lineItems.get(position);
 
         // Set title
-        holder.nameView.setText(event.getName());
+        holder.nameView.setText(lineItem.getName());
 
         // Set subtitle (hiding it empty)
-        String description = event.getDescription();
+        String description = "";
         if (description == null || description.isEmpty()) {
             holder.descrView.setVisibility(View.GONE);
         } else {
-            holder.descrView.setText(event.getDescription());
+            holder.descrView.setText(description);
+        }
+
+        int centsOwed = 0;
+        List<Payment> payments = lineItem.getPayments();
+        if (payments != null) {
+            for (Payment payment : payments) {
+                if (payment.getUser().equals(AppState.getCurrentState().getCurrentUser())) {
+                    centsOwed += payment.getAmount();
+                }
+            }
         }
 
         // Set info to be the amount of money owed to the current
         // user in this event
         ComponentHelper.getInstance().setOweAmount(context, holder.moneyView,
-                event.getAmountOwed(AppState.getCurrentState().getCurrentUser()), true);
+                centsOwed, true);
 
         // Set event picture
-        ComponentHelper.getInstance().setEventPicture(holder.imageView, event,
+        ComponentHelper.getInstance().setLineItemPicture(holder.imageView, lineItem,
                 ComponentHelper.PictureType.IN_LIST_ITEM);
-
-        // Set this cell's onClickListener
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Delegate click logic to listener
-                listener.onEventClicked(view, event);
-            }
-        });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                listener.onEventLongClicked(view, event);
-                return true;
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return lineItems.size();
     }
 }

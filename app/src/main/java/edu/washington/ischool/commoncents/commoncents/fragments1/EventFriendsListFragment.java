@@ -31,7 +31,7 @@ import edu.washington.ischool.commoncents.commoncents.models1.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FriendsListFragment extends Fragment implements UsersListAdapter.Listener {
+public class EventFriendsListFragment extends Fragment {
 
     private UsersListAdapter adapter;
 
@@ -39,7 +39,7 @@ public class FriendsListFragment extends Fragment implements UsersListAdapter.Li
     // Fragment Implementation
     //----------------------------------------------------------------------------------------------
 
-    public FriendsListFragment() {
+    public EventFriendsListFragment() {
         // Required empty public constructor
     }
 
@@ -91,7 +91,7 @@ public class FriendsListFragment extends Fragment implements UsersListAdapter.Li
         friendsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new UsersListAdapter(getContext(), this, DataRepository.getInstance().getUsers());
+        adapter = new UsersListAdapter(getContext(), null, AppState.getCurrentState().getSelectedEvent().getUsersInvolved());
         friendsList.setAdapter(adapter);
 
         friendsListUpdated();
@@ -102,42 +102,5 @@ public class FriendsListFragment extends Fragment implements UsersListAdapter.Li
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    // UsersListAdapter.Listener Implementation
-    //----------------------------------------------------------------------------------------------
-
-    @Override
-    public void onUserClicked(View view, User user) {
-        // Go to selected friends profile page
-        AppState.getCurrentState().selectUser(user);
-        startActivity(new Intent(getContext(), UserProfileActivity.class));
-    }
-
-    @Override
-    public void onUserLongClicked(View view, User user) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage(R.string.delete_caution)
-                .setTitle(R.string.warning_title)
-                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(), "Delete feature coming soon!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton(R.string.dialog_cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    @Override
-    public List<User> getUpdatedDataSet() {
-        return DataRepository.getInstance().getUsers();
     }
 }

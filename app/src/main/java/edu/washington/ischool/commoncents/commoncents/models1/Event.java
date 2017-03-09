@@ -1,14 +1,22 @@
 package edu.washington.ischool.commoncents.commoncents.models1;
 
+import android.util.Log;
+
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import edu.washington.ischool.commoncents.commoncents.AppState;
 
 /**
  * Created by iguest on 3/5/17.
  */
 
 public class Event extends Indexable {
+
+    static String TAG = "Event";
 
     private String name;
     private Date date;
@@ -52,10 +60,6 @@ public class Event extends Indexable {
     }
 
     //List of friends involved with the event
-    public List<User> getFriendsInvolved() {
-        return usersInvolved;
-    }
-
     public List<User> getUsersInvolved() {
         return usersInvolved;
     }
@@ -65,10 +69,42 @@ public class Event extends Indexable {
             return lineItems;
     }
 
+    @Exclude
     // Gets the amount of money owed to the current user from this event
     public int getAmountOwed(User user) {
-        // TODO implement
-        return (int)((Math.random() - 0.5) * 200) * 10;
+
+        User currentUser = AppState.getCurrentState().getCurrentUser();
+
+        if (currentUser == null) {
+            return getRandomAmount();
+        }
+
+        int total = 0;
+        List<LineItem> items = getLineItems();
+        if (items == null) {
+            Log.e(TAG, "getAmountOwed: lineItems null!");
+            return getRandomAmount();
+        }
+
+        for (LineItem item : items) {
+            List<Payment> payments = item.getPayments();
+            if (payments == null) {
+                Log.e(TAG, "getAmountOwed: lineItems null!");
+                return getRandomAmount();
+            }
+
+            for (Payment payment : payments) {
+                if (payment.getUser().getName().equals(user.getName())) {
+                    total += payment.getAmount();
+                }
+            }
+        }
+
+        return total;
+    }
+
+    private int getRandomAmount() {
+        return (int)((Math.random() - 0.5) * 200) * 100;
     }
 
     //Sets the friends involved in the event

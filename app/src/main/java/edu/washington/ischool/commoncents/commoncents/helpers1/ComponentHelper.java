@@ -10,6 +10,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
+import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
@@ -50,11 +51,11 @@ public class ComponentHelper {
      * it in the given image view.
      *
      * @param imageView ImageView to put the pic in
-     * @param event The Event to generate the picture for
+     * @param lineItem The LineItem to generate the picture for
      */
-    public void setEventPicture(ImageView imageView, Event event, PictureType pictureType) {
+    public void setLineItemPicture(ImageView imageView, LineItem lineItem, PictureType pictureType) {
 
-        String name = event.getName();
+        String name = lineItem.getName();
         float saturation = 0.35f;
         float value = 0.4f;
 
@@ -62,17 +63,17 @@ public class ComponentHelper {
     }
 
     /**
-     * Generates a picture for the given friend and stores
+     * Generates a profile picture for the given event and stores
      * it in the given image view.
      *
      * @param imageView ImageView to put the pic in
-     * @param friend The Friend to generate the picture for
+     * @param event The Event to generate the picture for
      */
-    public void setProfilePicture(ImageView imageView, Friend friend, PictureType pictureType) {
+    public void setEventPicture(ImageView imageView, Event event, PictureType pictureType) {
 
-        String name = friend.getName();
+        String name = event.getName();
         float saturation = 0.35f;
-        float value = 0.85f;
+        float value = 0.4f;
 
         setPicture(imageView, name, saturation, value, pictureType);
     }
@@ -132,7 +133,7 @@ public class ComponentHelper {
 
         switch (pictureType) {
             case IN_LIST_ITEM:
-                initials = name.substring(0, 2);
+                initials = name.substring(0, Math.min(2, name.length()));
                 drawable = TextDrawable.builder()
                         .buildRound(initials, Color.HSVToColor(new float[]{ hue, saturation, value }));
                 break;

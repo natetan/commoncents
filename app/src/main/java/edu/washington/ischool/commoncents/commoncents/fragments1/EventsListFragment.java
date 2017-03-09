@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,8 +33,9 @@ import edu.washington.ischool.commoncents.commoncents.R;
  */
 public class EventsListFragment extends Fragment implements EventsListAdapter.Listener {
 
+    static String TAG = "EventsListFragment";
+
     private EventsListAdapter adapter;
-    private Observer eventsObserver;
 
     //----------------------------------------------------------------------------------------------
     // Fragment Lifecycle
@@ -51,15 +53,7 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         initializeFab(getContext(), mainView);
         initializeEventsList(mainView);
 
-        eventsObserver = new Observer() {
-            @Override
-            public void update(Observable observable, Object o) {
-                Log.i("EventsObserver", "Update received! Object: " + o);
-                adapter.notifyDataSetChanged();
-            }
-        };
-
-        DataRepository.getInstance().subscribeToEventCollectionUpdates(eventsObserver);
+        DataRepository.getInstance().subscribeToEventCollectionUpdates(adapter);
 
         return mainView;
     }
@@ -67,7 +61,7 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        DataRepository.getInstance().unsubscribeFromEventCollectionUpdates(eventsObserver);
+        DataRepository.getInstance().unsubscribeFromEventCollectionUpdates(adapter);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -97,17 +91,8 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         eventsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new EventsListAdapter(getContext(), this);
+        adapter = new EventsListAdapter(getContext(), this, DataRepository.getInstance().getEvents());
         eventsList.setAdapter(adapter);
-
-        eventsListUpdated();
-    }
-
-    private void eventsListUpdated() {
-        // Notify adapter that data has changed
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -143,5 +128,8 @@ public class EventsListFragment extends Fragment implements EventsListAdapter.Li
         alert.show();
     }
 
-
+    @Override
+    public List<Event> getUpdatedDataSet() {
+        return DataRepository.getInstance().getEvents();
+    }
 }

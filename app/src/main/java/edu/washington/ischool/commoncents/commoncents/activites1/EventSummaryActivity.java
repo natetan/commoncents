@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,9 @@ import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
+import edu.washington.ischool.commoncents.commoncents.controllers1.EventSummaryPagerController;
+import edu.washington.ischool.commoncents.commoncents.controllers1.MainPagerController;
+import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsInEventAdapter;
@@ -33,7 +38,7 @@ import edu.washington.ischool.commoncents.commoncents.R;
 import edu.washington.ischool.commoncents.commoncents.models1.User;
 import edu.washington.ischool.commoncents.commoncents.receivers1.MessageBroadcastReceiver;
 
-public class EventSummaryActivity extends AppCompatActivity implements UsersListAdapter.Listener{
+public class EventSummaryActivity extends AppCompatActivity implements UsersListAdapter.Listener {
 
     private Button sendSmsBtn;
     private Button finishBtn;
@@ -53,9 +58,15 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         eventName = (TextView) findViewById(R.id.event_name);
         eventTotal = (TextView) findViewById(R.id.event_total);
 
-        eventName.setText("" + AppState.getCurrentState().getSelectedEvent().getName());
-        for (LineItem lineItem: AppState.getCurrentState().getSelectedEvent().getLineItems()) {
-            total += lineItem.getPrice() / 100.0;
+        Event selectedEvent = AppState.getCurrentState().getSelectedEvent();
+        Log.i("EventSummaryActivity", "onCreate: selected event: " + selectedEvent);
+        eventName.setText(selectedEvent.getName());
+
+        List<LineItem> lineItems = selectedEvent.getLineItems();
+        if (lineItems != null) {
+            for (LineItem lineItem : lineItems) {
+                total += lineItem.getPrice() / 100.0;
+            }
         }
         eventTotal.setText("" + total);
 
@@ -96,18 +107,29 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
             }
         });
 
-        initializeEventSummaryView();
+//        initializeEventSummaryView();
 
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+        EventSummaryPagerController.setupViewPager(this, viewPager, tabLayout);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        DataRepository.getInstance().unsubscribeFromUserCollectionUpdates(adapter);
     }
 
     private void initializeEventSummaryView() {
-        eventSummaryView = (RecyclerView) findViewById(R.id.event_summary_list);
+        eventSummaryView = (RecyclerView) findViewById(R.id.list);
         eventSummaryView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         eventSummaryView.setLayoutManager(layoutManager);
 
-        adapter = new UsersListAdapter(getBaseContext(), this);
+        adapter = new UsersListAdapter(this, this, AppState.getCurrentState().getSelectedEvent().getUsersInvolved());
         eventSummaryView.setAdapter(adapter);
     }
 

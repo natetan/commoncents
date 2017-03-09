@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.adapters1.EventsForFriendAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
@@ -68,7 +69,7 @@ public class UserProfileActivity extends AppCompatActivity implements EventsForF
         lineItemList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new EventsForFriendAdapter(this, this);
+        adapter = new EventsForFriendAdapter(this, this, DataRepository.getInstance().getEvents());
         lineItemList.setAdapter(adapter);
 
         lineItemListUpdated();

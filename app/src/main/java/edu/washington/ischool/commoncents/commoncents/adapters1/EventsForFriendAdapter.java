@@ -2,6 +2,7 @@ package edu.washington.ischool.commoncents.commoncents.adapters1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
+import edu.washington.ischool.commoncents.commoncents.activites1.LoginActivity;
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -25,7 +27,7 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
 
     static final String TAG = "EventsForFriendAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_event_for_friend;
+    private static final int ITEM_LAYOUT_ID = R.layout.list_item_pic_title_info;
     private static final int PIC_VIEW_ID = R.id.item_picture;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int DESCRIPTION_VIEW_ID = R.id.item_subtitle;
@@ -68,19 +70,10 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public EventsForFriendAdapter(Context context, Listener listener) {
+    public EventsForFriendAdapter(Context context, Listener listener, List<Event> events) {
         this.context = context;
         this.listener = listener;
-
-        // Listen to calls to notifyDataSetChanged() so we can keep our local data up to date
-        this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                EventsForFriendAdapter.this.updateDataSet();
-            }
-        });
-
-        updateDataSet();
+        this.events = events;
     }
 
     @Override
@@ -104,8 +97,17 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
 
         // Set the view properties for this cell
         ComponentHelper.getInstance().setEventPicture(holder.picView, event, ComponentHelper.PictureType.IN_LIST_ITEM);
+
         holder.nameView.setText(event.getName());
-        holder.descriptionView.setText(event.getDescription());
+
+        // Set subtitle (hiding it empty)
+        String description = event.getDescription();
+        if (description == null || description.isEmpty()) {
+            holder.descriptionView.setVisibility(View.GONE);
+        } else {
+            holder.descriptionView.setText(event.getDescription());
+        }
+
         ComponentHelper.getInstance().setOweAmount(context, holder.moneyView, event.getAmountOwed(AppState.getCurrentState().getCurrentUser()), true);
 
         // Set this cell's onClickListener
@@ -121,10 +123,5 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
     @Override
     public int getItemCount() {
         return events.size();
-    }
-
-    // Update our local collection of events with those from the repo
-    private void updateDataSet() {
-        events = DataRepository.getInstance().getEvents();
     }
 }

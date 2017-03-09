@@ -2,6 +2,7 @@ package edu.washington.ischool.commoncents.commoncents.adapters1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -19,18 +22,18 @@ import edu.washington.ischool.commoncents.commoncents.models1.User;
  * Created by keegomyneego on 3/5/17.
  */
 
-public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> {
+public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> implements Observer {
 
     static final String TAG = "UsersListAdapter";
 
-    private static final int ITEM_LAYOUT_ID = R.layout.item_friend_for_friends_list;
+    private static final int ITEM_LAYOUT_ID = R.layout.list_item_friend_for_friends_list;
     private static final int NAME_VIEW_ID = R.id.item_title;
     private static final int MONEY_VIEW_ID = R.id.item_info;
     private static final int PROFILE_PIC_VIEW_ID = R.id.profile_picture;
 
     private Context context;
     private Listener listener;
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
     //----------------------------------------------------------------------------------------------
     // Client Interface
@@ -62,22 +65,32 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     }
 
     //----------------------------------------------------------------------------------------------
+    // Observer Implementation
+    //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void update(Observable observable, Object o) {
+        Log.i(TAG, ".");
+        Log.i(TAG, "update observed!");
+        Log.i(TAG, ".");
+
+        if (listener != null) {
+            this.users.clear();
+            this.users.addAll(listener.getUpdatedDataSet());
+            notifyDataSetChanged();
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public UsersListAdapter(Context context, Listener listener) {
+    public UsersListAdapter(Context context, Listener listener, List<User> users) {
         this.context = context;
         this.listener = listener;
+        this.users = users;
 
-        // Listen to calls to notifyDataSetChanged() so we can keep our local data up to date
-        this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                UsersListAdapter.this.updateDataSet();
-            }
-        });
-
-        updateDataSet();
+        Log.i(TAG, "UsersListAdapter: users involved: " + users);
     }
 
     @Override
@@ -108,7 +121,9 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
             @Override
             public void onClick(View view) {
                 // Delegate click logic to listener
-                listener.onUserClicked(view, user);
+                if (listener != null) {
+                    listener.onUserClicked(view, user);
+                }
             }
         });
 
@@ -116,8 +131,12 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                listener.onUserLongClicked(view, user);
-                return true;
+                if (listener != null) {
+                    listener.onUserLongClicked(view, user);
+                    return true;
+                }
+
+                return false;
             }
         });
     }
@@ -125,10 +144,5 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     @Override
     public int getItemCount() {
         return users.size();
-    }
-
-    // Update our local collection of users with those from the repo
-    private void updateDataSet() {
-        users = listener.getUpdatedDataSet();
     }
 }

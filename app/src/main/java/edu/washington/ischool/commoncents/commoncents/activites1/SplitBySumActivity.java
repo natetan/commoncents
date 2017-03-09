@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.models1.Payment;
@@ -350,12 +351,15 @@ public class SplitBySumActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AppState.getCurrentState().getSelectedEvent().setFriendsInvolved(adapter.getfriends());
+                Event selectedEvent = AppState.getCurrentState().getSelectedEvent();
+
+                selectedEvent.setFriendsInvolved(adapter.getfriends());
 
                 ArrayList<LineItem> eventLineItem = new ArrayList<LineItem>();
-                eventLineItem.add(new LineItem(AppState.getCurrentState().getSelectedEvent().getName(), costInCents));
+                eventLineItem.add(new LineItem(selectedEvent.getName(), costInCents));
 
-                AppState.getCurrentState().getSelectedEvent().setLineItems(eventLineItem);
+                selectedEvent.setLineItems(eventLineItem);
+                DataRepository.getInstance().addEvent(selectedEvent);
 
                 finish();
                 Intent intent = new Intent(SplitBySumActivity.this, EventSummaryActivity.class);
@@ -378,7 +382,7 @@ public class SplitBySumActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         friendsInEventView.setLayoutManager(layoutManager);
 
-        adapter = new FriendsInEventAdapter(R.layout.item_friend_for_event, R.id.name, R.id.amount, R.id.percentage);
+        adapter = new FriendsInEventAdapter(R.layout.list_item_friend_for_event, R.id.name, R.id.amount, R.id.percentage);
         friendsInEventView.setAdapter(adapter);
     }
 

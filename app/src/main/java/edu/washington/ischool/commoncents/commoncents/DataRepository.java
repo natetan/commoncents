@@ -103,10 +103,20 @@ public class DataRepository {
 
     public void subscribeToEventCollectionUpdates(Observer o) {
         eventCollectionUpdates.addObserver(o);
+        o.update(eventCollectionUpdates, null);
     }
 
     public void unsubscribeFromEventCollectionUpdates(Observer o) {
         eventCollectionUpdates.deleteObserver(o);
+    }
+
+    public void subscribeToUserCollectionUpdates(Observer o) {
+        userCollectionUpdates.addObserver(o);
+        o.update(userCollectionUpdates, null);
+    }
+
+    public void unsubscribeFromUserCollectionUpdates(Observer o) {
+        userCollectionUpdates.deleteObserver(o);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -201,7 +211,7 @@ public class DataRepository {
                 "2063837211",
                 "2067781865",
                 "2069536142",
-                ""
+                "4254432971"
         };
         int count = 0;
         for (String name: newUserNames) {
@@ -223,9 +233,7 @@ public class DataRepository {
                 "Cupcake Party",
                 new Date(),
                 "It's a cupcake party dude!",
-                new ArrayList<>(Arrays.asList(
-                        currentUser
-                )),
+                new ArrayList<>(getUsers()),
                 new ArrayList<>(Arrays.asList(
                         new LineItem("cupcake 1", 10),
                         new LineItem("cupcake 2", 20)
@@ -239,7 +247,9 @@ public class DataRepository {
                 new Date(),
                 "It's everyone's birthday!",
                 new ArrayList<>(Arrays.asList(
-                        currentUser
+                        currentUser,
+                        getUsers().get(1),
+                        getUsers().get(3)
                 )),
                 new ArrayList<>(Arrays.asList(
                         new LineItem("birthday cake 1", 15),
@@ -304,7 +314,7 @@ public class DataRepository {
     private class AlwaysChangedObservable extends Observable {
         @Override
         public void notifyObservers() {
-            super.hasChanged();
+            super.setChanged();
             super.notifyObservers();
         }
     }
