@@ -55,6 +55,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         eventTotal = (TextView) findViewById(R.id.event_total);
 
         Event selectedEvent = AppState.getCurrentState().getSelectedEvent();
+        Log.i("EventSummaryActivity", "onCreate: selected event: " + selectedEvent);
         eventName.setText(selectedEvent.getName());
 
         List<LineItem> lineItems = selectedEvent.getLineItems();
