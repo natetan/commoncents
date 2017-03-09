@@ -68,7 +68,7 @@ public class Event extends Indexable {
     // Gets the amount of money owed to the current user from this event
     public int getAmountOwed(User user) {
         // TODO implement
-        return (int)((Math.random() - 0.5) * 200) * 100;
+        return (int)((Math.random() - 0.5) * 200) * 10;
     }
 
     //Sets the friends involved in the event

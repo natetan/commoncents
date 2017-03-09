@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -17,8 +18,10 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
+import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.models1.Payment;
 import edu.washington.ischool.commoncents.commoncents.models1.User;
@@ -310,9 +313,20 @@ public class SplitBySumActivity extends AppCompatActivity {
                 }
 
                 Log.v(TAG, newAmount);
+                ArrayList<User> users = (ArrayList<User>) DataRepository.getInstance().getUsers();
 
-                User user = new User(newName);
-                Payment payment = new Payment(user, Integer.valueOf(newAmount));
+                Payment payment = null;
+                if (users.contains(new User(newName))) {
+                    for (User user: users) {
+                        if (user.equals(new User(newName))) {
+                            payment = new Payment(user, Integer.valueOf(newAmount));
+                        }
+                    }
+
+                } else {
+                    User user = new User(newName);
+                    payment = new Payment(user, Integer.valueOf(newAmount));
+                }
 
                 adapter.addToFriendsInEvent(payment, Integer.valueOf(costInCents));
                 
