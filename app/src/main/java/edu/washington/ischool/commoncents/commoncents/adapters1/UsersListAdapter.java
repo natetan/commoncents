@@ -87,6 +87,8 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         this.context = context;
         this.listener = listener;
         this.users = users;
+
+        Log.i(TAG, "UsersListAdapter: users involved: " + users);
     }
 
     @Override

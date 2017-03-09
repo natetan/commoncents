@@ -104,13 +104,13 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
 
         initializeEventSummaryView();
 
-        DataRepository.getInstance().subscribeToUserCollectionUpdates(adapter);
+//        DataRepository.getInstance().subscribeToUserCollectionUpdates(adapter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DataRepository.getInstance().unsubscribeFromUserCollectionUpdates(adapter);
+//        DataRepository.getInstance().unsubscribeFromUserCollectionUpdates(adapter);
     }
 
     private void initializeEventSummaryView() {
@@ -120,7 +120,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         eventSummaryView.setLayoutManager(layoutManager);
 
-        adapter = new UsersListAdapter(getBaseContext(), this, AppState.getCurrentState().getSelectedEvent().getUsersInvolved());
+        adapter = new UsersListAdapter(this, this, AppState.getCurrentState().getSelectedEvent().getUsersInvolved());
         eventSummaryView.setAdapter(adapter);
     }
 
