@@ -93,7 +93,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
 
     @Override
     public void onUserLongClicked(View view, User user) {
-        
+
     }
 
     @Override
