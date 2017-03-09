@@ -1,6 +1,10 @@
 package edu.washington.ischool.commoncents.commoncents;
 
+import android.*;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -24,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         MainPagerController.setupViewPager(this, viewPager, tabLayout);
+
+        Activity mainActivity = MainActivity.this;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mainActivity.checkSelfPermission(android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+
+                mainActivity.requestPermissions(new String[] {
+                        android.Manifest.permission.SEND_SMS }, 1);
+            }
+        }
     }
 
     @Override
