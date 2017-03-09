@@ -144,6 +144,7 @@ public class SplitByItemActivity extends AppCompatActivity implements SplitByIte
                     }
 
                 }
+                finish();
                 DataRepository.getInstance().addEvent(currentEvent);
                 Intent intent = new Intent(SplitByItemActivity.this, EventSummaryActivity.class);
                 startActivity(intent);

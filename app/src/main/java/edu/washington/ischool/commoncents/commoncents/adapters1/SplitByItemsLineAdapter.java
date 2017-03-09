@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -115,6 +116,12 @@ public class SplitByItemsLineAdapter extends RecyclerView.Adapter<SplitByItemsLi
                         pairings.get(thisUser).remove(thisLineItem);
                     }
                 }
+                String pairedLineItems = "nothing (yet)";
+                pairedLineItems = pairings.get(thisUser).get(0).getName();
+                for (int i = 1; i < pairings.get(thisUser).size(); i++) {
+                    pairedLineItems += ", " + pairings.get(thisUser).get(i).getName();
+                }
+                Toast.makeText(view.getContext(), thisUser.getName() + " has selected " + pairedLineItems, Toast.LENGTH_SHORT).show();
             }
         });
     }

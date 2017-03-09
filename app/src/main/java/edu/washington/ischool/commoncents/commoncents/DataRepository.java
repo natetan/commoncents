@@ -206,11 +206,22 @@ public class DataRepository {
                 "Keegan"
         };
 
+        String[] nums = new String[] {
+                "",
+                "2063837211",
+                "2067781865",
+                "2069536142",
+                ""
+        };
+        int count = 0;
         for (String name: newUserNames) {
             User newUser = new User(name);
+            newUser.setPhoneNumber(nums[count]);
             mockUserIds.add(newUser.getIndexKey());
             addUser(newUser);
+            count++;
         }
+
     }
 
     // Adds bs into the database as defaults
