@@ -1,6 +1,10 @@
 package edu.washington.ischool.commoncents.commoncents.activites1;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +19,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.MainActivity;
+import edu.washington.ischool.commoncents.commoncents.Manifest;
 import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
@@ -24,6 +29,7 @@ import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.R;
 import edu.washington.ischool.commoncents.commoncents.models1.User;
+import edu.washington.ischool.commoncents.commoncents.receivers1.MessageBroadcastReceiver;
 
 public class EventSummaryActivity extends AppCompatActivity implements UsersListAdapter.Listener{
 
@@ -54,6 +60,18 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         sendSmsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), MessageBroadcastReceiver.class);
+                String[] friends = {};
+                String[] phoneNumbers = {};
+                List<User> users = AppState.getCurrentState().getSelectedEvent().getUsersInvolved();
+//                for (int i = 0; i < users.size(); i++) {
+//                    friends[i] = users.get(i).getName();
+//                    phoneNumbers[i] = users.get(i).getPhoneNumber();
+//                }
+                intent.putExtra("Friends", friends);
+                intent.putExtra("Message", "You owe me");
+                intent.putExtra("Phone", phoneNumbers);
 
             }
         });
@@ -88,6 +106,11 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         AppState.getCurrentState().selectUser(user);
         //SHOW LINE ITEMS, CREATE ACTIVITY FOR LINE ITEMS
         //startActivity(new Intent(getBaseContext(), FriendProfileActivity.class));
+    }
+
+    @Override
+    public void onUserLongClicked(View view, User user) {
+        
     }
 
     @Override

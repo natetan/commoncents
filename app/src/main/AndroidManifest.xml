@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="edu.washington.ischool.commoncents.commoncents">
 
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -59,6 +61,8 @@
             android:name=".activites1.DeveloperSettingsActivity"
             android:theme="@style/SettingsTheme"
             android:label="Developer Settings"/>
+
+        <receiver android:name=".receivers1.MessageBroadcastReceiver"/>
     </application>
 
 </manifest>
