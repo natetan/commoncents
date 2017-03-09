@@ -116,7 +116,7 @@ public class ComponentHelper {
 
         switch (pictureType) {
             case IN_LIST_ITEM:
-                initials = name.substring(0, 2);
+                initials = name.substring(0, Math.min(2, name.length()));
                 drawable = TextDrawable.builder()
                         .buildRound(initials, Color.HSVToColor(new float[]{ hue, saturation, value }));
                 break;

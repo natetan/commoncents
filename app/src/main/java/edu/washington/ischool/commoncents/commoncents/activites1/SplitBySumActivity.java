@@ -358,6 +358,8 @@ public class SplitBySumActivity extends AppCompatActivity {
                 AppState.getCurrentState().getSelectedEvent().setLineItems(eventLineItem);
 
                 finish();
+                Intent intent = new Intent(SplitBySumActivity.this, EventSummaryActivity.class);
+                startActivity(intent);
             }
         });
     }
