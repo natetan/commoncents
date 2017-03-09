@@ -54,7 +54,6 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         sendSmsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SmsManager smsManager = SmsManager.getDefault();
 
             }
         });
