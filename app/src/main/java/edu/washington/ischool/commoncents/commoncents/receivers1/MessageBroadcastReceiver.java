@@ -23,6 +23,7 @@ public class MessageBroadcastReceiver extends BroadcastReceiver {
         phoneNumber = intent.getStringExtra("Phone");
         message = intent.getStringExtra("Message");
 
+        Log.i("TAG", "Text sent!");
         Log.v("PHONE NUMBERS", phoneNumber.toString());
         Toast.makeText(context, phoneNumber + " " + message, Toast.LENGTH_SHORT).show();
 
@@ -30,6 +31,7 @@ public class MessageBroadcastReceiver extends BroadcastReceiver {
 //            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 //
 //        }
+
         smsManager.sendTextMessage("2063837211", null, message, null, null);
     }
 }

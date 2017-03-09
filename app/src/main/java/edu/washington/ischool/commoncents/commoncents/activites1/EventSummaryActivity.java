@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.MainActivity;
@@ -60,18 +62,28 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         sendSmsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MessageBroadcastReceiver.class);
-                String[] friends = {};
-                String[] phoneNumbers = {};
-                List<User> users = AppState.getCurrentState().getSelectedEvent().getUsersInvolved();
-//                for (int i = 0; i < users.size(); i++) {
-//                    friends[i] = users.get(i).getName();
-//                    phoneNumbers[i] = users.get(i).getPhoneNumber();
-//                }
-                intent.putExtra("Friends", friends);
-                intent.putExtra("Message", "You owe me");
-                intent.putExtra("Phone", phoneNumbers);
+                SmsManager smsManager = SmsManager.getDefault();
 
+                List<User> users = DataRepository.getInstance().getUsers();
+                List<User> usersInCurrentEvent = AppState.getCurrentState().getSelectedEvent().getUsersInvolved();
+                List<String> userNameInString = new ArrayList<String>();
+                for (int i = 0; i < usersInCurrentEvent.size(); i++) {
+                    //adds the name as string of all involved users' name
+                    userNameInString.add(usersInCurrentEvent.get(i).getName());
+                }
+
+                Log.i("TAG", users.size() + "");
+
+                for (int i = 0; i < users.size(); i++) {
+                    for (int j = 0; j < userNameInString.size(); j++) {
+                        if (userNameInString.get(j).equalsIgnoreCase(users.get(i).getName())) {
+                            smsManager.sendTextMessage(users.get(i).getPhoneNumber(), null, "You have payments you owe!", null, null);
+                            Log.i("phone numbers", users.get(i).getPhoneNumber() + "");
+                        }
+                    }
+
+
+                }
             }
         });
 
