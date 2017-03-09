@@ -103,10 +103,20 @@ public class DataRepository {
 
     public void subscribeToEventCollectionUpdates(Observer o) {
         eventCollectionUpdates.addObserver(o);
+        o.update(eventCollectionUpdates, null);
     }
 
     public void unsubscribeFromEventCollectionUpdates(Observer o) {
         eventCollectionUpdates.deleteObserver(o);
+    }
+
+    public void subscribeToUserCollectionUpdates(Observer o) {
+        userCollectionUpdates.addObserver(o);
+        o.update(userCollectionUpdates, null);
+    }
+
+    public void unsubscribeFromUserCollectionUpdates(Observer o) {
+        userCollectionUpdates.deleteObserver(o);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -293,7 +303,7 @@ public class DataRepository {
     private class AlwaysChangedObservable extends Observable {
         @Override
         public void notifyObservers() {
-            super.hasChanged();
+            super.setChanged();
             super.notifyObservers();
         }
     }

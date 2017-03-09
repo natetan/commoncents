@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.washington.ischool.commoncents.commoncents.activites1.AddFriendActivity;
 import edu.washington.ischool.commoncents.commoncents.activites1.UserProfileActivity;
@@ -51,19 +53,15 @@ public class FriendsListFragment extends Fragment implements UsersListAdapter.Li
 
         initializeFriendsList(mainView);
 
+        DataRepository.getInstance().subscribeToUserCollectionUpdates(adapter);
+
         return mainView;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroyView() {
+        super.onDestroyView();
+        DataRepository.getInstance().unsubscribeFromUserCollectionUpdates(adapter);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -93,7 +91,7 @@ public class FriendsListFragment extends Fragment implements UsersListAdapter.Li
         friendsList.setLayoutManager(layoutManager);
 
         // Create the adapter
-        adapter = new UsersListAdapter(getContext(), this);
+        adapter = new UsersListAdapter(getContext(), this, DataRepository.getInstance().getUsers());
         friendsList.setAdapter(adapter);
 
         friendsListUpdated();

@@ -2,6 +2,7 @@ package edu.washington.ischool.commoncents.commoncents.adapters1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
@@ -21,7 +24,7 @@ import edu.washington.ischool.commoncents.commoncents.R;
  * Created by IreneW on 2017-03-06.
  */
 
-public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder>  {
+public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder> implements Observer {
 
     static final String TAG = "EventsListAdapter";
 
@@ -33,7 +36,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
 
     private Context context;
     private Listener listener;
-    private List<Event> events = new ArrayList<>();
+    private List<Event> events;
 
     /**
      * Listener to which event handling logic is delegated
@@ -41,6 +44,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     public interface Listener {
         void onEventClicked(View view, Event event);
         void onEventLongClicked(View view, Event event);
+        List<Event> getUpdatedDataSet();
     }
 
     /**
@@ -63,22 +67,28 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     }
 
     //----------------------------------------------------------------------------------------------
+    // Observer Implementation
+    //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void update(Observable observable, Object o) {
+        Log.i(TAG, ".");
+        Log.i(TAG, "update observed!");
+        Log.i(TAG, ".");
+
+        this.events.clear();
+        this.events.addAll(listener.getUpdatedDataSet());
+        notifyDataSetChanged();
+    }
+
+    //----------------------------------------------------------------------------------------------
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public EventsListAdapter(Context context, EventsListAdapter.Listener listener) {
+    public EventsListAdapter(Context context, EventsListAdapter.Listener listener, List<Event> events) {
         this.context = context;
         this.listener = listener;
-
-        // Listen to calls to notifyDataSetChanged() so we can keep our local data up to date
-        this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                EventsListAdapter.this.updateDataSet();
-            }
-        });
-
-        updateDataSet();
+        this.events = events;
     }
 
     @Override
@@ -140,10 +150,5 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
     @Override
     public int getItemCount() {
         return events.size();
-    }
-
-    // Update our local collection of EVENTS with those from the repo
-    private void updateDataSet() {
-        events = DataRepository.getInstance().getEvents();
     }
 }

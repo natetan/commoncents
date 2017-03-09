@@ -2,6 +2,7 @@ package edu.washington.ischool.commoncents.commoncents.adapters1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
+import edu.washington.ischool.commoncents.commoncents.activites1.LoginActivity;
 import edu.washington.ischool.commoncents.commoncents.helpers1.ComponentHelper;
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.R;
@@ -68,19 +70,10 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
     // Adapter Implementation
     //----------------------------------------------------------------------------------------------
 
-    public EventsForFriendAdapter(Context context, Listener listener) {
+    public EventsForFriendAdapter(Context context, Listener listener, List<Event> events) {
         this.context = context;
         this.listener = listener;
-
-        // Listen to calls to notifyDataSetChanged() so we can keep our local data up to date
-        this.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                EventsForFriendAdapter.this.updateDataSet();
-            }
-        });
-
-        updateDataSet();
+        this.events = events;
     }
 
     @Override
@@ -130,10 +123,5 @@ public class EventsForFriendAdapter extends RecyclerView.Adapter<EventsForFriend
     @Override
     public int getItemCount() {
         return events.size();
-    }
-
-    // Update our local collection of events with those from the repo
-    private void updateDataSet() {
-        events = DataRepository.getInstance().getEvents();
     }
 }

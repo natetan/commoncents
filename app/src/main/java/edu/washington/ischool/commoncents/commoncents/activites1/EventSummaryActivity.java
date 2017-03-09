@@ -19,13 +19,14 @@ import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
+import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.adapters1.FriendsInEventAdapter;
 import edu.washington.ischool.commoncents.commoncents.R;
 import edu.washington.ischool.commoncents.commoncents.models1.User;
 
-public class EventSummaryActivity extends AppCompatActivity implements UsersListAdapter.Listener{
+public class EventSummaryActivity extends AppCompatActivity implements UsersListAdapter.Listener {
 
     private Button sendSmsBtn;
     private Button finishBtn;
@@ -45,9 +46,14 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         eventName = (TextView) findViewById(R.id.event_name);
         eventTotal = (TextView) findViewById(R.id.event_total);
 
-        eventName.setText("" + AppState.getCurrentState().getSelectedEvent().getName());
-        for (LineItem lineItem: AppState.getCurrentState().getSelectedEvent().getLineItems()) {
-            total += lineItem.getPrice() / 100.0;
+        Event selectedEvent = AppState.getCurrentState().getSelectedEvent();
+        eventName.setText(selectedEvent.getName());
+
+        List<LineItem> lineItems = selectedEvent.getLineItems();
+        if (lineItems != null) {
+            for (LineItem lineItem : lineItems) {
+                total += lineItem.getPrice() / 100.0;
+            }
         }
         eventTotal.setText("" + total);
 
@@ -70,6 +76,13 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
 
         initializeEventSummaryView();
 
+        DataRepository.getInstance().subscribeToUserCollectionUpdates(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataRepository.getInstance().unsubscribeFromUserCollectionUpdates(adapter);
     }
 
     private void initializeEventSummaryView() {
@@ -79,7 +92,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         eventSummaryView.setLayoutManager(layoutManager);
 
-        adapter = new UsersListAdapter(getBaseContext(), this);
+        adapter = new UsersListAdapter(getBaseContext(), this, AppState.getCurrentState().getSelectedEvent().getUsersInvolved());
         eventSummaryView.setAdapter(adapter);
     }
 
