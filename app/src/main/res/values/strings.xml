@@ -32,4 +32,7 @@
     <string name="text_friends_involved">FRIENDS INVOLVED</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_yes">Yes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

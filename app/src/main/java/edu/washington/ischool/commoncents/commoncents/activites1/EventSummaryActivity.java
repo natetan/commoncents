@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,8 @@ import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter
 import edu.washington.ischool.commoncents.commoncents.AppState;
 import edu.washington.ischool.commoncents.commoncents.DataRepository;
 import edu.washington.ischool.commoncents.commoncents.adapters1.UsersListAdapter;
+import edu.washington.ischool.commoncents.commoncents.controllers1.EventSummaryPagerController;
+import edu.washington.ischool.commoncents.commoncents.controllers1.MainPagerController;
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
 import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
@@ -103,9 +107,13 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
             }
         });
 
-        initializeEventSummaryView();
+//        initializeEventSummaryView();
 
-//        DataRepository.getInstance().subscribeToUserCollectionUpdates(adapter);
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+        EventSummaryPagerController.setupViewPager(this, viewPager, tabLayout);
     }
 
     @Override
@@ -115,7 +123,7 @@ public class EventSummaryActivity extends AppCompatActivity implements UsersList
     }
 
     private void initializeEventSummaryView() {
-        eventSummaryView = (RecyclerView) findViewById(R.id.event_summary_list);
+        eventSummaryView = (RecyclerView) findViewById(R.id.list);
         eventSummaryView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

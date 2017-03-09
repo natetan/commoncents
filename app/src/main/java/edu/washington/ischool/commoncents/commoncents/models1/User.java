@@ -1,15 +1,22 @@
 package edu.washington.ischool.commoncents.commoncents.models1;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.washington.ischool.commoncents.commoncents.AppState;
 
 /**
  * Created by iguest on 3/5/17.
  */
 
 public class User extends Indexable {
+
+    static String TAG = "User";
 
     @NonNull private String name;
     @NonNull private List<Event> eventList;
@@ -55,7 +62,41 @@ public class User extends Indexable {
         return phoneNumber;
     }
 
+    @Exclude
     public int getAmountOwed() {
+        User currentUser = AppState.getCurrentState().getCurrentUser();
+
+        if (currentUser == null || eventList == null) {
+            return getRandomAmount();
+        }
+
+        int total = 0;
+
+        for (Event event : eventList) {
+            List<LineItem> items = event.getLineItems();
+            if (items != null) {
+                Log.e(TAG, "getAmountOwed: lineItems null!");
+                for (LineItem item : items) {
+                    List<Payment> payments = item.getPayments();
+                    if (payments != null) {
+                        for (Payment payment : payments) {
+                            if (payment.getUser().getName().equals(currentUser.getName())) {
+                                total += payment.getAmount();
+                            }
+
+                            if (payment.getUser().getName().equals(this.getName())) {
+                                total -= payment.getAmount();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return total;
+    }
+
+    private int getRandomAmount() {
         return (int)((Math.random() - 0.5) * 200) * 100;
     }
 

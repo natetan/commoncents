@@ -10,6 +10,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 
 import edu.washington.ischool.commoncents.commoncents.models1.Event;
 import edu.washington.ischool.commoncents.commoncents.models1.Friend;
+import edu.washington.ischool.commoncents.commoncents.models1.LineItem;
 import edu.washington.ischool.commoncents.commoncents.models1.User;
 
 /**
@@ -43,6 +44,22 @@ public class ComponentHelper {
     public enum PictureType {
         IN_LIST_ITEM,
         AS_BACKGROUND
+    }
+
+    /**
+     * Generates a profile picture for the given event and stores
+     * it in the given image view.
+     *
+     * @param imageView ImageView to put the pic in
+     * @param lineItem The LineItem to generate the picture for
+     */
+    public void setLineItemPicture(ImageView imageView, LineItem lineItem, PictureType pictureType) {
+
+        String name = lineItem.getName();
+        float saturation = 0.35f;
+        float value = 0.4f;
+
+        setPicture(imageView, name, saturation, value, pictureType);
     }
 
     /**

@@ -10,8 +10,10 @@ import android.util.Log;
 import android.util.TypedValue;
 
 import edu.washington.ischool.commoncents.commoncents.R;
+import edu.washington.ischool.commoncents.commoncents.fragments1.EventFriendsListFragment;
 import edu.washington.ischool.commoncents.commoncents.fragments1.EventsListFragment;
 import edu.washington.ischool.commoncents.commoncents.fragments1.FriendsListFragment;
+import edu.washington.ischool.commoncents.commoncents.fragments1.LineItemsListFragment;
 import edu.washington.ischool.commoncents.commoncents.fragments1.SettingsFragment;
 
 /**
@@ -56,8 +58,8 @@ public class EventSummaryPagerController {
     private static TabInfo[] getTabInfoList() {
 
         return new TabInfo[]{
-                new TabInfo("Friends Involved", R.style.EventsTheme, EventsListFragment.class),
-                new TabInfo("Payments", R.style.FriendsTheme, FriendsListFragment.class),
+                new TabInfo("Friends Involved", R.style.EventsTheme, EventFriendsListFragment.class),
+                new TabInfo("Payments", R.style.FriendsTheme, LineItemsListFragment.class),
         };
     }
 

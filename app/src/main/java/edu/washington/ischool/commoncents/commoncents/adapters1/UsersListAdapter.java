@@ -74,9 +74,11 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         Log.i(TAG, "update observed!");
         Log.i(TAG, ".");
 
-        this.users.clear();
-        this.users.addAll(listener.getUpdatedDataSet());
-        notifyDataSetChanged();
+        if (listener != null) {
+            this.users.clear();
+            this.users.addAll(listener.getUpdatedDataSet());
+            notifyDataSetChanged();
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -119,7 +121,9 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
             @Override
             public void onClick(View view) {
                 // Delegate click logic to listener
-                listener.onUserClicked(view, user);
+                if (listener != null) {
+                    listener.onUserClicked(view, user);
+                }
             }
         });
 
@@ -127,8 +131,12 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                listener.onUserLongClicked(view, user);
-                return true;
+                if (listener != null) {
+                    listener.onUserLongClicked(view, user);
+                    return true;
+                }
+
+                return false;
             }
         });
     }
